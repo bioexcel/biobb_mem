@@ -12,7 +12,7 @@ class CpptrajDensity(BiobbObject):
     """
     | biobb_mem CpptrajDensity
     | Wrapper of the Ambertools Cpptraj module for calculating density profile along an axis of a given cpptraj compatible trajectory.
-    | Cpptraj (the successor to ptraj) is the main program in Ambertools for processing coordinate trajectories and data files. The parameter names and defaults are the same as the ones in the official `Cpptraj manual <https://amber-md.github.io/cpptraj/CPPTRAJ.xhtml>`_.
+    | Cpptraj (the successor to ptraj) is the main program in Ambertools for processing coordinate trajectories and data files. The parameter names and defaults are the same as the ones in the official `Cpptraj manual <https://raw.githubusercontent.com/Amber-MD/cpptraj/master/doc/CpptrajManual.pdf>`_.
 
     Args:
         input_top_path (str): Path to the input structure or topology file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/ambertools/cpptraj.parm.top>`_. Accepted formats: top (edam:format_3881), pdb (edam:format_1476), prmtop (edam:format_3881), parmtop (edam:format_3881), zip (edam:format_3987).
@@ -20,10 +20,13 @@ class CpptrajDensity(BiobbObject):
         output_cpptraj_path (str): Path to the output processed density analysis. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/reference/ambertools/ref_cpptraj.density.dat>`_. Accepted formats: dat (edam:format_1637), agr (edam:format_2033), xmgr (edam:format_2033), gnu (edam:format_2033).
         output_traj_path (str) (Optional): Path to the output processed trajectory. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/ambertools/cpptraj.traj.dcd>`_. Accepted formats: mdcrd (edam:format_3878), crd (edam:format_3878), cdf (edam:format_3650), netcdf (edam:format_3650), nc (edam:format_3650), restart (edam:format_3886), ncrestart (edam:format_3886), restartnc (edam:format_3886), dcd (edam:format_3878), charmm (edam:format_3887), cor (edam:format_2033), pdb (edam:format_1476), mol2 (edam:format_3816), trr (edam:format_3910), gro (edam:format_2033), binpos (edam:format_3885), xtc (edam:format_3875), cif (edam:format_1477), arc (edam:format_2333), sqm (edam:format_2033), sdf (edam:format_3814), conflib (edam:format_2033).
         properties (dic - Python dictionary object containing the tool parameters, not input/output files):
-            * **density_type** (*str*) - ("number") Type of density calculation. Values: number (number density), mass (mass density), charge (partial charge density), electron (electron density).
-            * **mask** (*str*) - ("*") Atom selection mask. Default: all atoms.
-            * **delta** (*float*) - (0.25) Resolution (bin width) in Angstroms.
-            * **axis** (*str*) - ("z") Axis along which to calculate density. Values: x, y, z.
+            * **density_type** (*str*) - ("number") Number, mass, partial charge (q) or electron (Ne - q) density. Electron density will be converted to e-/Å3 by dividing the average area spanned by the other two dimensions.
+            * **mask** (*str*) - ("*") Arbitrary number of masks for atom selection; a dataset is created and the output will contain entries for each mask.. Default: all atoms.
+            * **delta** (*float*) - (0.25) Resolution, i.e. determines number of slices (i.e. histogram bins).
+            * **axis** (*str*) - ("z") Coordinate (axis) for density calculation. Vales: x, y, z.
+            * **bintype** (*str*) - ("bincenter") Determine whether histogram bin coordinates will be based on bin center (default) or bin edges. Values: bicenter, binedge.
+            * **restrict** (*str*) - (None) If specified, only calculate the density within a cylinder or square shape from the specified axis as defined by a distance cutoff. Values: cylinder, square.
+            * **cutoff** (*float*) - (None) The distance cutoff for 'restrict'. Required if 'restrict' is specified.
             * **binary_path** (*str*) - ("cpptraj") Path to the cpptraj executable binary.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
@@ -37,14 +40,14 @@ class CpptrajDensity(BiobbObject):
                 'density_type': 'number'
             }
             cpptraj_density(input_top_path='/path/to/myTopology.top',
-                        input_traj_path='/path/to/myTrajectory.dcd',
+                        input_traj_path='/path/to/myTrajectory.xtc',
                         output_cpptraj_path='/path/to/newAnalysis.dat',
                         properties=prop)
 
     Info:
         * wrapped_software:
             * name: Ambertools Cpptraj
-            * version: >=20.0
+            * version: >=22.0
             * license: GNU
         * ontology:
             * name: EDAM
@@ -74,6 +77,9 @@ class CpptrajDensity(BiobbObject):
         self.mask = properties.get('mask', '*')
         self.delta = properties.get('delta', 0.25)
         self.axis = properties.get('axis', 'z')
+        self.bintype = properties.get('bintype', 'bincenter')
+        self.restrict = properties.get('restrict', None)
+        self.cutoff = properties.get('cutoff', None)
         self.properties = properties
         
 
@@ -81,20 +87,25 @@ class CpptrajDensity(BiobbObject):
         self.check_properties(properties)
         self.check_arguments()
 
-    def create_instructions_file(self, container_io_dict, out_log, err_log):
+    def create_instructions_file(self, stage_io_dict, out_log, err_log):
         """Creates an input file using the properties file settings"""
         instructions_list = []
         # different path if container execution or not
         self.instructions_file = str(PurePath(fu.create_unique_dir()).joinpath(self.instructions_file))
         fu.create_name(prefix=self.prefix, step=self.step, name=self.instructions_file)
 
-        instructions_list.append('parm ' + container_io_dict["in"]["input_top_path"])
-        instructions_list.append('trajin ' + container_io_dict["in"]["input_traj_path"])
-        instructions_list.append(f'density {self.density_type} out {container_io_dict["out"]["output_cpptraj_path"]} {self.mask} delta {self.delta} {self.axis}')
+        instructions_list.append('parm ' + stage_io_dict["in"]["input_top_path"])
+        instructions_list.append('trajin ' + stage_io_dict["in"]["input_traj_path"])
+        density_command = f'density {self.density_type} out {stage_io_dict["out"]["output_cpptraj_path"]} {self.mask} delta {self.delta} {self.axis} {self.bintype}'
+        if self.restrict:
+            density_command += f' restrict {self.restrict}'
+            if self.cutoff:
+                density_command += f' cutoff {self.cutoff}'
+        instructions_list.append(density_command)
 
         # trajout
-        if ("output_traj_path" in container_io_dict["out"]):
-            instructions_list.append('trajout ' + container_io_dict["out"]["output_traj_path"])
+        if ("output_traj_path" in stage_io_dict["out"]):
+            instructions_list.append('trajout ' + stage_io_dict["out"]["output_traj_path"])
 
         # create .in file
         with open(self.instructions_file, 'w') as mdp:
@@ -116,7 +127,7 @@ class CpptrajDensity(BiobbObject):
         self.create_instructions_file(self.stage_io_dict, self.out_log, self.err_log)
         # create cmd and launch execution
         self.cmd = [self.binary_path, '-i', self.instructions_file]
-        
+
         # Run Biobb block
         self.run_biobb()
         # Copy files to host
