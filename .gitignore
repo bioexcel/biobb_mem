@@ -118,11 +118,11 @@ log.*
 *.out
 
 # outputs notebook
-biobb_template/notebooks/template/*.*
-!biobb_template/notebooks/template/*.ipynb
+biobb_mem/notebooks/template/*.*
+!biobb_mem/notebooks/template/*.ipynb
 
-biobb_template/docs/jupyter/data
+biobb_mem/docs/jupyter/data
 
-biobb_template/adapters
-biobb_template/notebooks
+biobb_mem/adapters
+biobb_mem/notebooks
 conda_env
