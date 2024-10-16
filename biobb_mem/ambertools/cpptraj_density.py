@@ -20,6 +20,9 @@ class CpptrajDensity(BiobbObject):
         output_cpptraj_path (str): Path to the output processed density analysis. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/reference/ambertools/ref_cpptraj.density.dat>`_. Accepted formats: dat (edam:format_1637), agr (edam:format_2033), xmgr (edam:format_2033), gnu (edam:format_2033).
         output_traj_path (str) (Optional): Path to the output processed trajectory. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/ambertools/cpptraj.traj.dcd>`_. Accepted formats: mdcrd (edam:format_3878), crd (edam:format_3878), cdf (edam:format_3650), netcdf (edam:format_3650), nc (edam:format_3650), restart (edam:format_3886), ncrestart (edam:format_3886), restartnc (edam:format_3886), dcd (edam:format_3878), charmm (edam:format_3887), cor (edam:format_2033), pdb (edam:format_1476), mol2 (edam:format_3816), trr (edam:format_3910), gro (edam:format_2033), binpos (edam:format_3885), xtc (edam:format_3875), cif (edam:format_1477), arc (edam:format_2333), sqm (edam:format_2033), sdf (edam:format_3814), conflib (edam:format_2033).
         properties (dic - Python dictionary object containing the tool parameters, not input/output files):
+            * **start** (*int*) - (1) [1~100000|1] Starting frame for slicing
+            * **end** (*int*) - (-1) [-1~100000|1] Ending frame for slicing
+            * **steps** (*int*) - (1) [1~100000|1] Step for slicing
             * **density_type** (*str*) - ("number") Number, mass, partial charge (q) or electron (Ne - q) density. Electron density will be converted to e-/Å3 by dividing the average area spanned by the other two dimensions.
             * **mask** (*str*) - ("*") Arbitrary number of masks for atom selection; a dataset is created and the output will contain entries for each mask.. Default: all atoms.
             * **delta** (*float*) - (0.25) Resolution, i.e. determines number of slices (i.e. histogram bins).
@@ -70,9 +73,11 @@ class CpptrajDensity(BiobbObject):
         }
 
         # Properties specific for BB
-        self.instructions_file = properties.get('instructions_file', 'instructions.in')
-        
-        self.binary_path = properties.get('binary_path', 'cpptraj')
+        self.instructions_file = 'instructions.in'
+        self.start = properties.get('start', 1)
+        self.end = properties.get('end', -1)
+        self.step = properties.get('step', 1)
+        self.slice = f' {self.start} {self.end} {self.step}'
         self.density_type = properties.get('density_type', 'number')
         self.mask = properties.get('mask', '*')
         self.delta = properties.get('delta', 0.25)
@@ -80,6 +85,7 @@ class CpptrajDensity(BiobbObject):
         self.bintype = properties.get('bintype', 'bincenter')
         self.restrict = properties.get('restrict', None)
         self.cutoff = properties.get('cutoff', None)
+        self.binary_path = properties.get('binary_path', 'cpptraj')
         self.properties = properties
         
 
@@ -92,10 +98,9 @@ class CpptrajDensity(BiobbObject):
         instructions_list = []
         # different path if container execution or not
         self.instructions_file = str(PurePath(fu.create_unique_dir()).joinpath(self.instructions_file))
-        fu.create_name(prefix=self.prefix, step=self.step, name=self.instructions_file)
-
+        #fu.create_name(prefix=self.prefix, step=self.step, name=self.instructions_file)
         instructions_list.append('parm ' + stage_io_dict["in"]["input_top_path"])
-        instructions_list.append('trajin ' + stage_io_dict["in"]["input_traj_path"])
+        instructions_list.append('trajin ' + stage_io_dict["in"]["input_traj_path"] + self.slice)
         density_command = f'density {self.density_type} out {stage_io_dict["out"]["output_cpptraj_path"]} {self.mask} delta {self.delta} {self.axis} {self.bintype}'
         if self.restrict:
             density_command += f' restrict {self.restrict}'

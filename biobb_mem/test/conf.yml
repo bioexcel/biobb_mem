@@ -9,4 +9,5 @@ cpptraj_density:
     ref_output_cpptraj_path: file:test_reference_dir/ambertools/output.dat
   properties:
     density_type: number
+    disable_logs: True,
     remove_tmp: true
