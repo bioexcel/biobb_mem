@@ -19,7 +19,7 @@ class CHAP(BiobbObject):
         input_top_path (str): Path to the input structure or topology file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/chap/A01JD.pdb>`_. Accepted formats: top (edam:format_3881), pdb (edam:format_1476), prmtop (edam:format_3881), parmtop (edam:format_3881), zip (edam:format_3987).
         input_traj_path (str) (Optional): Path to the input trajectory to be processed. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/chap/A01JD.xtc>`_. Accepted formats: mdcrd (edam:format_3878), crd (edam:format_3878), cdf (edam:format_3650), netcdf (edam:format_3650), nc (edam:format_3650), restart (edam:format_3886), ncrestart (edam:format_3886), restartnc (edam:format_3886), dcd (edam:format_3878), charmm (edam:format_3887), cor (edam:format_2033), pdb (edam:format_1476), mol2 (edam:format_3816), trr (edam:format_3910), gro (edam:format_2033), binpos (edam:format_3885), xtc (edam:format_3875), cif (edam:format_1477), arc (edam:format_2333), sqm (edam:format_2033), sdf (edam:format_3814), conflib (edam:format_2033).
         input_index_path (str) (Optional): Path to the GROMACS index file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/chap/A01JD.ndx>`_. Accepted formats: ndx (edam:format_2033).
-        output_obj_path (str): Path to the output Wavefront Object file containing CHAP results. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/reference/chap/chap_output.obj>`_. Accepted formats: dat (edam:format_1637), agr (edam:format_2033), xmgr (edam:format_2033), gnu (edam:format_2033).
+        output_obj_path (str): Path to the output Wavefront Object file containing CHAP results. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/reference/chap/chap_output.obj>`_. Accepted formats: obj (edam:format_9999).
         properties (dic - Python dictionary object containing the tool parameters, not input/output files):
             * **b** (*float*) - (None) First frame (in picoseconds) to read from trajectory.
             * **e** (*float*) - (None) Last frame (in picoseconds) to read from trajectory.
@@ -78,6 +78,7 @@ class CHAP(BiobbObject):
             }
             chap(input_top_path='/path/to/myTopology.pdb',
                  input_traj_path='/path/to/myTrajectory.xtc',
+                 input_index_path='/path/to/myIndex.ndx',
                  output_obj_path='/path/to/results.obj',
                  properties=prop)
 
@@ -115,7 +116,7 @@ class CHAP(BiobbObject):
         self.tu = properties.get('tu', None)
         self.sel_pathway = properties.get('sel_pathway', None)
         self.sel_solvent = properties.get('sel_solvent', None)
-        #self.out_filename = properties.get('out_filename', 'chap_output')
+        self.out_filename = properties.get('out_filename', 'chap_output')
         self.out_num_points = properties.get('out_num_points', 1000)
         self.out_extrap_dist = properties.get('out_extrap_dist', 0.0)
         self.out_grid_dist = properties.get('out_grid_dist', 0.15)
@@ -169,11 +170,9 @@ class CHAP(BiobbObject):
 
         # create cmd and launch execution
         # TODO: use self.doc_properties_dict to add non default flags
-        print(self.stage_io_dict['in']['input_top_path'])
-        self.cmd = [self.binary_path,
+        self.cmd = ['cd', self.stage_io_dict['unique_dir'], '; ', self.binary_path,
                     '-s', self.stage_io_dict['in']['input_top_path'],
-                    #'-out-filename', self.out_filename,
-                    '-out-filename', self.stage_io_dict['out']['output_obj_path'][:-4], 
+                    '-out-filename', self.out_filename, 
                     '-out-num-points', str(self.out_num_points),
                     '-out-extrap-dist', str(self.out_extrap_dist),
                     '-out-grid-dist', str(self.out_grid_dist),
@@ -202,7 +201,6 @@ class CHAP(BiobbObject):
                     '-hydrophob-database', self.hydrophob_database,
                     '-hydrophob-bandwidth', str(self.hydrophob_bandwidth),
                     ]
-        print(self.stage_io_dict)
         if self.stage_io_dict['in'].get('input_traj_path'): 
             self.cmd.extend(['-f', self.stage_io_dict['in']['input_traj_path']])
         if self.stage_io_dict['in'].get('input_index_path'): 
@@ -246,7 +244,7 @@ class CHAP(BiobbObject):
         self.tmp_files.extend([
             self.stage_io_dict.get("unique_dir"),
         ])
-        #self.remove_tmp_files()
+        self.remove_tmp_files()
         self.check_arguments(output_files_created=True, raise_exception=False)
 
         return self.return_code
