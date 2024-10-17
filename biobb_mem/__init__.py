@@ -1,3 +1,3 @@
 name = "biobb_mem"
-__all__ = ["ambertools"]
-__version__ = "4.1.0"
+__all__ = ["ambertools, chap"]
+__version__ = "4.2.0"
