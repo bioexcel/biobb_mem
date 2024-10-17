@@ -172,6 +172,7 @@ class CHAP(BiobbObject):
         # TODO: use self.doc_properties_dict to add non default flags
         self.cmd = ['cd', self.stage_io_dict['unique_dir'], '; ', self.binary_path,
                     '-s', self.stage_io_dict['in']['input_top_path'],
+                    '-tu', self.tu,
                     '-out-filename', self.out_filename, 
                     '-out-num-points', str(self.out_num_points),
                     '-out-extrap-dist', str(self.out_extrap_dist),
