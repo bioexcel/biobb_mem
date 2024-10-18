@@ -76,8 +76,8 @@ class CpptrajDensity(BiobbObject):
         self.instructions_file = 'instructions.in'
         self.start = properties.get('start', 1)
         self.end = properties.get('end', -1)
-        self.step = properties.get('step', 1)
-        self.slice = f' {self.start} {self.end} {self.step}'
+        self.steps = properties.get('steps', 1)
+        self.slice = f' {self.start} {self.end} {self.steps}'
         self.density_type = properties.get('density_type', 'number')
         self.mask = properties.get('mask', '*')
         self.delta = properties.get('delta', 0.25)
