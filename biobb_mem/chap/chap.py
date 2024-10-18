@@ -2,10 +2,8 @@
 
 """Module containing the Cpptraj Density class and the command line interface."""
 import argparse
-from pathlib import PurePath
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
-from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
 import random
 
@@ -212,8 +210,6 @@ class CHAP(BiobbObject):
             self.cmd.extend(['-e', str(self.e)])
         if self.df:
             self.cmd.extend(['-df', str(self.df)])
-        if self.tu:
-            self.cmd.extend(['-tu', self.tu])
         if self.sel_pathway:
             self.cmd.extend(['-sel-pathway', str(self.sel_pathway)])
         if self.sel_solvent:
