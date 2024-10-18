@@ -5,7 +5,7 @@ import argparse
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
-import random
+import random, os
 
 class CHAP(BiobbObject):
     """
@@ -17,7 +17,7 @@ class CHAP(BiobbObject):
         input_top_path (str): Path to the input structure or topology file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/chap/A01JD.pdb>`_. Accepted formats: top (edam:format_3881), pdb (edam:format_1476), prmtop (edam:format_3881), parmtop (edam:format_3881), zip (edam:format_3987).
         input_traj_path (str) (Optional): Path to the input trajectory to be processed. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/chap/A01JD.xtc>`_. Accepted formats: mdcrd (edam:format_3878), crd (edam:format_3878), cdf (edam:format_3650), netcdf (edam:format_3650), nc (edam:format_3650), restart (edam:format_3886), ncrestart (edam:format_3886), restartnc (edam:format_3886), dcd (edam:format_3878), charmm (edam:format_3887), cor (edam:format_2033), pdb (edam:format_1476), mol2 (edam:format_3816), trr (edam:format_3910), gro (edam:format_2033), binpos (edam:format_3885), xtc (edam:format_3875), cif (edam:format_1477), arc (edam:format_2333), sqm (edam:format_2033), sdf (edam:format_3814), conflib (edam:format_2033).
         input_index_path (str) (Optional): Path to the GROMACS index file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/chap/A01JD.ndx>`_. Accepted formats: ndx (edam:format_2033).
-        output_obj_path (str): Path to the output Wavefront Object file containing CHAP results. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/reference/chap/chap_output.obj>`_. Accepted formats: obj (edam:format_9999).
+        output_obj_path (str): Path to the output Wavefront Object file containing CHAP results. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/reference/chap/chap_output.obj>`_. Accepted formats: obj (edam:format_2330).
         properties (dic - Python dictionary object containing the tool parameters, not input/output files):
             * **b** (*float*) - (None) First frame (in picoseconds) to read from trajectory.
             * **e** (*float*) - (None) Last frame (in picoseconds) to read from trajectory.
@@ -83,7 +83,7 @@ class CHAP(BiobbObject):
     Info:
         * wrapped_software:
             * name: CHAP 
-            * version: 
+            * version: 0.9.1
             * license: 
         * ontology:
             * name: EDAM
@@ -107,11 +107,29 @@ class CHAP(BiobbObject):
             "out": {"output_obj_path": output_obj_path}
         }
 
+        """ 
         # Properties specific for BB
+        for prop, prop_dict in self.doc_properties_dict.items():
+            inp_prop = properties.get(prop, None)
+            # input propierty is in doc properties, is not None and not default value
+            if (inp_prop and str(inp_prop) != prop_dict['default_value']):
+                # the prints would go in self.cmd
+                prop = prop.replace('_', '-')
+                # random init
+                if prop == 'sa-seed':
+                    print(f"-{prop} {random.randint(-2**63,2**63 - 1)}")
+                # vector lists
+                elif prop == 'pf-chan-dir-vec' or prop == 'pf_init_probe_pos':
+                    print(f"-{prop} {' '.join(map(str, inp_prop))}")
+                # "string"
+                elif prop == 'pm-pf-sel':
+                    print(f"-{prop} '{inp_prop}'")
+                else:
+                    print(f"-{prop} {inp_prop}") """
         self.b = properties.get('b', None)
         self.e = properties.get('e', None)
         self.df = properties.get('df', None)
-        self.tu = properties.get('tu', None)
+        self.tu = properties.get('tu', 'ps')
         self.sel_pathway = properties.get('sel_pathway', None)
         self.sel_solvent = properties.get('sel_solvent', None)
         self.out_filename = properties.get('out_filename', 'chap_output')
@@ -166,9 +184,12 @@ class CHAP(BiobbObject):
             return 0
         self.stage_files()
 
+        # save current directory and move to temporary
+        cwd = os.getcwd()
+        os.chdir(self.stage_io_dict.get("unique_dir"))
         # create cmd and launch execution
         # TODO: use self.doc_properties_dict to add non default flags
-        self.cmd = ['cd', self.stage_io_dict['unique_dir'], '; ', self.binary_path,
+        self.cmd = [self.binary_path,
                     '-s', self.stage_io_dict['in']['input_top_path'],
                     '-tu', self.tu,
                     '-out-filename', self.out_filename, 
@@ -235,6 +256,8 @@ class CHAP(BiobbObject):
         
         # Run Biobb block
         self.run_biobb()
+        # move back to original directory
+        os.chdir(cwd)
         # Copy files to host
         self.copy_to_host()
         # remove temporary folder(s)
@@ -247,7 +270,7 @@ class CHAP(BiobbObject):
         return self.return_code
 
 
-def chap(input_top_path: str, output_obj_path: str, 
+def chap_run(input_top_path: str, output_obj_path: str, 
          input_traj_path: str = None, input_index_path: str = None, 
          properties: dict = None, **kwargs) -> int:
     """Execute the :class:`CHAP <chap.chap.CHAP>` class and
@@ -277,7 +300,7 @@ def main():
     properties = settings.ConfReader(config=args.config).get_prop_dic()
 
     # Specific call of each building block
-    chap(input_top_path=args.input_top_path,
+    chap_run(input_top_path=args.input_top_path,
                 input_traj_path=args.input_traj_path,
                 input_index_path=args.input_index_path,
                 output_obj_path=args.output_obj_path,
