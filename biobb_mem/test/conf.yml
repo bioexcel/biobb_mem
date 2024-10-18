@@ -1,13 +1,47 @@
 global_properties:
   working_dir_path: /tmp/biobb/unitests
 
-cpptraj_density:
+cpptraj_density_default:
   paths:
     input_top_path: file:test_data_dir/ambertools/topology.pdb
     input_traj_path: file:test_data_dir/ambertools/trajectory.xtc
     output_cpptraj_path: output.dat
-    ref_output_cpptraj_path: file:test_reference_dir/ambertools/output.dat
+    ref_output_cpptraj_path: file:test_reference_dir/ambertools/output_default.dat
   properties:
-    density_type: number
-    disable_logs: True,
-    remove_tmp: true
+    disable_logs: true
+
+cpptraj_density_mask:
+  paths:
+    input_top_path: file:test_data_dir/ambertools/topology.pdb
+    input_traj_path: file:test_data_dir/ambertools/trajectory.xtc
+    output_cpptraj_path: output.dat
+    ref_output_cpptraj_path: file:test_reference_dir/ambertools/output_mask.dat
+  properties:
+    disable_logs: true
+    mask: "::M ::A,B"
+
+cpptraj_density_complex:
+  paths:
+    input_top_path: file:test_data_dir/ambertools/topology.pdb
+    input_traj_path: file:test_data_dir/ambertools/trajectory.xtc
+    output_cpptraj_path: output.dat
+    ref_output_cpptraj_path: file:test_reference_dir/ambertools/output_complex.dat
+  properties:
+    disable_logs: true
+    start: 5
+    end: 15
+    steps: 1
+    density_type: mass
+    mask: "::M,A,B ::A,B"
+    delta: 0.14
+    axis: y
+    disable_logs: false
+
+chap_default:
+  paths:
+    input_top_path: file:test_data_dir/chap/A01JD.pdb
+    input_traj_path: file:test_data_dir/chap/A01JD.xtc
+    output_cpptraj_path: output.dat
+    ref_output_cpptraj_path: file:test_reference_dir/chap/output.obj
+  properties:
+    disable_logs: true
