@@ -8,7 +8,9 @@ from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
 import MDAnalysis as mda
-from lipyphilic.leaflets import AssignLeaflets
+from lipyphilic.lib.assign_leaflets  import AssignLeaflets as lipyAssignLeaflets
+import pandas as pd
+import numpy as np
 
 class AssignLeaflets(BiobbObject):
     """
@@ -22,11 +24,11 @@ class AssignLeaflets(BiobbObject):
         output_leaflets_path (str): Path to the output leaflet assignments. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/reference/lipyphilic/leaflets.csv>`_. Accepted formats: csv (edam:format_3752).
         properties (dic - Python dictionary object containing the tool parameters, not input/output files):
             * **start** (*int*) - (None) Starting frame for slicing.
-            * **end** (*int*) - (None) Ending frame for slicing.
-            * **steps** (*int*) - (None) Step for slicing.
+            * **stop** (*int*) - (None) Ending frame for slicing.
+            * **step** (*int*) - (None) Step for slicing.
             * **lipid_sel** (*str*) - ("all") Selection string for the lipids in a membrane. The selection should cover **all** residues in the membrane, including cholesterol.
             * **midplane_sel** (*str*) - (None) Selection string for residues that may be midplane. Any residues not in this selection will be assigned to a leaflet regardless of its proximity to the midplane. The default is `None`, in which case all lipids will be assigned to either the upper or lower leaflet.
-            * **cutoff** (*float*) - (0) Minimum distance in *z* an atom must be from the midplane to be assigned to a leaflet rather than the midplane. The default is `0`, in which case all lipids will be assigned to either the upper or lower leaflet. Must be non-negative.
+            * **midplane_cutoff** (*float*) - (0) Minimum distance in *z* an atom must be from the midplane to be assigned to a leaflet rather than the midplane. The default is `0`, in which case all lipids will be assigned to either the upper or lower leaflet. Must be non-negative.
             * **n_bins** (*int*) - (1) Number of bins in *x* and *y* to use to create a grid of membrane patches. Local membrane midpoints are computed for each patch, and lipids assigned a leaflet based on the distance to their local membrane midpoint. The default is `1`, which is equivalent to computing a single global midpoint.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
@@ -41,7 +43,7 @@ class AssignLeaflets(BiobbObject):
             }
             assign_leaflets(input_top_path='/path/to/myTopology.tpr',
                         input_traj_path='/path/to/myTrajectory.xtc',
-                        output_leaflets_path='/path/to/leaflets.dat',
+                        output_leaflets_path='/path/to/leaflets.csv',
                         properties=prop)
 
     Info:
@@ -72,12 +74,11 @@ class AssignLeaflets(BiobbObject):
         # Properties specific for BB
         self.lipid_sel = properties.get('lipid_sel', 'all')
         self.midplane_sel = properties.get('midplane_sel', None)
-        self.cutoff = properties.get('cutoff', 0)
+        self.midplane_cutoff = properties.get('midplane_cutoff', None)
         self.n_bins = properties.get('n_bins', 1)
-        self.binary_path = properties.get('binary_path', 'lipyphilic')
         self.start = properties.get('start', None)
-        self.end = properties.get('end', None)
-        self.steps = properties.get('steps',None)
+        self.stop = properties.get('stop', None)
+        self.step = properties.get('step',None)
         self.properties = properties
 
         # Check the properties
@@ -93,35 +94,40 @@ class AssignLeaflets(BiobbObject):
             return 0
         self.stage_files()
 
-        # Import necessary modules
-        
-
         # Load the trajectory
         u = mda.Universe(self.stage_io_dict["in"]["input_top_path"], self.stage_io_dict["in"]["input_traj_path"])
 
         # Create AssignLeaflets object
-        leaflets = AssignLeaflets(
+        leaflets = lipyAssignLeaflets(
             universe=u,
             lipid_sel=self.lipid_sel,
             midplane_sel=self.midplane_sel,
-            cutoff=self.cutoff,
+            midplane_cutoff=self.midplane_cutoff,
             n_bins=self.n_bins
         )
         
         # Run the analysis
         leaflets.run(
             start=self.start,
-            end=self.end,
-            steps=self.steps
+            stop=self.stop,
+            step=self.step
         )
         # Save the results
-        leaflets.leaflets.to_csv(self.stage_io_dict["out"]["output_leaflets_path"])
+        frames = leaflets.leaflets.shape[1]
+        resnames = np.repeat(leaflets.membrane.resnames, frames)
+        resindices = np.tile(leaflets.membrane.resnums, frames)
+        frame_numbers = np.repeat(np.arange(frames), leaflets.membrane.n_residues)
 
-        # create cmd and launch execution
-        # self.cmd = [self.binary_path, '-i', self.instructions_file]
-        
-        # Run Biobb block
-        #self.run_biobb()
+        df = pd.DataFrame({
+            'resname': resnames,
+            'resindex': resindices,
+            'frame': frame_numbers,
+            'leaflet_index': leaflets.leaflets.T.flatten()
+        })
+
+        # Save the DataFrame to a CSV file
+        df.to_csv(self.stage_io_dict["out"]["output_leaflets_path"], index=False)
+
         # Copy files to host
         self.copy_to_host()
         # remove temporary folder(s)
@@ -135,14 +141,13 @@ class AssignLeaflets(BiobbObject):
         return self.return_code
 
 
-def assign_leaflets(input_top_path: str, input_traj_path: str, output_cpptraj_path: str, output_traj_path: str = None, properties: dict = None, **kwargs) -> int:
+def assign_leaflets(input_top_path: str, input_traj_path: str, output_leaflets_path: str = None, properties: dict = None, **kwargs) -> int:
     """Execute the :class:`AssignLeaflets <lipyphilic.assign_leaflets.AssignLeaflets>` class and
     execute the :meth:`launch() <lipyphilic.assign_leaflets.AssignLeaflets.launch>` method."""
 
     return AssignLeaflets(input_top_path=input_top_path,
                       input_traj_path=input_traj_path,
-                      output_cpptraj_path=output_cpptraj_path,
-                      output_traj_path=output_traj_path,
+                      output_leaflets_path=output_leaflets_path,
                       properties=properties, **kwargs).launch()
 
 
@@ -155,8 +160,7 @@ def main():
     required_args = parser.add_argument_group('required arguments')
     required_args.add_argument('--input_top_path', required=True, help='Path to the input structure or topology file. Accepted formats: top, pdb, prmtop, parmtop, zip.')
     required_args.add_argument('--input_traj_path', required=True, help='Path to the input trajectory to be processed. Accepted formats: crd, cdf, netcdf, restart, ncrestart, restartnc, dcd, charmm, cor, pdb, mol2, trr, gro, binpos, xtc, cif, arc, sqm, sdf, conflib.')
-    required_args.add_argument('--output_cpptraj_path', required=True, help='Path to the output processed analysis.')
-    parser.add_argument('--output_traj_path', required=False, help='Path to the output processed trajectory.')
+    required_args.add_argument('--output_leaflets_path', required=True, help='Path to the output processed analysis.')
 
     args = parser.parse_args()
     args.config = args.config or "{}"
@@ -165,8 +169,7 @@ def main():
     # Specific call of each building block
     assign_leaflets(input_top_path=args.input_top_path,
                 input_traj_path=args.input_traj_path,
-                output_cpptraj_path=args.output_cpptraj_path,
-                output_traj_path=args.output_traj_path,
+                output_leaflets_path=args.output_leaflets_path,
                 properties=properties)
 
 
