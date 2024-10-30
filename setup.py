@@ -19,7 +19,7 @@ setuptools.setup(
     },
     packages=setuptools.find_packages(exclude=['adapters', 'docs', 'test']),
     package_data={'biobb_mem': ['py.typed']},
-    install_requires=['biobb_common==5.0.0', 'mdanalysis>=2.1.0'],
+    install_requires=['biobb_common==4.2.0', 'mdanalysis>=2.1.0'],
     python_requires='>=3.9',
     entry_points={
         "console_scripts": [
@@ -30,7 +30,6 @@ setuptools.setup(
     },
     classifiers=(
         "Development Status :: 5 - Production/Stable",
-        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "License :: OSI Approved :: Apache Software License",
