@@ -11,16 +11,23 @@
         {
             "block" : "CHAP", 
             "tool" : "chap", 
-            "desc" : "Short description for the template module.",
+            "desc" : "Channel Annotation Package (CHAP) for analyzing pore geometry, hydrophobicity, and hydration state in protein channels and other macromolecular structures.",
             "exec" : "chap_run",
             "docs": "https://biobb-mem.readthedocs.io/en/latest/chap.html#module-chap.chap"
         },
         {
-            "block" : "TemplateContainer", 
-            "tool" : "zip", 
-            "desc" : "Short description for the template_container module.",
-            "exec" : "template_container",
-            "docs": "https://biobb-template.readthedocs.io/en/latest/template.html#module-template.template_container"
+            "block" : "CpptrajDensity", 
+            "tool" : "density",
+            "desc" : "Calculates the density along an axis of a given cpptraj compatible trajectory.",
+            "exec" : "density",
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/ambertools.html#module-ambertools.cpptraj_density"
+        },
+        {
+            "block" : "AssignLeaflets", 
+            "tool" : "assign_leaflets", 
+            "desc" : "Assign lipids to leaflets in a bilayer.",
+            "exec" : "assign_leaflets",
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/lipyphilic.html#lipyphilic-assign-leaflets-module"
         }
     ],
     "dep_pypi" : [
