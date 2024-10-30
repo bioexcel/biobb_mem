@@ -2,15 +2,14 @@
 
 """Module containing the Cpptraj Density class and the command line interface."""
 import argparse
-from pathlib import PurePath
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
-from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
 import MDAnalysis as mda
-from lipyphilic.lib.assign_leaflets  import AssignLeaflets as lipyAssignLeaflets
+from lipyphilic.lib.assign_leaflets import AssignLeaflets as lipyAssignLeaflets
 import pandas as pd
 import numpy as np
+
 
 class AssignLeaflets(BiobbObject):
     """
@@ -50,7 +49,7 @@ class AssignLeaflets(BiobbObject):
         * wrapped_software:
             * name: Lipyphilic
             * version: 0.10.0
-            * license: 
+            * license:
         * ontology:
             * name: EDAM
             * schema: http://edamontology.org/EDAM.owl
@@ -78,7 +77,7 @@ class AssignLeaflets(BiobbObject):
         self.n_bins = properties.get('n_bins', 1)
         self.start = properties.get('start', None)
         self.stop = properties.get('stop', None)
-        self.step = properties.get('step',None)
+        self.step = properties.get('step', None)
         self.properties = properties
 
         # Check the properties
@@ -105,7 +104,7 @@ class AssignLeaflets(BiobbObject):
             midplane_cutoff=self.midplane_cutoff,
             n_bins=self.n_bins
         )
-        
+
         # Run the analysis
         leaflets.run(
             start=self.start,
@@ -146,9 +145,9 @@ def assign_leaflets(input_top_path: str, input_traj_path: str, output_leaflets_p
     execute the :meth:`launch() <lipyphilic.assign_leaflets.AssignLeaflets.launch>` method."""
 
     return AssignLeaflets(input_top_path=input_top_path,
-                      input_traj_path=input_traj_path,
-                      output_leaflets_path=output_leaflets_path,
-                      properties=properties, **kwargs).launch()
+                          input_traj_path=input_traj_path,
+                          output_leaflets_path=output_leaflets_path,
+                          properties=properties, **kwargs).launch()
 
 
 def main():
@@ -168,9 +167,9 @@ def main():
 
     # Specific call of each building block
     assign_leaflets(input_top_path=args.input_top_path,
-                input_traj_path=args.input_traj_path,
-                output_leaflets_path=args.output_leaflets_path,
-                properties=properties)
+                    input_traj_path=args.input_traj_path,
+                    output_leaflets_path=args.output_leaflets_path,
+                    properties=properties)
 
 
 if __name__ == '__main__':

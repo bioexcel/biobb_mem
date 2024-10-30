@@ -16,6 +16,7 @@ class TestCpptrajDensityDefault():
         assert fx.equal(self.paths['output_cpptraj_path'], self.paths['ref_output_cpptraj_path'])
         assert fx.exe_success(returncode)
 
+
 class TestCpptrajDensityMask():
     def setup_class(self):
         fx.test_setup(self, 'cpptraj_density_mask')
@@ -30,7 +31,8 @@ class TestCpptrajDensityMask():
         assert fx.equal(self.paths['output_cpptraj_path'], self.paths['ref_output_cpptraj_path'])
         assert fx.exe_success(returncode)
 
-class TestCpptrajDensityMask():
+
+class TestCpptrajDensityComplex():
     def setup_class(self):
         fx.test_setup(self, 'cpptraj_density_complex')
 

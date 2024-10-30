@@ -5,7 +5,9 @@ import argparse
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
-import random, os
+import random
+import os
+
 
 class CHAP(BiobbObject):
     """
@@ -82,15 +84,15 @@ class CHAP(BiobbObject):
 
     Info:
         * wrapped_software:
-            * name: CHAP 
+            * name: CHAP
             * version: 0.9.1
-            * license: 
+            * license:
         * ontology:
             * name: EDAM
             * schema: http://edamontology.org/EDAM.owl
     """
 
-    def __init__(self, input_top_path, output_obj_path, 
+    def __init__(self, input_top_path, output_obj_path,
                  input_traj_path=None, input_index_path=None,
                  properties=None, **kwargs) -> None:
         properties = properties or {}
@@ -101,13 +103,13 @@ class CHAP(BiobbObject):
 
         # Input/Output files
         self.io_dict = {
-            "in": {"input_top_path": input_top_path, 
-                   "input_traj_path": input_traj_path, 
+            "in": {"input_top_path": input_top_path,
+                   "input_traj_path": input_traj_path,
                    "input_index_path": input_index_path},
             "out": {"output_obj_path": output_obj_path}
         }
 
-        """ 
+        """
         # Properties specific for BB
         for prop, prop_dict in self.doc_properties_dict.items():
             inp_prop = properties.get(prop, None)
@@ -148,9 +150,9 @@ class CHAP(BiobbObject):
         self.pf_max_probe_steps = properties.get('pf_max_probe_steps', 10000)
         self.pf_sel_ipp = properties.get('pf_sel_ipp', None)
         self.pf_init_probe_pos = properties.get('pf_init_probe_pos', None)
-        self.pf_chan_dir_vec = properties.get('pf_chan_dir_vec', [0,0,1])
+        self.pf_chan_dir_vec = properties.get('pf_chan_dir_vec', [0, 0, 1])
         self.pf_cutoff = properties.get('pf_cutoff', None)
-        self.sa_seed = properties.get('sa_seed', random.randint(-2**63,2**63 - 1))
+        self.sa_seed = properties.get('sa_seed', random.randint(-2**63, 2**63 - 1))
         self.sa_max_iter = properties.get('sa_max_iter', 0)
         self.sa_init_temp = properties.get('sa_init_temp', 0.1)
         self.sa_cooling_fac = properties.get('sa_cooling_fac', 0.98)
@@ -192,7 +194,7 @@ class CHAP(BiobbObject):
         self.cmd = [self.binary_path,
                     '-s', self.stage_io_dict['in']['input_top_path'],
                     '-tu', self.tu,
-                    '-out-filename', self.out_filename, 
+                    '-out-filename', self.out_filename,
                     '-out-num-points', str(self.out_num_points),
                     '-out-extrap-dist', str(self.out_extrap_dist),
                     '-out-grid-dist', str(self.out_grid_dist),
@@ -221,9 +223,9 @@ class CHAP(BiobbObject):
                     '-hydrophob-database', self.hydrophob_database,
                     '-hydrophob-bandwidth', str(self.hydrophob_bandwidth),
                     ]
-        if self.stage_io_dict['in'].get('input_traj_path'): 
+        if self.stage_io_dict['in'].get('input_traj_path'):
             self.cmd.extend(['-f', self.stage_io_dict['in']['input_traj_path']])
-        if self.stage_io_dict['in'].get('input_index_path'): 
+        if self.stage_io_dict['in'].get('input_index_path'):
             self.cmd.extend(['-n', self.stage_io_dict['in']['input_index_path']])
         if self.b:
             self.cmd.extend(['-b', str(self.b)])
@@ -244,16 +246,16 @@ class CHAP(BiobbObject):
         if self.pf_sel_ipp:
             self.cmd.extend(['-pf-sel-ipp', self.pf_sel_ipp])
         if self.pf_init_probe_pos:
-            self.cmd.extend(['-pf-init-probe-pos',  ' '.join(map, str(self.pf_init_probe_pos))])
+            self.cmd.extend(['-pf-init-probe-pos', ' '.join(map, str(self.pf_init_probe_pos))])
         if self.pf_cutoff:
-            self.cmd.extend(['-pf-cutoff',  str(self.pf_cutoff)])
+            self.cmd.extend(['-pf-cutoff', str(self.pf_cutoff)])
         if self.hydrophob_fallback:
             self.cmd.extend(['-hydrophob-fallback', self.hydrophob_fallback])
         if self.hydrophob_database == 'user':
             self.cmd.extend(['-hydrophob-database', self.hydrophob_database])
             if self.hydrophob_json:
                 self.cmd.extend(['-hydrophob-json', self.pf_vdwr_json])
-        
+
         # Run Biobb block
         self.run_biobb()
         # move back to original directory
@@ -270,17 +272,17 @@ class CHAP(BiobbObject):
         return self.return_code
 
 
-def chap_run(input_top_path: str, output_obj_path: str, 
-         input_traj_path: str = None, input_index_path: str = None, 
-         properties: dict = None, **kwargs) -> int:
+def chap_run(input_top_path: str, output_obj_path: str,
+             input_traj_path: str = None, input_index_path: str = None,
+             properties: dict = None, **kwargs) -> int:
     """Execute the :class:`CHAP <chap.chap.CHAP>` class and
     execute the :meth:`launch() <chap.chap.CHAP.launch>` method."""
 
     return CHAP(input_top_path=input_top_path,
-                      input_traj_path=input_traj_path,
-                      input_index_path=input_index_path,
-                      output_obj_path=output_obj_path,
-                      properties=properties, **kwargs).launch()
+                input_traj_path=input_traj_path,
+                input_index_path=input_index_path,
+                output_obj_path=output_obj_path,
+                properties=properties, **kwargs).launch()
 
 
 def main():
@@ -301,10 +303,10 @@ def main():
 
     # Specific call of each building block
     chap_run(input_top_path=args.input_top_path,
-                input_traj_path=args.input_traj_path,
-                input_index_path=args.input_index_path,
-                output_obj_path=args.output_obj_path,
-                properties=properties)
+             input_traj_path=args.input_traj_path,
+             input_index_path=args.input_index_path,
+             output_obj_path=args.output_obj_path,
+             properties=properties)
 
 
 if __name__ == '__main__':

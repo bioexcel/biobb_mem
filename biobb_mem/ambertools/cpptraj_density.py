@@ -8,6 +8,7 @@ from biobb_common.configuration import settings
 from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
 
+
 class CpptrajDensity(BiobbObject):
     """
     | biobb_mem CpptrajDensity
@@ -87,7 +88,6 @@ class CpptrajDensity(BiobbObject):
         self.cutoff = properties.get('cutoff', None)
         self.binary_path = properties.get('binary_path', 'cpptraj')
         self.properties = properties
-        
 
         # Check the properties
         self.check_properties(properties)
@@ -98,7 +98,7 @@ class CpptrajDensity(BiobbObject):
         instructions_list = []
         # different path if container execution or not
         self.instructions_file = str(PurePath(fu.create_unique_dir()).joinpath(self.instructions_file))
-        #fu.create_name(prefix=self.prefix, step=self.step, name=self.instructions_file)
+        # fu.create_name(prefix=self.prefix, step=self.step, name=self.instructions_file)
         instructions_list.append('parm ' + stage_io_dict["in"]["input_top_path"])
         instructions_list.append('trajin ' + stage_io_dict["in"]["input_traj_path"] + self.slice)
         density_command = f'density {self.density_type} out {stage_io_dict["out"]["output_cpptraj_path"]} {self.mask} delta {self.delta} {self.axis} {self.bintype}'
@@ -154,10 +154,10 @@ def cpptraj_density(input_top_path: str, input_traj_path: str, output_cpptraj_pa
     execute the :meth:`launch() <ambertools.cpptraj_density.CpptrajDensity.launch>` method."""
 
     return CpptrajDensity(input_top_path=input_top_path,
-                      input_traj_path=input_traj_path,
-                      output_cpptraj_path=output_cpptraj_path,
-                      output_traj_path=output_traj_path,
-                      properties=properties, **kwargs).launch()
+                          input_traj_path=input_traj_path,
+                          output_cpptraj_path=output_cpptraj_path,
+                          output_traj_path=output_traj_path,
+                          properties=properties, **kwargs).launch()
 
 
 def main():
@@ -178,10 +178,10 @@ def main():
 
     # Specific call of each building block
     cpptraj_density(input_top_path=args.input_top_path,
-                input_traj_path=args.input_traj_path,
-                output_cpptraj_path=args.output_cpptraj_path,
-                output_traj_path=args.output_traj_path,
-                properties=properties)
+                    input_traj_path=args.input_traj_path,
+                    output_cpptraj_path=args.output_cpptraj_path,
+                    output_traj_path=args.output_traj_path,
+                    properties=properties)
 
 
 if __name__ == '__main__':
