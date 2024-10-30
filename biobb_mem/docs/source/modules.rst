@@ -1,4 +1,4 @@
-biobb_template
+biobb_mem
 ==============
 
 .. toctree::

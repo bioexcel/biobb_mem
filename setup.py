@@ -4,22 +4,22 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="biobb_template",
-    version="4.1.0",
+    name="biobb_mem",
+    version="4.2.0",
     author="Biobb developers",
-    author_email="your@email.com",
-    description="Biobb_template is a complete code template to promote and facilitate the creation of new Biobbs by the community.",
+    author_email="ruben.chaves@irbbarcelona.org",
+    description="Biobb_mem is a complete code template to promote and facilitate the creation of new Biobbs by the community.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     keywords="Bioinformatics Workflows BioExcel Compatibility",
-    url="https://github.com/bioexcel/biobb_template",
+    url="https://github.com/bioexcel/biobb_mem",
     project_urls={
         "Documentation": "http://biobb-template.readthedocs.io/en/latest/",
         "Bioexcel": "https://bioexcel.eu/"
     },
     packages=setuptools.find_packages(exclude=['adapters', 'docs', 'test']),
-    package_data={'biobb_template': ['py.typed']},
-    install_requires=['biobb_common==4.1.0'],
+    package_data={'biobb_mem': ['py.typed']},
+    install_requires=['biobb_common==4.2.0'],
     python_requires='>=3.8',
     entry_points={
         "console_scripts": [

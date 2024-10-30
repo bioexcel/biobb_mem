@@ -17,7 +17,7 @@
 [![](https://img.shields.io/github/issues/bioexcel/biobb_template.svg?color=brightgreen&label=Issues)](https://GitHub.com/bioexcel/biobb_template/issues/)
 
 
-# biobb_template
+# biobb_mem
 
 ## Introduction
 Biobb_template is a complete code template to promote and facilitate the creation of

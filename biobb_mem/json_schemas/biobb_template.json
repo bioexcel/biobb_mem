@@ -1,7 +1,7 @@
 {
-    "_id": "biobb_template",
-    "desc": "Description for biobb_template package",
-    "github": "https://github.com/bioexcel/biobb_template",
+    "_id": "biobb_mem",
+    "desc": "Description for biobb_mem package",
+    "github": "https://github.com/bioexcel/biobb_mem",
     "readthedocs": "https://biobb-template.readthedocs.io/en/latest/",
     "conda": "",
     "docker": "",
