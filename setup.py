@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="biobb_mem",
-    version="4.2.0",
+    version="5.0.0",
     author="Biobb developers",
     author_email="ruben.chaves@irbbarcelona.org",
     description="Biobb_mem is a complete code template to promote and facilitate the creation of new Biobbs by the community.",
@@ -14,16 +14,18 @@ setuptools.setup(
     keywords="Bioinformatics Workflows BioExcel Compatibility",
     url="https://github.com/bioexcel/biobb_mem",
     project_urls={
-        "Documentation": "http://biobb-template.readthedocs.io/en/latest/",
+        "Documentation": "http://biobb-mem.readthedocs.io/en/latest/",
         "Bioexcel": "https://bioexcel.eu/"
     },
     packages=setuptools.find_packages(exclude=['adapters', 'docs', 'test']),
     package_data={'biobb_mem': ['py.typed']},
-    install_requires=['biobb_common==4.2.0'],
-    python_requires='>=3.8',
+    install_requires=['biobb_common==5.0.0', 'mdanalysis>=2.1.0'],
+    python_requires='>=3.9',
     entry_points={
         "console_scripts": [
-            "template = biobb_template.template.template:main"
+            "chap_run = biobb_mem.chap.chap:main",
+            "cpptraj_density = biobb_mem.ambertools.cpptraj_density:main",
+            "assign_leaflets = biobb_mem.lipyphilic.assign_leaflets:main",
         ]
     },
     classifiers=(
