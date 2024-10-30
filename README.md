@@ -1,8 +1,8 @@
-[![](https://img.shields.io/github/v/tag/bioexcel/biobb_template?label=Version)](https://GitHub.com/bioexcel/biobb_template/tags/)
+[![](https://img.shields.io/github/v/tag/bioexcel/biobb_mem?label=Version)](https://GitHub.com/bioexcel/biobb_mem/tags/)
 
-[![](https://img.shields.io/badge/OS-Unix%20%7C%20MacOS-blue)](https://github.com/bioexcel/biobb_template)
+[![](https://img.shields.io/badge/OS-Unix%20%7C%20MacOS-blue)](https://github.com/bioexcel/biobb_mem)
 [![](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![](https://img.shields.io/badge/Open%20Source%3f-Yes!-blue)](https://github.com/bioexcel/biobb_template)
+[![](https://img.shields.io/badge/Open%20Source%3f-Yes!-blue)](https://github.com/bioexcel/biobb_mem)
 
 [![](https://readthedocs.org/projects/biobb-template/badge/?version=latest&label=Docs)](https://biobb-template.readthedocs.io/en/latest/?badge=latest)
 [![](https://img.shields.io/website?down_message=Offline&label=Biobb%20Website&up_message=Online&url=https%3A%2F%2Fmmb.irbbarcelona.org%2Fbiobb%2F)](https://mmb.irbbarcelona.org/biobb/)
@@ -10,11 +10,11 @@
 [![](https://zenodo.org/badge/DOI/10.1038/s41597-019-0177-4.svg)](https://doi.org/10.1038/s41597-019-0177-4)
 [![](https://img.shields.io/endpoint?color=brightgreen&url=https%3A%2F%2Fapi.juleskreuer.eu%2Fcitation-badge.php%3Fshield%26doi%3D10.1038%2Fs41597-019-0177-4)](https://www.nature.com/articles/s41597-019-0177-4#citeas)
 
-[![](https://docs.bioexcel.eu/biobb_template/junit/testsbadge.svg)](https://docs.bioexcel.eu/biobb_template/junit/report.html)
-[![](https://docs.bioexcel.eu/biobb_template/coverage/coveragebadge.svg)](https://docs.bioexcel.eu/biobb_template/coverage/)
-[![](https://docs.bioexcel.eu/biobb_template/flake8/flake8badge.svg)](https://docs.bioexcel.eu/biobb_template/flake8/)
-[![](https://img.shields.io/github/last-commit/bioexcel/biobb_template?label=Last%20Commit)](https://github.com/bioexcel/biobb_template/commits/master)
-[![](https://img.shields.io/github/issues/bioexcel/biobb_template.svg?color=brightgreen&label=Issues)](https://GitHub.com/bioexcel/biobb_template/issues/)
+[![](https://docs.bioexcel.eu/biobb_mem/junit/testsbadge.svg)](https://docs.bioexcel.eu/biobb_mem/junit/report.html)
+[![](https://docs.bioexcel.eu/biobb_mem/coverage/coveragebadge.svg)](https://docs.bioexcel.eu/biobb_mem/coverage/)
+[![](https://docs.bioexcel.eu/biobb_mem/flake8/flake8badge.svg)](https://docs.bioexcel.eu/biobb_mem/flake8/)
+[![](https://img.shields.io/github/last-commit/bioexcel/biobb_mem?label=Last%20Commit)](https://github.com/bioexcel/biobb_mem/commits/master)
+[![](https://img.shields.io/github/issues/bioexcel/biobb_mem.svg?color=brightgreen&label=Issues)](https://GitHub.com/bioexcel/biobb_mem/issues/)
 
 
 # biobb_mem
@@ -37,47 +37,47 @@ If you have no experience with anaconda, please first take a look to the [New wi
 
 ### Download repository
 
-Although the biobb_template repository is available at GitHub and thus you can clone it, we strongly recommend you to [**download it compressed**](https://github.com/bioexcel/biobb_template/archive/master.zip) and start your new project from scratch. 
+Although the biobb_mem repository is available at GitHub and thus you can clone it, we strongly recommend you to [**download it compressed**](https://github.com/bioexcel/biobb_mem/archive/master.zip) and start your new project from scratch. 
 
 ### Create new conda environment
 
 Once you have the project unzipped in your computer, please follow the next steps to create a new conda environment:
 
 ```console
-cd biobb_template-master
+cd biobb_mem-master
 conda env create -f conda_env/environment.yml
 ```
 
 ### Update environment paths
 
-Edit **conda_env/biobb_template.pth** with the paths to your *biobb_template* folder. Example:
+Edit **conda_env/biobb_mem.pth** with the paths to your *biobb_mem* folder. Example:
 
 ```console
-/home/user_name/projects/biobb_template/
-/home/user_name/projects/biobb_template/biobb_template/biobb_template
+/home/user_name/projects/biobb_mem/
+/home/user_name/projects/biobb_mem/biobb_mem/biobb_mem
 ```
 
-Copy the edited **conda_env/biobb_template.pth** file to the site-packages folder of your environment. This folder is in */[anaconda-path]/envs/biobb_template/lib/python3.7/site-packages*, where */[anaconda-path]* is usually */anaconda3* or */opt/conda*.
+Copy the edited **conda_env/biobb_mem.pth** file to the site-packages folder of your environment. This folder is in */[anaconda-path]/envs/biobb_mem/lib/python3.7/site-packages*, where */[anaconda-path]* is usually */anaconda3* or */opt/conda*.
 
 ```console
-cp conda_env/biobb_template.pth /[anaconda-path]/envs/biobb_template/lib/python3.7/site-packages
+cp conda_env/biobb_mem.pth /[anaconda-path]/envs/biobb_mem/lib/python3.7/site-packages
 ```
 
 ### Activate environment
 
-Then, activate the recently created *biobb_template* conda environment:
+Then, activate the recently created *biobb_mem* conda environment:
 
 ```console
-conda activate biobb_template
+conda activate biobb_mem
 ```
 
 ### Create repository
 
-This template includes some folders not standard for a biobb, such as **biobb_template/adapters/**, **biobb_template/notebooks/** or **conda_env/**. For the sake of having a pure biobb structure, you should uncomment the three last lines of the **.gitignore** file before creating a new git repository:
+This template includes some folders not standard for a biobb, such as **biobb_mem/adapters/**, **biobb_mem/notebooks/** or **conda_env/**. For the sake of having a pure biobb structure, you should uncomment the three last lines of the **.gitignore** file before creating a new git repository:
 
 ```console
-biobb_template/adapters
-biobb_template/notebooks
+biobb_mem/adapters
+biobb_mem/notebooks
 conda_env
 ```
 Then, inialitize repository:
@@ -95,12 +95,12 @@ Additionally, it's recommendable to configure binary paths in your environment i
 To run tests, please execute the following instruction:
 
 ```console
-pytest /path/to/biobb_template/biobb_template/test/unitests/test_template/test_template.py
+pytest /path/to/biobb_mem/biobb_mem/test/unitests/test_template/test_template.py
 ```
 Or, if you prefer to show the BioBB output during the test process:
 
 ```console
-pytest -s /path/to/biobb_template/biobb_template/test/unitests/test_template/test_template.py
+pytest -s /path/to/biobb_mem/biobb_mem/test/unitests/test_template/test_template.py
 ```
 
 ## Documentation

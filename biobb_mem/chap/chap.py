@@ -86,7 +86,7 @@ class CHAP(BiobbObject):
         * wrapped_software:
             * name: CHAP
             * version: 0.9.1
-            * license:
+            * license: other
         * ontology:
             * name: EDAM
             * schema: http://edamontology.org/EDAM.owl
