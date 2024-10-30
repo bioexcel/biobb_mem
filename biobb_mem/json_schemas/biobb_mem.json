@@ -2,18 +2,18 @@
     "_id": "biobb_mem",
     "desc": "Description for biobb_mem package",
     "github": "https://github.com/bioexcel/biobb_mem",
-    "readthedocs": "https://biobb-template.readthedocs.io/en/latest/",
+    "readthedocs": "https://biobb-mem.readthedocs.io/en/latest/",
     "conda": "",
     "docker": "",
     "singularity": "",
-    "version": "4.1.0",
+    "version": "5.0.0",
     "tools" : [
         {
-            "block" : "Template", 
-            "tool" : "zip", 
+            "block" : "CHAP", 
+            "tool" : "chap", 
             "desc" : "Short description for the template module.",
-            "exec" : "template",
-            "docs": "https://biobb-template.readthedocs.io/en/latest/template.html#module-template.template"
+            "exec" : "chap_run",
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/chap.html#module-chap.chap"
         },
         {
             "block" : "TemplateContainer", 
@@ -24,15 +24,18 @@
         }
     ],
     "dep_pypi" : [
-        "install_requires=['biobb_common==4.1.0']", 
-        "python_requires='>=3.8'"
+        "install_requires=['biobb_common==5.0.0', 'mdanalysis>=2.1.0']", 
+        "python_requires='>=3.9'"
     ], 
     "dep_conda" : [
-        "python >=3.8", 
-        "biobb_common ==4.1.0"
+        "python >=3.9", 
+        "biobb_common ==5.0.0",
+        "ambertools >=22.0",
+        "lipyphilic ==0.10.0",
+        "chap"
     ],
     "keywords" : [
-        "template", 
+        "membrane", 
         "keywords"
     ]
 }
