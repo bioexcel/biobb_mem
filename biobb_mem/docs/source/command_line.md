@@ -288,7 +288,21 @@ Command:
 ```python
 assign_leaflets -h
 ```
-    /bin/sh: line 1: assign_leaflets: command not found
+    usage: assign_leaflets [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH --output_leaflets_path OUTPUT_LEAFLETS_PATH
+    
+    Assign lipids to leaflets in a bilayer.
+    
+    options:
+      -h, --help            show this help message and exit
+      --config CONFIG       Configuration file
+    
+    required arguments:
+      --input_top_path INPUT_TOP_PATH
+                            Path to the input structure or topology file. Accepted formats: top, pdb, prmtop, parmtop, zip.
+      --input_traj_path INPUT_TRAJ_PATH
+                            Path to the input trajectory to be processed. Accepted formats: crd, cdf, netcdf, restart, ncrestart, restartnc, dcd, charmm, cor, pdb, mol2, trr, gro, binpos, xtc, cif, arc, sqm, sdf, conflib.
+      --output_leaflets_path OUTPUT_LEAFLETS_PATH
+                            Path to the output processed analysis.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
@@ -320,7 +334,23 @@ Command:
 ```python
 cpptraj_density -h
 ```
-    /bin/sh: line 1: cpptraj_density: command not found
+    usage: cpptraj_density [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH --output_cpptraj_path OUTPUT_CPPTRAJ_PATH [--output_traj_path OUTPUT_TRAJ_PATH]
+    
+    Calculates the density along an axis of a given cpptraj compatible trajectory.
+    
+    options:
+      -h, --help            show this help message and exit
+      --config CONFIG       Configuration file
+      --output_traj_path OUTPUT_TRAJ_PATH
+                            Path to the output processed trajectory.
+    
+    required arguments:
+      --input_top_path INPUT_TOP_PATH
+                            Path to the input structure or topology file. Accepted formats: top, pdb, prmtop, parmtop, zip.
+      --input_traj_path INPUT_TRAJ_PATH
+                            Path to the input trajectory to be processed. Accepted formats: crd, cdf, netcdf, restart, ncrestart, restartnc, dcd, charmm, cor, pdb, mol2, trr, gro, binpos, xtc, cif, arc, sqm, sdf, conflib.
+      --output_cpptraj_path OUTPUT_CPPTRAJ_PATH
+                            Path to the output processed analysis.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
