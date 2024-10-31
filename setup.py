@@ -19,7 +19,7 @@ setuptools.setup(
     },
     packages=setuptools.find_packages(exclude=['adapters', 'docs', 'test']),
     package_data={'biobb_mem': ['py.typed']},
-    install_requires=['biobb_common==4.2.0', 'mdanalysis>=2.1.0'],
+    install_requires=['biobb_common==5.0.0', 'mdanalysis>=2.1.0'],
     python_requires='>=3.9',
     entry_points={
         "console_scripts": [
