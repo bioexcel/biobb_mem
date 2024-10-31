@@ -6,4 +6,4 @@ biobb_mem
 
    ambertools
    chap
-   lipyphilicBB
+   lipyphilic

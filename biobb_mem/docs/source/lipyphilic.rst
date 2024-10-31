@@ -1,13 +1,13 @@
-lipyphilicBB package
+lipyphilic package
 =====================
 
 Submodules
 ------------
 
-lipyphilicBB.assign_leaflets module
+lipyphilic.assign_leaflets module
 -------------------------------------
 
-.. automodule:: lipyphilicBB.assign_leaflets
+.. automodule:: lipyphilic.assign_leaflets
     :members:
     :undoc-members:
     :show-inheritance:
