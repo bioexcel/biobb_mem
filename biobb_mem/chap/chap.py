@@ -16,9 +16,9 @@ class CHAP(BiobbObject):
     | CHAP finds pores in biological macromolecules like ion channels and determines the hydration state of these permeation pathways. It can operate on both individual structures and on molecular dynamics trajectories. For more information, see the `CHAP documentation <http://www.channotation.org/docs/input_parameters/>`_.
 
     Args:
-        input_top_path (str): Path to the input structure or topology file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/chap/A01JD.pdb>`_. Accepted formats: top (edam:format_3881), pdb (edam:format_1476), prmtop (edam:format_3881), parmtop (edam:format_3881), zip (edam:format_3987).
-        input_traj_path (str) (Optional): Path to the input trajectory to be processed. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/chap/A01JD.xtc>`_. Accepted formats: mdcrd (edam:format_3878), crd (edam:format_3878), cdf (edam:format_3650), netcdf (edam:format_3650), nc (edam:format_3650), restart (edam:format_3886), ncrestart (edam:format_3886), restartnc (edam:format_3886), dcd (edam:format_3878), charmm (edam:format_3887), cor (edam:format_2033), pdb (edam:format_1476), mol2 (edam:format_3816), trr (edam:format_3910), gro (edam:format_2033), binpos (edam:format_3885), xtc (edam:format_3875), cif (edam:format_1477), arc (edam:format_2333), sqm (edam:format_2033), sdf (edam:format_3814), conflib (edam:format_2033).
-        input_index_path (str) (Optional): Path to the GROMACS index file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/chap/A01JD.ndx>`_. Accepted formats: ndx (edam:format_2033).
+        input_top_path (str): Path to the input  topology file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.pdb>`_. Accepted formats: tpr (edam:format_2333), gro (edam:format_2033), g96 (edam:format_2033), pdb (edam:format_1476), brk (edam:format_2033), ent (edam:format_1476).
+        input_traj_path (str) (Optional): Path to the GROMACS trajectory file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.xtc>`_. Accepted formats: xtc (edam:format_3875), trr (edam:format_3910), cpt (edam:format_2333), gro (edam:format_2033), g96 (edam:format_2033), pdb (edam:format_1476), tng (edam:format_3876).
+        input_index_path (str) (Optional): Path to the GROMACS index file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.ndx>`_. Accepted formats: ndx (edam:format_2033).
         output_obj_path (str): Path to the output Wavefront Object file containing CHAP results. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/reference/chap/chap_output.obj>`_. Accepted formats: obj (edam:format_2330).
         properties (dic - Python dictionary object containing the tool parameters, not input/output files):
             * **b** (*float*) - (None) First frame (in picoseconds) to read from trajectory.
@@ -292,10 +292,10 @@ def main():
 
     # Specific args of each building block
     required_args = parser.add_argument_group('required arguments')
-    required_args.add_argument('--input_top_path', required=True, help='Path to the input structure or topology file. Accepted formats: top, pdb, prmtop, parmtop, zip.')
-    parser.add_argument('--input_traj_path', required=False, help='Path to the input trajectory to be processed. Accepted formats: crd, cdf, netcdf, restart, ncrestart, restartnc, dcd, charmm, cor, pdb, mol2, trr, gro, binpos, xtc, cif, arc, sqm, sdf, conflib.')
+    required_args.add_argument('--input_top_path', required=True, help='Path to the input structure or topology file. Accepted formats: ent, gro, pdb, tpr.')
+    parser.add_argument('--input_traj_path', required=False, help='Path to the input trajectory to be processed. Accepted formats: gro, pdb, tng, trr, xtc.')
     parser.add_argument('--input_index_path', required=False, help="Path to the GROMACS index file. Accepted formats: ndx.")
-    required_args.add_argument('--output_obj_path', required=True, help='Path to the output processed Wavefront object.')
+    required_args.add_argument('--output_obj_path', required=True, help='Path to the output processed Wavefront object. Accepted formats: obj.')
 
     args = parser.parse_args()
     args.config = args.config or "{}"

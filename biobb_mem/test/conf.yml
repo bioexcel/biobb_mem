@@ -39,8 +39,8 @@ cpptraj_density_complex:
 
 chap_default:
   paths:
-    input_top_path: file:test_data_dir/chap/A01JD.pdb
-    input_traj_path: file:test_data_dir/chap/A01JD.xtc
+    input_top_path: file:test_data_dir/A01JD/A01JD.pdb
+    input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
     output_obj_path: chap_output.obj
     ref_output_obj_path: file:test_reference_dir/chap/chap_output.obj
   properties:
