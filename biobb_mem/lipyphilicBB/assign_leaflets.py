@@ -18,9 +18,9 @@ class AssignLeaflets(BiobbObject):
     | LiPyphilic is a Python package for analyzing MD simulations of lipid bilayers. The parameter names and defaults are the same as the ones in the official `Lipyphilic documentation <https://lipyphilic.readthedocs.io/en/latest/reference/analysis/leaflets.html>`_.
 
     Args:
-        input_top_path (str): Path to the input structure or topology file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/lipyphilic/system.tpr>`_. Accepted formats: tpr (edam:format_2333), gro (edam:format_2033), pdb (edam:format_1476).
-        input_traj_path (str): Path to the input trajectory to be processed. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/lipyphilic/trajectory.xtc>`_. Accepted formats: xtc (edam:format_3875), trr (edam:format_3910), tng (edam:format_3876).
-        output_leaflets_path (str): Path to the output leaflet assignments. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/reference/lipyphilic/leaflets.csv>`_. Accepted formats: csv (edam:format_3752).
+        input_top_path (str): Path to the input structure or topology file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/lipyphilicBB/system.tpr>`_. Accepted formats: tpr (edam:format_2333), gro (edam:format_2033), pdb (edam:format_1476).
+        input_traj_path (str): Path to the input trajectory to be processed. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/lipyphilicBB/trajectory.xtc>`_. Accepted formats: xtc (edam:format_3875), trr (edam:format_3910), tng (edam:format_3876).
+        output_leaflets_path (str): Path to the output leaflet assignments. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/reference/lipyphilicBB/leaflets.csv>`_. Accepted formats: csv (edam:format_3752).
         properties (dic - Python dictionary object containing the tool parameters, not input/output files):
             * **start** (*int*) - (None) Starting frame for slicing.
             * **stop** (*int*) - (None) Ending frame for slicing.
@@ -36,7 +36,7 @@ class AssignLeaflets(BiobbObject):
     Examples:
         This is a use example of how to use the building block from Python::
 
-            from biobb_mem.lipyphilic.assign_leaflets import assign_leaflets
+            from biobb_mem.lipyphilicBB.assign_leaflets import assign_leaflets
             prop = {
                 'lipid_sel': 'name GL1 GL2 ROH',
             }
@@ -86,7 +86,7 @@ class AssignLeaflets(BiobbObject):
 
     @launchlogger
     def launch(self) -> int:
-        """Execute the :class:`AssignLeaflets <lipyphilic.assign_leaflets.AssignLeaflets>` lipyphilic.assign_leaflets.AssignLeaflets object."""
+        """Execute the :class:`AssignLeaflets <lipyphilicBB.assign_leaflets.AssignLeaflets>` lipyphilicBB.assign_leaflets.AssignLeaflets object."""
 
         # Setup Biobb
         if self.check_restart():
@@ -141,8 +141,8 @@ class AssignLeaflets(BiobbObject):
 
 
 def assign_leaflets(input_top_path: str, input_traj_path: str, output_leaflets_path: str = None, properties: dict = None, **kwargs) -> int:
-    """Execute the :class:`AssignLeaflets <lipyphilic.assign_leaflets.AssignLeaflets>` class and
-    execute the :meth:`launch() <lipyphilic.assign_leaflets.AssignLeaflets.launch>` method."""
+    """Execute the :class:`AssignLeaflets <lipyphilicBB.assign_leaflets.AssignLeaflets>` class and
+    execute the :meth:`launch() <lipyphilicBB.assign_leaflets.AssignLeaflets.launch>` method."""
 
     return AssignLeaflets(input_top_path=input_top_path,
                           input_traj_path=input_traj_path,
