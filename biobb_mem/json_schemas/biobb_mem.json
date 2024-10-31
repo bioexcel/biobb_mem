@@ -27,7 +27,7 @@
             "tool" : "assign_leaflets", 
             "desc" : "Assign lipids to leaflets in a bilayer.",
             "exec" : "assign_leaflets",
-            "docs": "https://biobb-mem.readthedocs.io/en/latest/lipyphilic.html#lipyphilic-assign-leaflets-module"
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/LiPyphilic.html#LiPyphilic-assign-leaflets-module"
         }
     ],
     "dep_pypi" : [

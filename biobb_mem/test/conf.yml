@@ -6,7 +6,7 @@ cpptraj_density_default:
     input_top_path: file:test_data_dir/ambertools/topology.pdb
     input_traj_path: file:test_data_dir/ambertools/trajectory.xtc
     output_cpptraj_path: output.dat
-    ref_output_cpptraj_path: file:test_reference_dir/ambertools/output_default.dat
+    ref_output_cpptraj_path: file:test_reference_dir/ambertools/density_default.dat
   properties:
     disable_logs: true
 
@@ -15,7 +15,7 @@ cpptraj_density_mask:
     input_top_path: file:test_data_dir/ambertools/topology.pdb
     input_traj_path: file:test_data_dir/ambertools/trajectory.xtc
     output_cpptraj_path: output.dat
-    ref_output_cpptraj_path: file:test_reference_dir/ambertools/output_mask.dat
+    ref_output_cpptraj_path: file:test_reference_dir/ambertools/density_mask.dat
   properties:
     disable_logs: true
     mask: "::M ::A,B"
@@ -25,7 +25,7 @@ cpptraj_density_complex:
     input_top_path: file:test_data_dir/ambertools/topology.pdb
     input_traj_path: file:test_data_dir/ambertools/trajectory.xtc
     output_cpptraj_path: output.dat
-    ref_output_cpptraj_path: file:test_reference_dir/ambertools/output_complex.dat
+    ref_output_cpptraj_path: file:test_reference_dir/ambertools/density_complex.dat
   properties:
     disable_logs: true
     start: 5
