@@ -90,6 +90,7 @@ class CHAP(BiobbObject):
         * ontology:
             * name: EDAM
             * schema: http://edamontology.org/EDAM.owl
+
     """
 
     def __init__(self, input_top_path, output_obj_path,
