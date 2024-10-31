@@ -14,7 +14,7 @@
 
 import sys
 from pathlib import Path
-from unittest.mock import MagicMock
+#from unittest.mock import MagicMock
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -23,13 +23,13 @@ sys.path.insert(0, str(Path('../../').resolve()))
 #autodock_mock_imports = ["lipyphilic.lib"]
 
 # Mock the 'lipyphilic' module
-class Mock(MagicMock):
-    @classmethod
-    def __getattr__(cls, name):
-        return MagicMock()
+# class Mock(MagicMock):
+#     @classmethod
+#     def __getattr__(cls, name):
+#         return MagicMock()
 
-MOCK_MODULES = ['lipyphilic', 'lipyphilic.lib', 'lipyphilic.lib.assign_leaflets']
-sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
+# MOCK_MODULES = ['lipyphilic', 'lipyphilic.lib', 'lipyphilic.lib.assign_leaflets']
+# sys.modules.update((mod_name, Mock()) for mod_name in MOCK_MODULES)
 
 # -- General configuration ------------------------------------------------
 
