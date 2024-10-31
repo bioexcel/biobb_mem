@@ -49,7 +49,7 @@ class AssignLeaflets(BiobbObject):
         * wrapped_software:
             * name: Lipyphilic
             * version: 0.10.0
-            * license: other
+            * license: GPL-2.0
         * ontology:
             * name: EDAM
             * schema: http://edamontology.org/EDAM.owl
