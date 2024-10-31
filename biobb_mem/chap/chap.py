@@ -110,6 +110,25 @@ class CHAP(BiobbObject):
             "out": {"output_obj_path": output_obj_path}
         }
 
+        
+        # Properties specific for BB
+        '''for prop, prop_dict in self.doc_properties_dict.items():
+            inp_prop = properties.get(prop, None)
+            # input propierty is in doc properties, is not None and not default value
+            if (inp_prop and str(inp_prop) != prop_dict['default_value']):
+                # the prints would go in self.cmd
+                prop = prop.replace('_', '-')
+                # random init
+                if prop == 'sa-seed':
+                    print(f"-{prop} {random.randint(-2**63,2**63 - 1)}")
+                # vector lists
+                elif prop == 'pf-chan-dir-vec' or prop == 'pf_init_probe_pos':
+                    print(f"-{prop} {' '.join(map(str, inp_prop))}")
+                # "string"
+                elif prop == 'pm-pf-sel':
+                    print(f"-{prop} '{inp_prop}'")
+                else:
+                    print(f"-{prop} {inp_prop}") '''
         self.b = properties.get('b', None)
         self.e = properties.get('e', None)
         self.df = properties.get('df', None)
