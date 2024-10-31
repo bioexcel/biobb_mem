@@ -109,7 +109,7 @@ class CHAP(BiobbObject):
             "out": {"output_obj_path": output_obj_path}
         }
 
-        """
+        '''
         # Properties specific for BB
         for prop, prop_dict in self.doc_properties_dict.items():
             inp_prop = properties.get(prop, None)
@@ -127,7 +127,7 @@ class CHAP(BiobbObject):
                 elif prop == 'pm-pf-sel':
                     print(f"-{prop} '{inp_prop}'")
                 else:
-                    print(f"-{prop} {inp_prop}") """
+                    print(f"-{prop} {inp_prop}") '''
         self.b = properties.get('b', None)
         self.e = properties.get('e', None)
         self.df = properties.get('df', None)
