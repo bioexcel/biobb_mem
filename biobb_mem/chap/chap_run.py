@@ -71,7 +71,7 @@ class CHAP(BiobbObject):
     Examples:
         This is a use example of how to use the building block from Python::
 
-            from biobb_mem.chap.chap import chap
+            from biobb_mem.chap.chap_run import chap_run
             prop = {
                 'pf_method': 'inplane_optim',
                 'sel_pathway': 1
@@ -160,7 +160,7 @@ class CHAP(BiobbObject):
 
     @launchlogger
     def launch(self) -> int:
-        """Execute the :class:`CHAP <chap.chap.CHAP>` chap.chap.CHAP object."""
+        """Execute the :class:`CHAP <chap.chap_run.CHAP>` chap.chap_run.CHAP object."""
 
         # Setup Biobb
         if self.check_restart():
@@ -256,8 +256,8 @@ class CHAP(BiobbObject):
 def chap_run(input_top_path: str, output_obj_path: str,
              input_traj_path: str = None, input_index_path: str = None,
              properties: dict = None, **kwargs) -> int:
-    """Execute the :class:`CHAP <chap.chap.CHAP>` class and
-    execute the :meth:`launch() <chap.chap.CHAP.launch>` method."""
+    """Execute the :class:`CHAP <chap.chap_run.CHAP>` class and
+    execute the :meth:`launch() <chap.chap_run.CHAP.launch>` method."""
 
     return CHAP(input_top_path=input_top_path,
                 input_traj_path=input_traj_path,

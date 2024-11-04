@@ -1,6 +1,6 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://bioexcel.eu/biobb_mem/json_schemas/1.0/chap",
+    "$id": "http://bioexcel.eu/biobb_mem/json_schemas/1.0/chap_run",
     "name": "biobb_mem CHAP",
     "title": "Wrapper of the Channel Annotation Package (CHAP) for analyzing pore geometry, hydrophobicity, and hydration state in protein channels and other macromolecular structures.",
     "description": "CHAP finds pores in biological macromolecules like ion channels and determines the hydration state of these permeation pathways. It can operate on both individual structures and on molecular dynamics trajectories. For more information, see the CHAP documentation.",

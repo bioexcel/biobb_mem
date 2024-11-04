@@ -1,5 +1,5 @@
 from biobb_common.tools import test_fixtures as fx
-from biobb_mem.chap.chap import chap_run
+from biobb_mem.chap.chap_run import chap_run
 
 
 class TestChapDefault():
