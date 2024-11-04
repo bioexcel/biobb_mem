@@ -1,6 +1,6 @@
 {
     "_id": "biobb_mem",
-    "desc": "Description for biobb_mem package",
+    "desc": "Description for biobb_mem package.",
     "github": "https://github.com/bioexcel/biobb_mem",
     "readthedocs": "https://biobb-mem.readthedocs.io/en/latest/",
     "conda": "",
