@@ -19,11 +19,11 @@ setuptools.setup(
     },
     packages=setuptools.find_packages(exclude=['adapters', 'docs', 'test']),
     package_data={'biobb_mem': ['py.typed']},
-    install_requires=['biobb_common==5.0.0', 'mdanalysis>=2.1.0'],
+    install_requires=['biobb_common==5.0.0'],
     python_requires='>=3.9',
     entry_points={
         "console_scripts": [
-            "chap_run = biobb_mem.chap.chap:main",
+            "chap_run = biobb_mem.chap.chap_run:main",
             "cpptraj_density = biobb_mem.ambertools.cpptraj_density:main",
             "assign_leaflets = biobb_mem.lipyphilicBB.assign_leaflets:main",
         ]
@@ -32,6 +32,7 @@ setuptools.setup(
         "Development Status :: 5 - Production/Stable",
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: 3.11",
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: MacOS :: MacOS X",
         "Operating System :: POSIX",
