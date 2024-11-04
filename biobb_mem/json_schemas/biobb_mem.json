@@ -19,7 +19,7 @@
             "block" : "CpptrajDensity", 
             "tool" : "density",
             "desc" : "Calculates the density along an axis of a given cpptraj compatible trajectory.",
-            "exec" : "density",
+            "exec" : "cpptraj_density",
             "docs": "https://biobb-mem.readthedocs.io/en/latest/ambertools.html#module-ambertools.cpptraj_density"
         },
         {
