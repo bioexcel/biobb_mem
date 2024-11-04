@@ -51,3 +51,14 @@ chap_default:
     out_num_points: 200
     pf_max_probe_steps: 500
     pf_max_free_dist: 1.00
+
+lipyphilic_default:
+  paths:
+    input_top_path: file:test_data_dir/A01JD/A01JD.pdb
+    input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
+    output_leaflets_path: leaflets_data.csv
+    ref_output_leaflets_path: file:test_reference_dir/lipyphilicBB/leaflets_data.csv
+  properties:
+    disable_logs: true
+    lipid_sel: '(resname DPPC and name P8)'
+  

@@ -24,7 +24,7 @@ class AssignLeaflets(BiobbObject):
         properties (dic - Python dictionary object containing the tool parameters, not input/output files):
             * **start** (*int*) - (None) Starting frame for slicing.
             * **stop** (*int*) - (None) Ending frame for slicing.
-            * **step** (*int*) - (None) Step for slicing.
+            * **steps** (*int*) - (None) Step for slicing.
             * **lipid_sel** (*str*) - ("all") Selection string for the lipids in a membrane. The selection should cover **all** residues in the membrane, including cholesterol.
             * **midplane_sel** (*str*) - (None) Selection string for residues that may be midplane. Any residues not in this selection will be assigned to a leaflet regardless of its proximity to the midplane. The default is `None`, in which case all lipids will be assigned to either the upper or lower leaflet.
             * **midplane_cutoff** (*float*) - (0) Minimum distance in *z* an atom must be from the midplane to be assigned to a leaflet rather than the midplane. The default is `0`, in which case all lipids will be assigned to either the upper or lower leaflet. Must be non-negative.
@@ -77,7 +77,7 @@ class AssignLeaflets(BiobbObject):
         self.n_bins = properties.get('n_bins', 1)
         self.start = properties.get('start', None)
         self.stop = properties.get('stop', None)
-        self.step = properties.get('step', None)
+        self.steps = properties.get('steps', None)
         self.properties = properties
 
         # Check the properties
@@ -104,12 +104,12 @@ class AssignLeaflets(BiobbObject):
             midplane_cutoff=self.midplane_cutoff,
             n_bins=self.n_bins
         )
-
+        assert self.steps is None, self.steps
         # Run the analysis
         leaflets.run(
             start=self.start,
             stop=self.stop,
-            step=self.step
+            step=self.steps
         )
         # Save the results
         frames = leaflets.leaflets.shape[1]
