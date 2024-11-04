@@ -58,11 +58,11 @@ jobs:
             pip
       
       - name: Install genbadge from pip
-        shell: micromamba-shell {0}  # necessary for conda env to be active
+        shell: bash -l {0}
         run: pip install genbadge[all]
 
       - name: List installed package versions
-        shell: micromamba-shell {0}  # necessary for conda env to be active
+        shell: bash -l {0}
         run: micromamba list
 
       - name: Lint with flake8
