@@ -112,7 +112,23 @@ Command:
 ```python
 chap_run -h
 ```
-    /bin/sh: line 1: chap_run: command not found
+    usage: chap_run [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH [--input_traj_path INPUT_TRAJ_PATH] [--input_index_path INPUT_INDEX_PATH] --output_obj_path OUTPUT_OBJ_PATH
+    
+    Channel Annotation Package (CHAP) for analyzing pore geometry, hydrophobicity, and hydration state in protein channels and other macromolecular structures.
+    
+    options:
+      -h, --help            show this help message and exit
+      --config CONFIG       Configuration file
+      --input_traj_path INPUT_TRAJ_PATH
+                            Path to the input trajectory to be processed. Accepted formats: gro, pdb, tng, trr, xtc.
+      --input_index_path INPUT_INDEX_PATH
+                            Path to the GROMACS index file. Accepted formats: ndx.
+    
+    required arguments:
+      --input_top_path INPUT_TOP_PATH
+                            Path to the input structure or topology file. Accepted formats: ent, gro, pdb, tpr.
+      --output_obj_path OUTPUT_OBJ_PATH
+                            Path to the output processed Wavefront object. Accepted formats: obj.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
