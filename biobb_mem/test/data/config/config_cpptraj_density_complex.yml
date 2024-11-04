@@ -1,9 +1,0 @@
-properties:
-  axis: y
-  delta: 0.14
-  density_type: mass
-  disable_logs: false
-  end: 15
-  mask: ::M,A,B ::A,B
-  start: 5
-  steps: 1

@@ -1,3 +1,0 @@
-properties:
-  disable_logs: true
-  mask: ::M ::A,B
