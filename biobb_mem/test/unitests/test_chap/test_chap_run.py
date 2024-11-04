@@ -4,7 +4,7 @@ from biobb_mem.chap.chap_run import chap_run
 
 class TestChapDefault():
     def setup_class(self):
-        fx.test_setup(self, 'chap_default')
+        fx.test_setup(self, 'chap_run')
 
     def teardown_class(self):
         fx.test_teardown(self)

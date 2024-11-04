@@ -17,7 +17,7 @@ assign_leaflets -h
     
     Assign lipids to leaflets in a bilayer.
     
-    options:
+    optional arguments:
       -h, --help            show this help message and exit
       --config CONFIG       Configuration file
     
@@ -50,60 +50,31 @@ Config parameters for this building block:
 * **restart** (*boolean*): (False) Do not execute if output files exist..
 * **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
 ### YAML
-### JSON
-
-## Cpptraj_density
-Wrapper of the Ambertools Cpptraj module for calculating density profile along an axis of a given cpptraj compatible trajectory.
-### Get help
-Command:
+#### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_assign_leaflets.yml)
 ```python
-cpptraj_density -h
+properties:
+  disable_logs: true
+  lipid_sel: (resname DPPC and name P8)
+
 ```
-    usage: cpptraj_density [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH --output_cpptraj_path OUTPUT_CPPTRAJ_PATH [--output_traj_path OUTPUT_TRAJ_PATH]
-    
-    Calculates the density along an axis of a given cpptraj compatible trajectory.
-    
-    options:
-      -h, --help            show this help message and exit
-      --config CONFIG       Configuration file
-      --output_traj_path OUTPUT_TRAJ_PATH
-                            Path to the output processed trajectory.
-    
-    required arguments:
-      --input_top_path INPUT_TOP_PATH
-                            Path to the input structure or topology file. Accepted formats: top, pdb, prmtop, parmtop, zip.
-      --input_traj_path INPUT_TRAJ_PATH
-                            Path to the input trajectory to be processed. Accepted formats: crd, cdf, netcdf, restart, ncrestart, restartnc, dcd, charmm, cor, pdb, mol2, trr, gro, binpos, xtc, cif, arc, sqm, sdf, conflib.
-      --output_cpptraj_path OUTPUT_CPPTRAJ_PATH
-                            Path to the output processed analysis.
-### I / O Arguments
-Syntax: input_argument (datatype) : Definition
-
-Config input / output arguments for this building block:
-* **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/ambertools/topology.top). Accepted formats: TOP, PDB, PRMTOP, PARMTOP, ZIP
-* **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/ambertools/trajectory.xtc). Accepted formats: MDCRD, CRD, CDF, NETCDF, NC, RESTART, NCRESTART, RESTARTNC, DCD, CHARMM, COR, PDB, MOL2, TRR, GRO, BINPOS, XTC, CIF, ARC, SQM, SDF, CONFLIB
-* **output_cpptraj_path** (*string*): Path to the output processed density analysis. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/reference/ambertools/reference/density_default.dat). Accepted formats: DAT, AGR, XMGR, GNU
-* **output_traj_path** (*string*): Path to the output processed trajectory. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/reference/ambertools/trajectory_out.dcd). Accepted formats: MDCRD, CRD, CDF, NETCDF, NC, RESTART, NCRESTART, RESTARTNC, DCD, CHARMM, COR, PDB, MOL2, TRR, GRO, BINPOS, XTC, CIF, ARC, SQM, SDF, CONFLIB
-### Config
-Syntax: input_parameter (datatype) - (default_value) Definition
-
-Config parameters for this building block:
-* **start** (*integer*): (1) Starting frame for slicing.
-* **end** (*integer*): (-1) Ending frame for slicing.
-* **steps** (*integer*): (1) Step for slicing.
-* **density_type** (*string*): (number) Number, mass, partial charge (q) or electron (Ne - q) density. Electron density will be converted to e-/Å3 by dividing the average area spanned by the other two dimensions..
-* **mask** (*string*): (*) Arbitrary number of masks for atom selection; a dataset is created and the output will contain entries for each mask.. Default: all atoms..
-* **delta** (*number*): (0.25) Resolution, i.e. determines number of slices (i.e. histogram bins)..
-* **axis** (*string*): (z) Coordinate (axis) for density calculation. Vales: x, y, z..
-* **bintype** (*string*): (bincenter) Determine whether histogram bin coordinates will be based on bin center (default) or bin edges. .
-* **restrict** (*string*): (None) If specified, only calculate the density within a cylinder or square shape from the specified axis as defined by a distance cutoff. .
-* **cutoff** (*number*): (None) The distance cutoff for 'restrict'. Required if 'restrict' is specified..
-* **binary_path** (*string*): (cpptraj) Path to the cpptraj executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
-* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
-### YAML
+#### Command line
+```python
+assign_leaflets --config config_assign_leaflets.yml --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_leaflets_path leaflets.csv
+```
 ### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_assign_leaflets.json)
+```python
+{
+  "properties": {
+    "disable_logs": true,
+    "lipid_sel": "(resname DPPC and name P8)"
+  }
+}
+```
+#### Command line
+```python
+assign_leaflets --config config_assign_leaflets.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_leaflets_path leaflets.csv
+```
 
 ## Chap_run
 Wrapper of the Channel Annotation Package (CHAP) for analyzing pore geometry, hydrophobicity, and hydration state in protein channels and other macromolecular structures.
@@ -116,7 +87,7 @@ chap_run -h
     
     Channel Annotation Package (CHAP) for analyzing pore geometry, hydrophobicity, and hydration state in protein channels and other macromolecular structures.
     
-    options:
+    optional arguments:
       -h, --help            show this help message and exit
       --config CONFIG       Configuration file
       --input_traj_path INPUT_TRAJ_PATH
@@ -188,4 +159,113 @@ Config parameters for this building block:
 * **restart** (*boolean*): (False) Do not execute if output files exist..
 * **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
 ### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_chap_run.yml)
+```python
+properties:
+  b: 1
+  disable_logs: true
+  e: 50
+  out_num_points: 200
+  pf_max_free_dist: 1.0
+  pf_max_probe_steps: 500
+  sel_pathway: 1
+
+```
+#### Command line
+```python
+chap_run --config config_chap_run.yml --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --input_index_path A01JD.ndx --output_obj_path chap_output.obj
+```
 ### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_chap_run.json)
+```python
+{
+  "properties": {
+    "disable_logs": true,
+    "sel_pathway": 1,
+    "b": 1,
+    "e": 50,
+    "out_num_points": 200,
+    "pf_max_probe_steps": 500,
+    "pf_max_free_dist": 1.0
+  }
+}
+```
+#### Command line
+```python
+chap_run --config config_chap_run.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --input_index_path A01JD.ndx --output_obj_path chap_output.obj
+```
+
+## Cpptraj_density
+Wrapper of the Ambertools Cpptraj module for calculating density profile along an axis of a given cpptraj compatible trajectory.
+### Get help
+Command:
+```python
+cpptraj_density -h
+```
+    usage: cpptraj_density [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH --output_cpptraj_path OUTPUT_CPPTRAJ_PATH [--output_traj_path OUTPUT_TRAJ_PATH]
+    
+    Calculates the density along an axis of a given cpptraj compatible trajectory.
+    
+    optional arguments:
+      -h, --help            show this help message and exit
+      --config CONFIG       Configuration file
+      --output_traj_path OUTPUT_TRAJ_PATH
+                            Path to the output processed trajectory.
+    
+    required arguments:
+      --input_top_path INPUT_TOP_PATH
+                            Path to the input structure or topology file. Accepted formats: top, pdb, prmtop, parmtop, zip.
+      --input_traj_path INPUT_TRAJ_PATH
+                            Path to the input trajectory to be processed. Accepted formats: crd, cdf, netcdf, restart, ncrestart, restartnc, dcd, charmm, cor, pdb, mol2, trr, gro, binpos, xtc, cif, arc, sqm, sdf, conflib.
+      --output_cpptraj_path OUTPUT_CPPTRAJ_PATH
+                            Path to the output processed analysis.
+### I / O Arguments
+Syntax: input_argument (datatype) : Definition
+
+Config input / output arguments for this building block:
+* **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/ambertools/topology.top). Accepted formats: TOP, PDB, PRMTOP, PARMTOP, ZIP
+* **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/ambertools/trajectory.xtc). Accepted formats: MDCRD, CRD, CDF, NETCDF, NC, RESTART, NCRESTART, RESTARTNC, DCD, CHARMM, COR, PDB, MOL2, TRR, GRO, BINPOS, XTC, CIF, ARC, SQM, SDF, CONFLIB
+* **output_cpptraj_path** (*string*): Path to the output processed density analysis. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/reference/ambertools/reference/density_default.dat). Accepted formats: DAT, AGR, XMGR, GNU
+* **output_traj_path** (*string*): Path to the output processed trajectory. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/reference/ambertools/trajectory_out.dcd). Accepted formats: MDCRD, CRD, CDF, NETCDF, NC, RESTART, NCRESTART, RESTARTNC, DCD, CHARMM, COR, PDB, MOL2, TRR, GRO, BINPOS, XTC, CIF, ARC, SQM, SDF, CONFLIB
+### Config
+Syntax: input_parameter (datatype) - (default_value) Definition
+
+Config parameters for this building block:
+* **start** (*integer*): (1) Starting frame for slicing.
+* **end** (*integer*): (-1) Ending frame for slicing.
+* **steps** (*integer*): (1) Step for slicing.
+* **density_type** (*string*): (number) Number, mass, partial charge (q) or electron (Ne - q) density. Electron density will be converted to e-/Å3 by dividing the average area spanned by the other two dimensions..
+* **mask** (*string*): (*) Arbitrary number of masks for atom selection; a dataset is created and the output will contain entries for each mask.. Default: all atoms..
+* **delta** (*number*): (0.25) Resolution, i.e. determines number of slices (i.e. histogram bins)..
+* **axis** (*string*): (z) Coordinate (axis) for density calculation. Vales: x, y, z..
+* **bintype** (*string*): (bincenter) Determine whether histogram bin coordinates will be based on bin center (default) or bin edges. .
+* **restrict** (*string*): (None) If specified, only calculate the density within a cylinder or square shape from the specified axis as defined by a distance cutoff. .
+* **cutoff** (*number*): (None) The distance cutoff for 'restrict'. Required if 'restrict' is specified..
+* **binary_path** (*string*): (cpptraj) Path to the cpptraj executable binary..
+* **remove_tmp** (*boolean*): (True) Remove temporal files..
+* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
+### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_cpptraj_density.yml)
+```python
+properties:
+  disable_logs: true
+
+```
+#### Command line
+```python
+cpptraj_density --config config_cpptraj_density.yml --input_top_path topology.top --input_traj_path trajectory.xtc --output_cpptraj_path density_default.dat --output_traj_path trajectory_out.dcd
+```
+### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_cpptraj_density.json)
+```python
+{
+  "properties": {
+    "disable_logs": true
+  }
+}
+```
+#### Command line
+```python
+cpptraj_density --config config_cpptraj_density.json --input_top_path topology.top --input_traj_path trajectory.xtc --output_cpptraj_path density_default.dat --output_traj_path trajectory_out.dcd
+```

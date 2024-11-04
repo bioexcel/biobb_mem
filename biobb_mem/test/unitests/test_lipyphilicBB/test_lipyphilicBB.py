@@ -4,7 +4,7 @@ from biobb_mem.lipyphilicBB.assign_leaflets import assign_leaflets
 
 class TestLipyphilicDefault():
     def setup_class(self):
-        fx.test_setup(self, 'lipyphilic_default')
+        fx.test_setup(self, 'assign_leaflets')
 
     def teardown_class(self):
         fx.test_teardown(self)

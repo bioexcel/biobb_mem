@@ -1,7 +1,7 @@
 global_properties:
   working_dir_path: /tmp/biobb/unitests
 
-cpptraj_density_default:
+cpptraj_density:
   paths:
     input_top_path: file:test_data_dir/ambertools/topology.pdb
     input_traj_path: file:test_data_dir/ambertools/trajectory.xtc
@@ -37,7 +37,7 @@ cpptraj_density_complex:
     axis: y
     disable_logs: false
 
-chap_default:
+chap_run:
   paths:
     input_top_path: file:test_data_dir/A01JD/A01JD.pdb
     input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
@@ -52,7 +52,7 @@ chap_default:
     pf_max_probe_steps: 500
     pf_max_free_dist: 1.00
 
-lipyphilic_default:
+assign_leaflets:
   paths:
     input_top_path: file:test_data_dir/A01JD/A01JD.pdb
     input_traj_path: file:test_data_dir/A01JD/A01JD.xtc

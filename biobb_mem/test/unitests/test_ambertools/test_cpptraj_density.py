@@ -4,7 +4,7 @@ from biobb_mem.ambertools.cpptraj_density import cpptraj_density
 
 class TestCpptrajDensityDefault():
     def setup_class(self):
-        fx.test_setup(self, 'cpptraj_density_default')
+        fx.test_setup(self, 'cpptraj_density')
 
     def teardown_class(self):
         fx.test_teardown(self)
