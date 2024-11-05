@@ -1,10 +1,16 @@
 [![](https://img.shields.io/github/v/tag/bioexcel/biobb_mem?label=Version)](https://GitHub.com/bioexcel/biobb_mem/tags/)
+[![](https://img.shields.io/pypi/v/biobb-mem.svg?label=Pypi)](https://pypi.python.org/pypi/biobb-mem/)
+[![](https://img.shields.io/conda/vn/bioconda/biobb_mem?label=Conda)](https://anaconda.org/bioconda/biobb_mem)
+[![](https://img.shields.io/conda/dn/bioconda/biobb_mem?label=Conda%20Downloads)](https://anaconda.org/bioconda/biobb_mem)
+[![](https://img.shields.io/badge/Docker-Quay.io-blue)](https://quay.io/repository/biocontainers/biobb_mem?tab=tags)
+[![](https://img.shields.io/badge/Singularity-GalaxyProject-blue)](https://depot.galaxyproject.org/singularity/biobb_mem:5.0.0--pyhdfd78af_0)
 
 [![](https://img.shields.io/badge/OS-Unix%20%7C%20MacOS-blue)](https://github.com/bioexcel/biobb_mem)
+[![](https://img.shields.io/pypi/pyversions/biobb-mem.svg?label=Python%20Versions)](https://pypi.org/project/biobb-mem/)
 [![](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![](https://img.shields.io/badge/Open%20Source%3f-Yes!-blue)](https://github.com/bioexcel/biobb_mem)
 
-[![](https://readthedocs.org/projects/biobb-template/badge/?version=latest&label=Docs)](https://biobb-template.readthedocs.io/en/latest/?badge=latest)
+[![](https://readthedocs.org/projects/biobb-mem/badge/?version=latest&label=Docs)](https://biobb-mem.readthedocs.io/en/latest/?badge=latest)
 [![](https://img.shields.io/website?down_message=Offline&label=Biobb%20Website&up_message=Online&url=https%3A%2F%2Fmmb.irbbarcelona.org%2Fbiobb%2F)](https://mmb.irbbarcelona.org/biobb/)
 [![](https://img.shields.io/badge/Youtube-tutorials-blue?logo=youtube&logoColor=red)](https://www.youtube.com/@BioExcelCoE/search?query=biobb)
 [![](https://zenodo.org/badge/DOI/10.1038/s41597-019-0177-4.svg)](https://doi.org/10.1038/s41597-019-0177-4)
@@ -16,104 +22,87 @@
 [![](https://img.shields.io/github/last-commit/bioexcel/biobb_mem?label=Last%20Commit)](https://github.com/bioexcel/biobb_mem/commits/master)
 [![](https://img.shields.io/github/issues/bioexcel/biobb_mem.svg?color=brightgreen&label=Issues)](https://GitHub.com/bioexcel/biobb_mem/issues/)
 
+[![fair-software.eu](https://img.shields.io/badge/fair--software.eu-%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8F%20%20%E2%97%8F-green)](https://fair-software.eu)
+[![](https://www.bestpractices.dev/projects/8847/badge)](https://www.bestpractices.dev/projects/8847)
+
+[](https://bestpractices.coreinfrastructure.org/projects/8847/badge)
+
+[//]: # (The previous line invisible link is for compatibility with the howfairis script https://github.com/fair-software/howfairis-github-action/tree/main wich uses the old bestpractices URL)
 
 # biobb_mem
 
-## Introduction
-Biobb_template is a complete code template to promote and facilitate the creation of
-new Biobbs by the community.
+### Introduction
+biobb_mem is a BioBB category for membrane analysis and manipulation.
+biobb_mem allows analysis of membrane properties and manipulation of membrane systems using tools like MDAnalysis and LiPyphilic.
 Biobb (BioExcel building blocks) packages are Python building blocks that
 create new layer of compatibility and interoperability over popular
 bioinformatics tools.
 The latest documentation of this package can be found in our readthedocs site:
-[latest API documentation](http://biobb-template.readthedocs.io/en/latest/).
+[latest API documentation](http://biobb-mem.readthedocs.io/en/latest/).
 
-## Version
-v4.1.0 2023.4
+### Version
+v5.0.0 2024.2
 
-## Installation
+### Installation
+Using PIP:
 
-If you have no experience with anaconda, please first take a look to the [New with anaconda?](https://biobb-documentation.readthedocs.io/en/latest/first_steps.html#new-with-anaconda) section of the [official documentation](https://biobb-documentation.readthedocs.io/en/latest/).
+> **Important:** PIP only installs the package. All the dependencies must be installed separately. To perform a complete installation, please use ANACONDA or DOCKER.
 
-### Download repository
+* Installation:
 
-Although the biobb_mem repository is available at GitHub and thus you can clone it, we strongly recommend you to [**download it compressed**](https://github.com/bioexcel/biobb_mem/archive/master.zip) and start your new project from scratch. 
 
-### Create new conda environment
+        pip install "biobb_mem>=5.0.0"
 
-Once you have the project unzipped in your computer, please follow the next steps to create a new conda environment:
 
-```console
-cd biobb_mem-master
-conda env create -f conda_env/environment.yml
-```
+* Usage: [Python API documentation](https://biobb-mem.readthedocs.io/en/latest/modules.html)
 
-### Update environment paths
+Using ANACONDA:
 
-Edit **conda_env/biobb_mem.pth** with the paths to your *biobb_mem* folder. Example:
+* Installation:
 
-```console
-/home/user_name/projects/biobb_mem/
-/home/user_name/projects/biobb_mem/biobb_mem/biobb_mem
-```
 
-Copy the edited **conda_env/biobb_mem.pth** file to the site-packages folder of your environment. This folder is in */[anaconda-path]/envs/biobb_mem/lib/python3.7/site-packages*, where */[anaconda-path]* is usually */anaconda3* or */opt/conda*.
+        conda install -c bioconda "biobb_mem>=5.0.0"
 
-```console
-cp conda_env/biobb_mem.pth /[anaconda-path]/envs/biobb_mem/lib/python3.7/site-packages
-```
 
-### Activate environment
+* Usage: With conda installation BioBBs can be used with the [Python API documentation](https://biobb-mem.readthedocs.io/en/latest/modules.html) and the [Command Line documentation](https://biobb-mem.readthedocs.io/en/latest/command_line.html)
 
-Then, activate the recently created *biobb_mem* conda environment:
+Using DOCKER:
 
-```console
-conda activate biobb_mem
-```
+* Installation:
 
-### Create repository
 
-This template includes some folders not standard for a biobb, such as **biobb_mem/adapters/**, **biobb_mem/notebooks/** or **conda_env/**. For the sake of having a pure biobb structure, you should uncomment the three last lines of the **.gitignore** file before creating a new git repository:
+        docker pull quay.io/biocontainers/biobb_mem:5.0.0--pyhdfd78af_0
 
-```console
-biobb_mem/adapters
-biobb_mem/notebooks
-conda_env
-```
-Then, inialitize repository:
 
-```console
-git init
-```
+* Usage:
 
-### Binary paths configuration
 
-Additionally, it's recommendable to configure binary paths in your environment in order to ease the command line execution. More info about this subject in the [Binary path configuration](https://biobb-documentation.readthedocs.io/en/latest/execution.html#binary-path-configuration) section of the [official documentation](https://biobb-documentation.readthedocs.io/en/latest/).
+        docker run quay.io/biocontainers/biobb_mem:5.0.0--pyhdfd78af_0
 
-## Run tests
 
-To run tests, please execute the following instruction:
+Using SINGULARITY:
 
-```console
-pytest /path/to/biobb_mem/biobb_mem/test/unitests/test_template/test_template.py
-```
-Or, if you prefer to show the BioBB output during the test process:
+**MacOS users**: it's strongly recommended to avoid Singularity and use **Docker** as containerization system.
 
-```console
-pytest -s /path/to/biobb_mem/biobb_mem/test/unitests/test_template/test_template.py
-```
+* Installation:
 
-## Documentation
 
-[Click here to find the API Documentation example](https://biobb-template.readthedocs.io/en/latest/template.html) for this template and [here for Command Line documentation](http://biobb-template.readthedocs.io/en/latest/command_line.html).
+        singularity pull --name biobb_mem.sif https://depot.galaxyproject.org/singularity/biobb_mem:5.0.0--pyhdfd78af_0
 
-And here you can find [the full documentation](https://biobb-documentation.readthedocs.io/en/latest/) about how to build a new **BioExcel building block** from scratch.
 
-## Copyright & Licensing
+* Usage:
+
+
+        singularity exec biobb_mem.sif <command>
+
+
+The command list and specification can be found at the [Command Line documentation](https://biobb-mem.readthedocs.io/en/latest/command_line.html).
+
+### Copyright & Licensing
 This software has been developed in the [MMB group](http://mmb.irbbarcelona.org) at the [BSC](http://www.bsc.es/) & [IRB](https://www.irbbarcelona.org/) for the [European BioExcel](http://bioexcel.eu/), funded by the European Commission (EU H2020 [823830](http://cordis.europa.eu/projects/823830), EU H2020 [675728](http://cordis.europa.eu/projects/675728)).
 
-* (c) 2015-2022 [Barcelona Supercomputing Center](https://www.bsc.es/)
-* (c) 2015-2022 [Institute for Research in Biomedicine](https://www.irbbarcelona.org/)
+* (c) 2015-2024 [Barcelona Supercomputing Center](https://www.bsc.es/)
+* (c) 2015-2024 [Institute for Research in Biomedicine](https://www.irbbarcelona.org/)
 
 Licensed under the
 [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0), see the file LICENSE for details.
