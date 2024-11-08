@@ -1,8 +1,0 @@
-properties:
-  b: 1
-  disable_logs: true
-  e: 50
-  out_num_points: 200
-  pf_max_free_dist: 1.0
-  pf_max_probe_steps: 500
-  sel_pathway: 1

@@ -48,7 +48,7 @@ class MDAHole(BiobbObject):
         * wrapped_software:
             * name: MDAnalysis
             * version: 2.7.0
-            * license: GNU v3
+            * license: GNU
         * ontology:
             * name: EDAM
             * schema: http://edamontology.org/EDAM.owl

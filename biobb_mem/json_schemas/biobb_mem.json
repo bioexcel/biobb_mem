@@ -9,11 +9,11 @@
     "version": "5.0.0",
     "tools" : [
         {
-            "block" : "CHAP", 
-            "tool" : "chap", 
-            "desc" : "Channel Annotation Package (CHAP) for analyzing pore geometry, hydrophobicity, and hydration state in protein channels and other macromolecular structures.",
-            "exec" : "chap_run",
-            "docs": "https://biobb-mem.readthedocs.io/en/latest/chap.html#chap-chap-run-module"
+            "block" : "MDAHole", 
+            "tool" : "mda_hole", 
+            "desc" : "Wrapper of the MDAnalysis Hole module for analyzing hole geometry in protein channels and other macromolecular structures.",
+            "exec" : "mda_hole",
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/mdanalysis_biobb.html#module-mdanalysis_biobb.mda_hole"
         },
         {
             "block" : "CpptrajDensity", 
