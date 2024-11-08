@@ -104,7 +104,6 @@ class LPPAssignLeaflets(BiobbObject):
             midplane_cutoff=self.midplane_cutoff,
             n_bins=self.n_bins
         )
-        assert self.steps is None, self.steps
         # Run the analysis
         leaflets.run(
             start=self.start,

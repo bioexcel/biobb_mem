@@ -37,21 +37,6 @@ cpptraj_density_complex:
     axis: y
     disable_logs: false
 
-chap_run:
-  paths:
-    input_top_path: file:test_data_dir/A01JD/A01JD.pdb
-    input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
-    output_obj_path: chap_output.obj
-    ref_output_obj_path: file:test_reference_dir/chap/chap_output.obj
-  properties:
-    disable_logs: true
-    sel_pathway: 1
-    b: 1
-    e: 50
-    out_num_points: 200
-    pf_max_probe_steps: 500
-    pf_max_free_dist: 1.00
-
 lpp_assign_leaflets:
   paths:
     input_top_path: file:test_data_dir/A01JD/A01JD.pdb
@@ -61,4 +46,14 @@ lpp_assign_leaflets:
   properties:
     disable_logs: true
     lipid_sel: '(resname DPPC and name P8)'
-  
+
+mda_hole:
+  paths:
+    input_top_path: file:test_data_dir/A01JD/A01JD.pdb
+    input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
+    output_hole_path: hole.csv
+    ref_output_hole_path: file:test_reference_dir/mdanalysis_biobb/hole.csv
+  properties:
+    disable_logs: true
+    select: 'protein'
+    steps: 5
