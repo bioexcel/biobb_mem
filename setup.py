@@ -25,7 +25,7 @@ setuptools.setup(
         "console_scripts": [
             "chap_run = biobb_mem.chap.chap_run:main",
             "cpptraj_density = biobb_mem.ambertools.cpptraj_density:main",
-            "assign_leaflets = biobb_mem.lipyphilicBB.assign_leaflets:main",
+            "lpp_assign_leaflets = biobb_mem.lipyphilic_biobb.lpp_assign_leaflets:main",
         ]
     },
     classifiers=(

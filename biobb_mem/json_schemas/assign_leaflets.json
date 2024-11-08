@@ -1,8 +1,8 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "$id": "http://bioexcel.eu/biobb_mem/json_schemas/1.0/assign_leaflets",
-  "name": "biobb_mem AssignLeaflets",
-  "title": "Wrapper of the Lipyphilic AssignLeaflets module for assigning lipids to leaflets in a bilayer.",
+  "$id": "http://bioexcel.eu/biobb_mem/json_schemas/1.0/lpp_assign_leaflets",
+  "name": "biobb_mem LPPAssignLeaflets",
+  "title": "Wrapper of the Lipyphilic LPPAssignLeaflets module for assigning lipids to leaflets in a bilayer.",
   "description": "LiPyphilic is a Python package for analyzing MD simulations of lipid bilayers. The parameter names and defaults are the same as the ones in the official Lipyphilic documentation.",
   "type": "object",
   "info": {
@@ -214,7 +214,7 @@
           "type": "string",
           "description": "Path to the output leaflet assignments",
           "filetype": "output",
-          "sample": "https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/reference/lipyphilicBB/leaflets.csv",
+          "sample": "https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/reference/lipyphilic_biobb/leaflets.csv",
           "enum": [
               ".*\\.csv$"
           ],

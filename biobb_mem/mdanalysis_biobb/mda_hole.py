@@ -20,7 +20,7 @@ class AssignLeaflets(BiobbObject):
     Args:
         input_top_path (str): Path to the input structure or topology file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.pdb>`_. Accepted formats: crd (edam:3878), gro (edam:2033), mdcrd (edam:3878), mol2 (edam:3816), pdb (edam:1476), pdbqt (edam:1476), prmtop (edam:3881), psf (edam:3882), top (edam:3881), tpr (edam:2333), xml (edam:2332), xyz (edam:3887).
         input_traj_path (str): Path to the input trajectory to be processed. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.xtc>`_. Accepted formats: arc (edam:2333), crd (edam:3878), dcd (edam:3878), ent (edam:1476), gro (edam:2033), inpcrd (edam:3878), mdcrd (edam:3878), mol2 (edam:3816), nc (edam:3650), pdb (edam:1476), pdbqt (edam:1476), restrt (edam:3886), tng (edam:3876), trr (edam:3910), xtc (edam:3875), xyz (edam:3887).
-        output_leaflets_path (str): Path to the output leaflet assignments. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/reference/lipyphilicBB/leaflets.csv>`_. Accepted formats: csv (edam:format_3752).
+        output_leaflets_path (str): Path to the output leaflet assignments. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/reference/lipyphilic_biobb/leaflets.csv>`_. Accepted formats: csv (edam:format_3752).
         properties (dic - Python dictionary object containing the tool parameters, not input/output files):
             * **start** (*int*) - (None) Starting frame for slicing.
             * **stop** (*int*) - (None) Ending frame for slicing.
@@ -36,7 +36,7 @@ class AssignLeaflets(BiobbObject):
     Examples:
         This is a use example of how to use the building block from Python::
 
-            from biobb_mem.lipyphilicBB.assign_leaflets import assign_leaflets
+            from biobb_mem.lipyphilic_biobb.assign_leaflets import assign_leaflets
             prop = {
                 'lipid_sel': 'name GL1 GL2 ROH',
             }
@@ -86,7 +86,7 @@ class AssignLeaflets(BiobbObject):
 
     @launchlogger
     def launch(self) -> int:
-        """Execute the :class:`AssignLeaflets <lipyphilicBB.assign_leaflets.AssignLeaflets>` lipyphilicBB.assign_leaflets.AssignLeaflets object."""
+        """Execute the :class:`AssignLeaflets <lipyphilic_biobb.assign_leaflets.AssignLeaflets>` lipyphilic_biobb.assign_leaflets.AssignLeaflets object."""
 
         # Setup Biobb
         if self.check_restart():
@@ -141,8 +141,8 @@ class AssignLeaflets(BiobbObject):
 
 
 def assign_leaflets(input_top_path: str, input_traj_path: str, output_leaflets_path: str = None, properties: dict = None, **kwargs) -> int:
-    """Execute the :class:`AssignLeaflets <lipyphilicBB.assign_leaflets.AssignLeaflets>` class and
-    execute the :meth:`launch() <lipyphilicBB.assign_leaflets.AssignLeaflets.launch>` method."""
+    """Execute the :class:`AssignLeaflets <lipyphilic_biobb.assign_leaflets.AssignLeaflets>` class and
+    execute the :meth:`launch() <lipyphilic_biobb.assign_leaflets.AssignLeaflets.launch>` method."""
 
     return AssignLeaflets(input_top_path=input_top_path,
                           input_traj_path=input_traj_path,

@@ -23,11 +23,11 @@
             "docs": "https://biobb-mem.readthedocs.io/en/latest/ambertools.html#module-ambertools.cpptraj_density"
         },
         {
-            "block" : "AssignLeaflets", 
-            "tool" : "assign_leaflets", 
+            "block" : "LPPAssignLeaflets", 
+            "tool" : "lpp_assign_leaflets", 
             "desc" : "Assign lipids to leaflets in a bilayer.",
-            "exec" : "assign_leaflets",
-            "docs": "https://biobb-mem.readthedocs.io/en/latest/lipyphilicBB.html#module-lipyphilicBB.assign_leaflets"
+            "exec" : "lpp_assign_leaflets",
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/lipyphilic_biobb.html#module-lipyphilic_biobb.lpp_assign_leaflets"
         }
     ],
     "dep_pypi" : [

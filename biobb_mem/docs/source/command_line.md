@@ -6,14 +6,14 @@ biobb_command [-h] --config CONFIG --input_file(s) <input_file(s)> --output_file
 -----------------
 
 
-## Assign_leaflets
+## Lpp_assign_leaflets
 Wrapper of the Lipyphilic AssignLeaflets module for assigning lipids to leaflets in a bilayer.
 ### Get help
 Command:
 ```python
-assign_leaflets -h
+lpp_assign_leaflets -h
 ```
-    usage: assign_leaflets [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH --output_leaflets_path OUTPUT_LEAFLETS_PATH
+    usage: lpp_assign_leaflets [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH --output_leaflets_path OUTPUT_LEAFLETS_PATH
     
     Assign lipids to leaflets in a bilayer.
     
@@ -34,7 +34,7 @@ Syntax: input_argument (datatype) : Definition
 Config input / output arguments for this building block:
 * **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.pdb). Accepted formats: CRD, GRO, MDCRD, MOL2, PDB, PDBQT, PRMTOP, PSF, TOP, TPR, XML, XYZ
 * **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.xtc). Accepted formats: ARC, CRD, DCD, ENT, GRO, INPCRD, MDCRD, MOL2, NC, PDB, PDBQT, RESTRT, TNG, TRR, XTC, XYZ
-* **output_leaflets_path** (*string*): Path to the output leaflet assignments. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/reference/lipyphilicBB/leaflets.csv). Accepted formats: CSV
+* **output_leaflets_path** (*string*): Path to the output leaflet assignments. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/reference/lipyphilic_biobb/leaflets.csv). Accepted formats: CSV
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
 
@@ -59,7 +59,7 @@ properties:
 ```
 #### Command line
 ```python
-assign_leaflets --config config_assign_leaflets.yml --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_leaflets_path leaflets.csv
+lpp_assign_leaflets --config config_assign_leaflets.yml --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_leaflets_path leaflets.csv
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_assign_leaflets.json)
@@ -73,7 +73,7 @@ assign_leaflets --config config_assign_leaflets.yml --input_top_path A01JD.pdb -
 ```
 #### Command line
 ```python
-assign_leaflets --config config_assign_leaflets.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_leaflets_path leaflets.csv
+lpp_assign_leaflets --config config_assign_leaflets.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_leaflets_path leaflets.csv
 ```
 
 ## Chap_run
