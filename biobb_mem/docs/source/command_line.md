@@ -13,7 +13,21 @@ Command:
 ```python
 lpp_assign_leaflets -h
 ```
-    /bin/sh: line 1: lpp_assign_leaflets: command not found
+    usage: lpp_assign_leaflets [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH --output_leaflets_path OUTPUT_LEAFLETS_PATH
+    
+    Assign lipids to leaflets in a bilayer.
+    
+    options:
+      -h, --help            show this help message and exit
+      --config CONFIG       Configuration file
+    
+    required arguments:
+      --input_top_path INPUT_TOP_PATH
+                            Path to the input structure or topology file. Accepted formats: crd, gro, mdcrd, mol2, pdb, pdbqt, prmtop, psf, top, tpr, xml, xyz.
+      --input_traj_path INPUT_TRAJ_PATH
+                            Path to the input trajectory to be processed. Accepted formats: arc, crd, dcd, ent, gro, inpcrd, mdcrd, mol2, nc, pdb, pdbqt, restrt, tng, trr, xtc, xyz.
+      --output_leaflets_path OUTPUT_LEAFLETS_PATH
+                            Path to the output processed analysis.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
@@ -69,7 +83,21 @@ Command:
 ```python
 mda_hole -h
 ```
-    /bin/sh: line 1: mda_hole: command not found
+    usage: mda_hole [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH --output_hole_path OUTPUT_HOLE_PATH
+    
+    Analyze ion channel pores or transporter pathways.
+    
+    options:
+      -h, --help            show this help message and exit
+      --config CONFIG       Configuration file
+    
+    required arguments:
+      --input_top_path INPUT_TOP_PATH
+                            Path to the input structure or topology file. Accepted formats: crd, gro, mdcrd, mol2, pdb, pdbqt, prmtop, psf, top, tpr, xml, xyz.
+      --input_traj_path INPUT_TRAJ_PATH
+                            Path to the input trajectory to be processed. Accepted formats: arc, crd, dcd, ent, gro, inpcrd, mdcrd, mol2, nc, pdb, pdbqt, restrt, tng, trr, xtc, xyz.
+      --output_hole_path OUTPUT_HOLE_PATH
+                            Path to the output HOLE analysis results. Accepted formats: vmd.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 

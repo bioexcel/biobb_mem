@@ -92,7 +92,7 @@ class MDAHole(BiobbObject):
         self.stage_files()
 
         # Load the universe
-        u = mda.Universe(self.stage_io_dict["in"]["input_top_path"], 
+        u = mda.Universe(self.stage_io_dict["in"]["input_top_path"],
                          self.stage_io_dict["in"]["input_traj_path"])
 
         # Create HoleAnalysis object
