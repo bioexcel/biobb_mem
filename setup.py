@@ -23,9 +23,9 @@ setuptools.setup(
     python_requires='>=3.9',
     entry_points={
         "console_scripts": [
-            "chap_run = biobb_mem.chap.chap_run:main",
             "cpptraj_density = biobb_mem.ambertools.cpptraj_density:main",
             "lpp_assign_leaflets = biobb_mem.lipyphilic_biobb.lpp_assign_leaflets:main",
+            "mda_hole = biobb_mem.mdanalysis_biobb.mda_hole:main",
         ]
     },
     classifiers=(

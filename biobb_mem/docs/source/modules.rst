@@ -5,5 +5,5 @@ biobb_mem
    :maxdepth: 4
 
    ambertools
-   chap
+   mdanalysis_biobb
    lipyphilic_biobb
