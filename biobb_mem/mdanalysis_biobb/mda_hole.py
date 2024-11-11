@@ -23,10 +23,13 @@ class MDAHole(BiobbObject):
             * **start** (*int*) - (None) Starting frame for slicing.
             * **stop** (*int*) - (None) Ending frame for slicing.
             * **steps** (*int*) - (None) Step for slicing.
+            * **executable** (*str*) - ("hole") Path to the HOLE executable.
             * **select** (*str*) - ("protein") The selection string to create an atom selection that the HOLE analysis is applied to.
             * **cpoint** (*list*) - (None) Coordinates of a point inside the pore (Å). If None, tries to guess based on the geometry.
             * **cvect** (*list*) - (None) Search direction vector. If None, tries to guess based on the geometry.
-            * **executable** (*str*) - ("hole") Path to the HOLE executable.
+            * **sample** (*int*) - (0.2) Distance of sample points in Å. This value determines how many points in the pore profile are calculated.
+            * **end_radius** (*float*) - (22) Radius in Å, which is considered to be the end of the pore.
+            * **dot_density** (*int*) - (15) [5~35] Density of facets for generating a 3D pore representation.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
             * **sandbox_path** (*str*) - ("./") [WF property] Parent path to the sandbox directory.
@@ -72,10 +75,13 @@ class MDAHole(BiobbObject):
         self.start = properties.get('start', None)
         self.stop = properties.get('stop', None)
         self.steps = properties.get('steps', None)
+        self.executable = properties.get('executable', 'hole')
         self.select = properties.get('select', 'protein')
         self.cpoint = properties.get('cpoint', None)
         self.cvect = properties.get('cvect', None)
-        self.executable = properties.get('executable', 'hole')
+        self.sample = properties.get('sample', 0.2)
+        self.end_radius = properties.get('end_radius', 22)
+        self.dot_density = properties.get('dot_density', 15)
         self.properties = properties
 
         # Check the properties
@@ -101,6 +107,7 @@ class MDAHole(BiobbObject):
             select=self.select,
             cpoint=self.cpoint,
             cvect=self.cvect,
+            sample=self.sample,
             executable=self.executable
         )
         # Run the analysis with step parameter
@@ -109,7 +116,10 @@ class MDAHole(BiobbObject):
             stop=self.stop,
             step=self.steps
         )
-        hole.create_vmd_surface(self.stage_io_dict["out"]["output_hole_path"])
+        hole.create_vmd_surface(
+            self.stage_io_dict["out"]["output_hole_path"],
+            dot_density=self.dot_density
+        )
         hole.delete_temporary_files()
         # Copy files to host
         self.copy_to_host()
