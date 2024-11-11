@@ -51,8 +51,8 @@ mda_hole:
   paths:
     input_top_path: file:test_data_dir/A01JD/A01JD.pdb
     input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
-    output_hole_path: hole.csv
-    ref_output_hole_path: file:test_reference_dir/mdanalysis_biobb/hole.csv
+    output_hole_path: hole.vmd
+    ref_output_hole_path: file:test_reference_dir/mdanalysis_biobb/hole.vmd
   properties:
     disable_logs: true
     select: 'protein'
