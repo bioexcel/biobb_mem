@@ -1,6 +1,6 @@
 {
     "_id": "biobb_mem",
-    "desc": "Description for biobb_mem package.",
+    "desc": "Biobb_mem is a BioBB category for membrane analysis and manipulation. It allows analysis of membrane properties and manipulation of membrane systems using tools like MDAnalysis and LiPyphilic.",
     "github": "https://github.com/bioexcel/biobb_mem",
     "readthedocs": "https://biobb-mem.readthedocs.io/en/latest/",
     "conda": "https://anaconda.org/bioconda/biobb_mem",
