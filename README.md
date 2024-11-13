@@ -41,7 +41,7 @@ The latest documentation of this package can be found in our readthedocs site:
 [latest API documentation](http://biobb-mem.readthedocs.io/en/latest/).
 
 ### Version
-v5.0.0 2024.2
+v5.0.1 2024.2
 
 ### Installation
 Using PIP:
