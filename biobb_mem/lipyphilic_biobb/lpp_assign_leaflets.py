@@ -6,6 +6,7 @@ from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
 import MDAnalysis as mda
+from MDAnalysis.transformations.boxdimensions import set_dimensions
 from lipyphilic.lib.assign_leaflets import AssignLeaflets
 import pandas as pd
 import numpy as np
@@ -29,6 +30,7 @@ class LPPAssignLeaflets(BiobbObject):
             * **midplane_sel** (*str*) - (None) Selection string for residues that may be midplane. Any residues not in this selection will be assigned to a leaflet regardless of its proximity to the midplane. The default is `None`, in which case all lipids will be assigned to either the upper or lower leaflet.
             * **midplane_cutoff** (*float*) - (0) Minimum distance in *z* an atom must be from the midplane to be assigned to a leaflet rather than the midplane. The default is `0`, in which case all lipids will be assigned to either the upper or lower leaflet. Must be non-negative.
             * **n_bins** (*int*) - (1) Number of bins in *x* and *y* to use to create a grid of membrane patches. Local membrane midpoints are computed for each patch, and lipids assigned a leaflet based on the distance to their local membrane midpoint. The default is `1`, which is equivalent to computing a single global midpoint.
+            * **ignore_no_box** (*bool*) - (True) Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
             * **sandbox_path** (*str*) - ("./") [WF property] Parent path to the sandbox directory.
@@ -78,6 +80,7 @@ class LPPAssignLeaflets(BiobbObject):
         self.start = properties.get('start', None)
         self.stop = properties.get('stop', None)
         self.steps = properties.get('steps', None)
+        self.ignore_no_box = properties.get('ignore_no_box', True)
         self.properties = properties
 
         # Check the properties
@@ -95,6 +98,21 @@ class LPPAssignLeaflets(BiobbObject):
 
         # Load the trajectory
         u = mda.Universe(self.stage_io_dict["in"]["input_top_path"], self.stage_io_dict["in"]["input_traj_path"])
+        if u.dimensions is None and self.ignore_no_box:
+            print('Warning: trajectory probably has no box variable. Setting dimensions ussing the minimum and maximum positions of the atoms.')
+            # Initialize min and max positions with extreme values
+            min_pos = np.full(3, np.inf)
+            max_pos = np.full(3, -np.inf)
+
+            # Iterate over all frames to find the overall min and max positions
+            for ts in u.trajectory:
+                positions = u.atoms.positions
+                min_pos = np.minimum(min_pos, positions.min(axis=0))
+                max_pos = np.maximum(max_pos, positions.max(axis=0))
+
+            # Calculate the dimensions of the box
+            box_dimensions = max_pos - min_pos - 10
+            u.trajectory.add_transformations(set_dimensions([*box_dimensions, 90, 90, 90]))
 
         # Create AssignLeaflets object
         leaflets = AssignLeaflets(
