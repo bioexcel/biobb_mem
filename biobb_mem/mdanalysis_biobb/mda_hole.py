@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Module containing the Cpptraj Density class and the command line interface."""
+"""Module containing the MDAnalysis HOLE class and the command line interface."""
 import argparse
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
