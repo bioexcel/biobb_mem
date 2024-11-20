@@ -126,3 +126,7 @@ biobb_mem/docs/jupyter/data
 biobb_mem/adapters
 biobb_mem/notebooks
 conda_env
+
+# MDAnalasys
+*.xtc_offsets.lock
+*.xtc_offsets.npz
