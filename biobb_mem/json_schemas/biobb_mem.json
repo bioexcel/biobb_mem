@@ -45,6 +45,7 @@
         "python >=3.9", 
         "biobb_common ==5.0.0",
         "ambertools >=22.0",
+        "gromacs",
         "lipyphilic ==0.10.0",
         "chap",
         "hole2",

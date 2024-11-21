@@ -102,7 +102,7 @@ class FatslimMembranes(BiobbObject):
         self.tmp_cfg = str(PurePath(fu.create_unique_dir()).joinpath('output.gro'))
         self.cmd = ['gmx', 'editconf',
                     '-f', self.stage_io_dict["in"]["input_top_path"],
-                    '-o ', self.tmp_cfg,
+                    '-o', self.tmp_cfg,
                     '-box', ' '.join(map(str, u.dimensions[:3]))
                     ]
         self.tmp_out = str(PurePath(fu.create_unique_dir()).joinpath('output.ndx'))
