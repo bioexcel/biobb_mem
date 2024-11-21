@@ -2,9 +2,11 @@
 
 """Module containing the FATSLiM Membranes class and the command line interface."""
 import argparse
+from pathlib import PurePath
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
+from biobb_common.tools import file_utils as fu
 import MDAnalysis as mda
 import os
 
@@ -88,40 +90,73 @@ class FatslimMembranes(BiobbObject):
         u = mda.Universe(self.stage_io_dict["in"]["input_top_path"],
                          self.stage_io_dict["in"]["input_traj_path"])
         # Build the index to select the atoms from the membrane
-        tmp_ndx = 'headgroups.ndx'
-        with mda.selections.gromacs.SelectionWriter(tmp_ndx, mode='w') as ndx:
+        self.tmp_ndx = str(PurePath(fu.create_unique_dir()).joinpath('headgroups.ndx'))
+        with mda.selections.gromacs.SelectionWriter(self.tmp_ndx, mode='w') as ndx:
             ndx.write(u.select_atoms(self.selection), name='headgroups')
         # Convert topology .gro and add box dimensions if not available in the topology
-        tmp_gro = 'output.gro'
+        self.tmp_cfg = str(PurePath(fu.create_unique_dir()).joinpath('output.gro'))
         self.cmd = ['gmx', 'editconf',
                     '-f', self.stage_io_dict["in"]["input_top_path"],
-                    '-o ', tmp_gro,
+                    '-o ', self.tmp_cfg,
                     '-box', ' '.join(map(str, u.dimensions[:3]))
                     ]
-
+        self.tmp_out = str(PurePath(fu.create_unique_dir()).joinpath('output.ndx'))
         # Build command
         self.cmd.extend([
             ';',
             self.binary_path, "membranes",
-            "-c", 'output.gro',
-            "-n", tmp_ndx,
-            "--output-index", 'output.ndx',
+            "-c", self.tmp_cfg,
+            "-n", self.tmp_ndx,
+            "--output-index", self.tmp_out,
             "--cutoff", str(self.cutoff)
         ])
 
         # Run Biobb block
         self.run_biobb()
-        os.rename('output_0000.ndx', self.stage_io_dict["out"]["output_ndx_path"])
+        os.rename(self.tmp_out[:-4]+'_0000.ndx', self.stage_io_dict["out"]["output_ndx_path"])
         # Copy files to host
         self.copy_to_host()
 
         # Remove temporary files
-        self.tmp_files.append(self.stage_io_dict.get("unique_dir"))
+        self.tmp_files.extend([
+            self.stage_io_dict.get("unique_dir"),
+            PurePath(self.tmp_ndx).parent,
+            PurePath(self.tmp_cfg).parent,
+            PurePath(self.tmp_out).parent
+        ])
         self.remove_tmp_files()
 
         self.check_arguments(output_files_created=True, raise_exception=False)
 
         return self.return_code
+
+    @staticmethod
+    def parse_index(ndx):
+        """
+        Parses a GROMACS index file (.ndx) to extract leaflet groups.
+        Args:
+            ndx (str): Path to the GROMACS index file (.ndx).
+        Returns:
+            dict: A dictionary where keys are group names and values are lists of integers representing atom indices.
+        """
+
+        # Read the leaflet.ndx file
+        with open(ndx, 'r') as file:
+            leaflet_data = file.readlines()
+
+        # Initialize dictionaries to store leaflet groups
+        leaflet_groups = {}
+        current_group = None
+
+        # Parse the leaflet.ndx file
+        for line in leaflet_data:
+            line = line.strip()
+            if line.startswith('[') and line.endswith(']'):
+                current_group = line[1:-1].strip()
+                leaflet_groups[current_group] = []
+            elif current_group is not None:
+                leaflet_groups[current_group].extend(map(int, line.split()))
+        return leaflet_groups
 
 
 def fatslim_membranes(input_top_path: str, input_traj_path: str, output_ndx_path: str, properties: dict = None, **kwargs) -> int:
