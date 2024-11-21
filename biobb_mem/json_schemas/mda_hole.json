@@ -3,7 +3,7 @@
     "$id": "http://bioexcel.eu/biobb_mem/json_schemas/1.0/mda_hole",
     "name": "biobb_mem MDAHole",
     "title": "Wrapper of the MDAnalysis HOLE module for analyzing ion channel pores or transporter pathways.",
-    "description": "MDAnalysis HOLE provides an interface to the HOLE suite of tools to analyze pore dimensions and properties along a channel or transporter pathway. The parameter names and defaults follow the `MDAnalysis HOLE<https://docs.mdanalysis.org/stable/documentation_pages/analysis/hole2.html>`_  implementation.",
+    "description": "MDAnalysis HOLE provides an interface to the HOLE suite of tools to analyze pore dimensions and properties along a channel or transporter pathway. The parameter names and defaults follow the MDAnalysis HOLE  implementation.",
     "type": "object",
     "info": {
         "wrapped_software": {
