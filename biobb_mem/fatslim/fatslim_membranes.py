@@ -110,8 +110,8 @@ class FatslimMembranes(BiobbObject):
         self.cmd.extend([
             ';',
             self.binary_path, "membranes",
-            "-c", self.tmp_cfg,
             "-n", self.tmp_ndx,
+            "-c", self.tmp_cfg,
             "--output-index", self.tmp_out,
             "--cutoff", str(self.cutoff),
             "--begin-frame", str(self.begin_frame),
@@ -120,11 +120,12 @@ class FatslimMembranes(BiobbObject):
 
         # Run Biobb block
         self.run_biobb()
-        print('TEST', os.listdir(PurePath(self.tmp_out).parent))
         print('TEST', os.listdir(PurePath(self.tmp_ndx).parent))
+        print('TEST', os.listdir(PurePath(self.tmp_cfg).parent))
         print('TEST', os.listdir(PurePath(self.tmp_out).parent))
+        print('TEST', os.listdir(PurePath(self.stage_io_dict["out"]["output_ndx_path"]).parent))
         print('TEST', shutil.which("fatslim"))
-        os.rename(self.tmp_out[:-4]+'_0000.ndx', self.stage_io_dict["out"]["output_ndx_path"])
+        shutil.move(self.tmp_out[:-4]+'_0000.ndx', self.stage_io_dict["out"]["output_ndx_path"])
         # Copy files to host
         self.copy_to_host()
 
