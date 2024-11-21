@@ -9,6 +9,7 @@ from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
 import MDAnalysis as mda
 import shutil
+import os
 
 
 class FatslimMembranes(BiobbObject):
@@ -113,6 +114,7 @@ class FatslimMembranes(BiobbObject):
 
         # Run Biobb block
         self.run_biobb()
+        print('TEST', os.listdir(PurePath(self.tmp_out).parent))
         shutil.move(self.tmp_out[:-4]+'_0000.ndx', self.stage_io_dict["out"]["output_ndx_path"])
         # Copy files to host
         self.copy_to_host()
