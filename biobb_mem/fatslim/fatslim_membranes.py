@@ -9,7 +9,6 @@ from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
 import MDAnalysis as mda
 import shutil
-import os
 
 
 class FatslimMembranes(BiobbObject):
@@ -23,7 +22,7 @@ class FatslimMembranes(BiobbObject):
         input_traj_path (str): Path to the GROMACS trajectory file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.xtc>`_. Accepted formats: xtc (edam:format_3875), trr (edam:format_3910), cpt (edam:format_2333), gro (edam:format_2033), g96 (edam:format_2033), pdb (edam:format_1476), tng (edam:format_3876).
         output_ndx_path (str): Path to the output index NDX file. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.ndx>`_. Accepted formats: ndx (edam:format_2033).
         properties (dic - Python dictionary object containing the tool parameters, not input/output files):
-            * **selection** (*str*) - ("resname DPPC and element P") Molecules used in the identification using MDAnalysis selection language.
+            * **selection** (*str*) - ("resname DPPC and element P") Molecules used in the identification using MDAnalysis `selection language <https://docs.mdanalysis.org/stable/documentation_pages/selections.html>`_.
             * **cutoff** (*float*) - (2) Cutoff distance (in nm) to be used when leaflet identification is performed.
             * **binary_path** (*str*) - ("fatslim") Path to the fatslim executable binary.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
@@ -114,7 +113,6 @@ class FatslimMembranes(BiobbObject):
 
         # Run Biobb block
         self.run_biobb()
-        print('TEST', os.listdir(PurePath(self.tmp_out).parent))
         shutil.move(self.tmp_out[:-4]+'_0000.ndx', self.stage_io_dict["out"]["output_ndx_path"])
         # Copy files to host
         self.copy_to_host()
