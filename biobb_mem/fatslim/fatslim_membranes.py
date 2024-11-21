@@ -24,6 +24,8 @@ class FatslimMembranes(BiobbObject):
         properties (dic - Python dictionary object containing the tool parameters, not input/output files):
             * **selection** (*str*) - ("resname DPPC and element P") Molecules used in the identification using MDAnalysis `selection language <https://docs.mdanalysis.org/stable/documentation_pages/selections.html>`_.
             * **cutoff** (*float*) - (2) Cutoff distance (in nm) to be used when leaflet identification is performed.
+            * **begin_frame** (*int*) - (-1) First frame index to be used for analysis.
+            * **end_frame** (*int*) - (-1) Last frame index to be used for analysis.
             * **binary_path** (*str*) - ("fatslim") Path to the fatslim executable binary.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
@@ -70,6 +72,8 @@ class FatslimMembranes(BiobbObject):
         # Properties specific for BB
         self.selection = properties.get('selection', "resname DPPC or resname POPC) and element P")
         self.cutoff = properties.get('cutoff', 2.2)
+        self.begin_frame = properties.get('begin_frame', -1)
+        self.end_frame = properties.get('end_frame', -1)
         self.binary_path = properties.get('binary_path', 'fatslim')
         self.properties = properties
 
@@ -108,7 +112,9 @@ class FatslimMembranes(BiobbObject):
             "-c", self.tmp_cfg,
             "-n", self.tmp_ndx,
             "--output-index", self.tmp_out,
-            "--cutoff", str(self.cutoff)
+            "--cutoff", str(self.cutoff),
+            "--begin-frame", str(self.begin_frame),
+            "--end-frame", str(self.end_frame)
         ])
 
         # Run Biobb block
