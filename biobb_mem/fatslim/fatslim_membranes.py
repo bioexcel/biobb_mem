@@ -119,6 +119,7 @@ class FatslimMembranes(BiobbObject):
 
         # Run Biobb block
         self.run_biobb()
+        print(shutil.which("fatslim"))
         shutil.move(self.tmp_out[:-4]+'_0000.ndx', self.stage_io_dict["out"]["output_ndx_path"])
         # Copy files to host
         self.copy_to_host()
