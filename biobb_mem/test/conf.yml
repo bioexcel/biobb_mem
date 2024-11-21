@@ -57,3 +57,14 @@ mda_hole:
     disable_logs: true
     select: 'protein'
     steps: 5
+
+fatslim_membranes:
+  paths:
+    input_top_path: file:test_data_dir/A01JD/A01JD.pdb
+    input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
+    output_ndx_path: leaflets.ndx
+    ref_output_ndx_path: file:test_reference_dir/fatslim/leaflets.ndx
+  properties:
+    disable_logs: true
+    selection: '(resname DPPC and name P8)'
+    cutoff: 2.2
