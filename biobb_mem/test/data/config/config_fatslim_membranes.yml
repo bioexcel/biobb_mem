@@ -1,0 +1,4 @@
+properties:
+  cutoff: 2.2
+  disable_logs: true
+  selection: (resname DPPC and name P8)

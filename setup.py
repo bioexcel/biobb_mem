@@ -24,6 +24,7 @@ setuptools.setup(
     entry_points={
         "console_scripts": [
             "cpptraj_density = biobb_mem.ambertools.cpptraj_density:main",
+            "fatslim_membranes = biobb_mem.fatslim.fatslim_membranes:main",
             "lpp_assign_leaflets = biobb_mem.lipyphilic_biobb.lpp_assign_leaflets:main",
             "mda_hole = biobb_mem.mdanalysis_biobb.mda_hole:main",
         ]

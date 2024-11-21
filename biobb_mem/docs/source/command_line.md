@@ -6,6 +6,74 @@ biobb_command [-h] --config CONFIG --input_file(s) <input_file(s)> --output_file
 -----------------
 
 
+## Fatslim_membranes
+Wrapper of the FATSLiM membranes module for leaflet and membrane identification.
+### Get help
+Command:
+```python
+fatslim_membranes -h
+```
+    usage: fatslim_membranes [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH --output_ndx_path OUTPUT_NDX_PATH
+    
+    Calculates the density along an axis of a given cpptraj compatible trajectory.
+    
+    options:
+      -h, --help            show this help message and exit
+      --config CONFIG       Configuration file
+    
+    required arguments:
+      --input_top_path INPUT_TOP_PATH
+                            Path to the input structure or topology file. Accepted formats: ent, gro, pdb, tpr.
+      --input_traj_path INPUT_TRAJ_PATH
+                            Path to the input trajectory to be processed. Accepted formats: gro, pdb, tng, trr, xtc.
+      --output_ndx_path OUTPUT_NDX_PATH
+                            Path to the GROMACS index file. Accepted formats: ndx
+### I / O Arguments
+Syntax: input_argument (datatype) : Definition
+
+Config input / output arguments for this building block:
+* **input_top_path** (*string*): Path to the input topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.pdb). Accepted formats: TPR, GRO, G96, PDB, BRK, ENT
+* **input_traj_path** (*string*): Path to the GROMACS trajectory file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.xtc). Accepted formats: XTC, TRR, CPT, GRO, G96, PDB, TNG
+* **output_ndx_path** (*string*): Path to the output index NDX file. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.ndx). Accepted formats: NDX
+### Config
+Syntax: input_parameter (datatype) - (default_value) Definition
+
+Config parameters for this building block:
+* **selection** (*string*): (resname DPPC and element P) Molecules used in the identification using MDAnalysis selection language..
+* **cutoff** (*number*): (2.0) Cutoff distance (in nm) to be used when leaflet identification is performed..
+* **binary_path** (*string*): (fatslim) Path to the fatslim executable binary..
+* **remove_tmp** (*boolean*): (True) Remove temporal files..
+* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
+### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_membranes.yml)
+```python
+properties:
+  cutoff: 2.2
+  disable_logs: true
+  selection: (resname DPPC and name P8)
+
+```
+#### Command line
+```python
+fatslim_membranes --config config_fatslim_membranes.yml --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_ndx_path A01JD.ndx
+```
+### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_membranes.json)
+```python
+{
+  "properties": {
+    "disable_logs": true,
+    "selection": "(resname DPPC and name P8)",
+    "cutoff": 2.2
+  }
+}
+```
+#### Command line
+```python
+fatslim_membranes --config config_fatslim_membranes.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_ndx_path A01JD.ndx
+```
+
 ## Lpp_assign_leaflets
 Wrapper of the LiPyphilic AssignLeaflets module for assigning lipids to leaflets in a bilayer.
 ### Get help
@@ -46,6 +114,7 @@ Config parameters for this building block:
 * **midplane_sel** (*string*): (None) Selection string for residues that may be midplane. Any residues not in this selection will be assigned to a leaflet regardless of its proximity to the midplane. The default is `None`, in which case all lipids will be assigned to either the upper or lower leaflet..
 * **midplane_cutoff** (*number*): (0.0) Minimum distance in *z* an atom must be from the midplane to be assigned to a leaflet rather than the midplane. The default is `0`, in which case all lipids will be assigned to either the upper or lower leaflet. Must be non-negative..
 * **n_bins** (*integer*): (1) Number of bins in *x* and *y* to use to create a grid of membrane patches. Local membrane midpoints are computed for each patch, and lipids assigned a leaflet based on the distance to their local membrane midpoint. The default is `1`, which is equivalent to computing a single global midpoint..
+* **ignore_no_box** (*boolean*): (True) Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory..
 * **remove_tmp** (*boolean*): (True) Remove temporal files..
 * **restart** (*boolean*): (False) Do not execute if output files exist..
 * **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
@@ -112,10 +181,13 @@ Config parameters for this building block:
 * **start** (*integer*): (None) Starting frame for slicing..
 * **stop** (*integer*): (None) Ending frame for slicing..
 * **steps** (*integer*): (None) Step for slicing..
+* **executable** (*string*): (hole) Path to the HOLE executable..
 * **select** (*string*): (protein) The selection string to create an atom selection that the HOLE analysis is applied to..
 * **cpoint** (*array*): (None) Coordinates of a point inside the pore (Å). If None, tries to guess based on the geometry..
 * **cvect** (*array*): (None) Search direction vector. If None, tries to guess based on the geometry..
-* **executable** (*string*): (hole) Path to the HOLE executable..
+* **sample** (*number*): (0.2) Distance of sample points in Å. This value determines how many points in the pore profile are calculated..
+* **end_radius** (*number*): (22.0) Radius in Å, which is considered to be the end of the pore..
+* **dot_density** (*integer*): (15) Density of facets for generating a 3D pore representation..
 * **remove_tmp** (*boolean*): (True) Remove temporal files..
 * **restart** (*boolean*): (False) Do not execute if output files exist..
 * **sandbox_path** (*string*): (./) Parent path to the sandbox directory..

@@ -27,7 +27,7 @@ class MDAHole(BiobbObject):
             * **select** (*str*) - ("protein") The selection string to create an atom selection that the HOLE analysis is applied to.
             * **cpoint** (*list*) - (None) Coordinates of a point inside the pore (Å). If None, tries to guess based on the geometry.
             * **cvect** (*list*) - (None) Search direction vector. If None, tries to guess based on the geometry.
-            * **sample** (*int*) - (0.2) Distance of sample points in Å. This value determines how many points in the pore profile are calculated.
+            * **sample** (*float*) - (0.2) Distance of sample points in Å. This value determines how many points in the pore profile are calculated.
             * **end_radius** (*float*) - (22) Radius in Å, which is considered to be the end of the pore.
             * **dot_density** (*int*) - (15) [5~35] Density of facets for generating a 3D pore representation.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.

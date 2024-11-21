@@ -271,6 +271,12 @@
                     "wf_prop": false,
                     "description": "Number of bins in *x* and *y* to use to create a grid of membrane patches. Local membrane midpoints are computed for each patch, and lipids assigned a leaflet based on the distance to their local membrane midpoint. The default is `1`, which is equivalent to computing a single global midpoint."
                 },
+                "ignore_no_box": {
+                    "type": "boolean",
+                    "default": true,
+                    "wf_prop": false,
+                    "description": "Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory."
+                },
                 "remove_tmp": {
                     "type": "boolean",
                     "default": true,

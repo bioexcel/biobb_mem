@@ -1,0 +1,182 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://bioexcel.eu/biobb_mem/json_schemas/1.0/fatslim_membranes",
+    "name": "biobb_mem FatslimMembranes",
+    "title": "Wrapper of the FATSLiM membranes module for leaflet and membrane identification.",
+    "description": "FATSLiM is designed to provide efficient and robust analysis of physical parameters from MD trajectories, with a focus on processing large trajectory files quickly.",
+    "type": "object",
+    "info": {
+        "wrapped_software": {
+            "name": "FATSLiM",
+            "version": "0.2.2",
+            "license": "GNU"
+        },
+        "ontology": {
+            "name": "EDAM",
+            "schema": "http://edamontology.org/EDAM.owl"
+        }
+    },
+    "required": [
+        "input_top_path",
+        "input_traj_path",
+        "output_ndx_path"
+    ],
+    "properties": {
+        "input_top_path": {
+            "type": "string",
+            "description": "Path to the input topology file",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.pdb",
+            "enum": [
+                ".*\\.tpr$",
+                ".*\\.gro$",
+                ".*\\.g96$",
+                ".*\\.pdb$",
+                ".*\\.brk$",
+                ".*\\.ent$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.tpr$",
+                    "description": "Path to the input topology file",
+                    "edam": "format_2333"
+                },
+                {
+                    "extension": ".*\\.gro$",
+                    "description": "Path to the input topology file",
+                    "edam": "format_2033"
+                },
+                {
+                    "extension": ".*\\.g96$",
+                    "description": "Path to the input topology file",
+                    "edam": "format_2033"
+                },
+                {
+                    "extension": ".*\\.pdb$",
+                    "description": "Path to the input topology file",
+                    "edam": "format_1476"
+                },
+                {
+                    "extension": ".*\\.brk$",
+                    "description": "Path to the input topology file",
+                    "edam": "format_2033"
+                },
+                {
+                    "extension": ".*\\.ent$",
+                    "description": "Path to the input topology file",
+                    "edam": "format_1476"
+                }
+            ]
+        },
+        "input_traj_path": {
+            "type": "string",
+            "description": "Path to the GROMACS trajectory file",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.xtc",
+            "enum": [
+                ".*\\.xtc$",
+                ".*\\.trr$",
+                ".*\\.cpt$",
+                ".*\\.gro$",
+                ".*\\.g96$",
+                ".*\\.pdb$",
+                ".*\\.tng$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.xtc$",
+                    "description": "Path to the GROMACS trajectory file",
+                    "edam": "format_3875"
+                },
+                {
+                    "extension": ".*\\.trr$",
+                    "description": "Path to the GROMACS trajectory file",
+                    "edam": "format_3910"
+                },
+                {
+                    "extension": ".*\\.cpt$",
+                    "description": "Path to the GROMACS trajectory file",
+                    "edam": "format_2333"
+                },
+                {
+                    "extension": ".*\\.gro$",
+                    "description": "Path to the GROMACS trajectory file",
+                    "edam": "format_2033"
+                },
+                {
+                    "extension": ".*\\.g96$",
+                    "description": "Path to the GROMACS trajectory file",
+                    "edam": "format_2033"
+                },
+                {
+                    "extension": ".*\\.pdb$",
+                    "description": "Path to the GROMACS trajectory file",
+                    "edam": "format_1476"
+                },
+                {
+                    "extension": ".*\\.tng$",
+                    "description": "Path to the GROMACS trajectory file",
+                    "edam": "format_3876"
+                }
+            ]
+        },
+        "output_ndx_path": {
+            "type": "string",
+            "description": "Path to the output index NDX file",
+            "filetype": "output",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.ndx",
+            "enum": [
+                ".*\\.ndx$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.ndx$",
+                    "description": "Path to the output index NDX file",
+                    "edam": "format_2033"
+                }
+            ]
+        },
+        "properties": {
+            "type": "object",
+            "properties": {
+                "selection": {
+                    "type": "string",
+                    "default": "resname DPPC and element P",
+                    "wf_prop": false,
+                    "description": "Molecules used in the identification using MDAnalysis selection language."
+                },
+                "cutoff": {
+                    "type": "number",
+                    "default": 2.0,
+                    "wf_prop": false,
+                    "description": "Cutoff distance (in nm) to be used when leaflet identification is performed."
+                },
+                "binary_path": {
+                    "type": "string",
+                    "default": "fatslim",
+                    "wf_prop": false,
+                    "description": "Path to the fatslim executable binary."
+                },
+                "remove_tmp": {
+                    "type": "boolean",
+                    "default": true,
+                    "wf_prop": true,
+                    "description": "Remove temporal files."
+                },
+                "restart": {
+                    "type": "boolean",
+                    "default": false,
+                    "wf_prop": true,
+                    "description": "Do not execute if output files exist."
+                },
+                "sandbox_path": {
+                    "type": "string",
+                    "default": "./",
+                    "wf_prop": true,
+                    "description": "Parent path to the sandbox directory."
+                }
+            }
+        }
+    },
+    "additionalProperties": false
+}

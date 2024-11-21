@@ -28,6 +28,13 @@
             "desc" : "Assign lipids to leaflets in a bilayer.",
             "exec" : "lpp_assign_leaflets",
             "docs": "https://biobb-mem.readthedocs.io/en/latest/lipyphilic_biobb.html#module-lipyphilic_biobb.lpp_assign_leaflets"
+        },
+        {
+            "block" : "FatslimMembranes", 
+            "tool" : "fatslim_membranes", 
+            "desc" : "Identify membrane types and leaflets.",
+            "exec" : "fatslim_membranes",
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/fatslim.html#module-fatslim.fatslim_membranes"
         }
     ],
     "dep_pypi" : [
@@ -39,7 +46,8 @@
         "biobb_common ==5.0.0",
         "ambertools >=22.0",
         "lipyphilic ==0.10.0",
-        "chap"
+        "chap",
+        "hole2"
     ],
     "keywords" : [
         "membrane", 

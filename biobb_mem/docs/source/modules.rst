@@ -5,5 +5,6 @@ biobb_mem
    :maxdepth: 4
 
    ambertools
-   mdanalysis_biobb
+   fatslim
    lipyphilic_biobb
+   mdanalysis_biobb

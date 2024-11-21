@@ -1,0 +1,7 @@
+{
+  "properties": {
+    "disable_logs": true,
+    "selection": "(resname DPPC and name P8)",
+    "cutoff": 2.2
+  }
+}
