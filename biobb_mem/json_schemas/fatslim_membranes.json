@@ -151,6 +151,18 @@
                     "wf_prop": false,
                     "description": "Cutoff distance (in nm) to be used when leaflet identification is performed."
                 },
+                "begin_frame": {
+                    "type": "integer",
+                    "default": -1,
+                    "wf_prop": false,
+                    "description": "First frame index to be used for analysis."
+                },
+                "end_frame": {
+                    "type": "integer",
+                    "default": -1,
+                    "wf_prop": false,
+                    "description": "Last frame index to be used for analysis."
+                },
                 "binary_path": {
                     "type": "string",
                     "default": "fatslim",

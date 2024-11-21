@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="biobb_mem",
-    version="5.0.1",
+    version="5.0.2",
     author="Biobb developers",
     author_email="ruben.chaves@irbbarcelona.org",
     description="Biobb_mem is a complete code template to promote and facilitate the creation of new Biobbs by the community.",

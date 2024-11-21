@@ -41,6 +41,8 @@ Syntax: input_parameter (datatype) - (default_value) Definition
 Config parameters for this building block:
 * **selection** (*string*): (resname DPPC and element P) Molecules used in the identification using MDAnalysis selection language..
 * **cutoff** (*number*): (2.0) Cutoff distance (in nm) to be used when leaflet identification is performed..
+* **begin_frame** (*integer*): (-1) First frame index to be used for analysis..
+* **end_frame** (*integer*): (-1) Last frame index to be used for analysis..
 * **binary_path** (*string*): (fatslim) Path to the fatslim executable binary..
 * **remove_tmp** (*boolean*): (True) Remove temporal files..
 * **restart** (*boolean*): (False) Do not execute if output files exist..
