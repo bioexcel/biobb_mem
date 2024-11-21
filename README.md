@@ -33,7 +33,7 @@
 
 ### Introduction
 biobb_mem is a BioBB category for membrane analysis and manipulation.
-biobb_mem allows analysis of membrane properties and manipulation of membrane systems using tools like MDAnalysis, FATSLiM and LiPyphilic.
+biobb_mem allows analysis of membrane properties and manipulation of membrane systems using tools like [MDAnalysis](https://github.com/MDAnalysis/mdanalysis), [FATSLiM](https://github.com/FATSLiM/fatslim) and [LiPyphilic](https://github.com/p-j-smith/lipyphilic).
 Biobb (BioExcel building blocks) packages are Python building blocks that
 create new layer of compatibility and interoperability over popular
 bioinformatics tools.
