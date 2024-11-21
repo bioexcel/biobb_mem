@@ -13,7 +13,7 @@ class MDAHole(BiobbObject):
     """
     | biobb_mem MDAHole
     | Wrapper of the MDAnalysis HOLE module for analyzing ion channel pores or transporter pathways.
-    | MDAnalysis HOLE provides an interface to the HOLE suite of tools to analyze pore dimensions and properties along a channel or transporter pathway. The parameter names and defaults follow the `MDAnalysis HOLE<https://docs.mdanalysis.org/stable/documentation_pages/analysis/hole2.html>`_  implementation.
+    | MDAnalysis HOLE provides an interface to the HOLE suite of tools to analyze pore dimensions and properties along a channel or transporter pathway. The parameter names and defaults follow the `MDAnalysis HOLE <https://docs.mdanalysis.org/stable/documentation_pages/analysis/hole2.html>`_  implementation.
 
     Args:
         input_top_path (str): Path to the input structure or topology file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.pdb>`_. Accepted formats: crd (edam:3878), gro (edam:2033), mdcrd (edam:3878), mol2 (edam:3816), pdb (edam:1476), pdbqt (edam:1476), prmtop (edam:3881), psf (edam:3882), top (edam:3881), tpr (edam:2333), xml (edam:2332), xyz (edam:3887).

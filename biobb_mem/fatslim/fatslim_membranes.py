@@ -134,6 +134,7 @@ class FatslimMembranes(BiobbObject):
     def parse_index(ndx):
         """
         Parses a GROMACS index file (.ndx) to extract leaflet groups.
+
         Args:
             ndx (str): Path to the GROMACS index file (.ndx).
         Returns:
