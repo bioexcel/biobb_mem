@@ -136,35 +136,6 @@ class FatslimMembranes(BiobbObject):
 
         return self.return_code
 
-    @staticmethod
-    def parse_index(ndx):
-        """
-        Parses a GROMACS index file (.ndx) to extract leaflet groups.
-
-        Args:
-            ndx (str): Path to the GROMACS index file (.ndx).
-        Returns:
-            dict: A dictionary where keys are group names and values are lists of integers representing atom indices.
-        """
-
-        # Read the leaflet.ndx file
-        with open(ndx, 'r') as file:
-            leaflet_data = file.readlines()
-
-        # Initialize dictionaries to store leaflet groups
-        leaflet_groups = {}
-        current_group = None
-
-        # Parse the leaflet.ndx file
-        for line in leaflet_data:
-            line = line.strip()
-            if line.startswith('[') and line.endswith(']'):
-                current_group = line[1:-1].strip()
-                leaflet_groups[current_group] = []
-            elif current_group is not None:
-                leaflet_groups[current_group].extend(map(int, line.split()))
-        return leaflet_groups
-
 
 def fatslim_membranes(input_top_path: str, input_traj_path: str, output_ndx_path: str, properties: dict = None, **kwargs) -> int:
     """Execute the :class:`FatslimMembranes <fatslim.fatslim_membranes.FatslimMembranes>` class and
@@ -195,6 +166,35 @@ def main():
     fatslim_membranes(input_top_path=args.input_top_path,
                       output_ndx_path=args.output_ndx_path,
                       properties=properties)
+
+
+def parse_index(ndx):
+    """
+    Parses a GROMACS index file (.ndx) to extract leaflet groups.
+
+    Args:
+        ndx (str): Path to the GROMACS index file (.ndx).
+    Returns:
+        dict: A dictionary where keys are group names and values are lists of integers representing atom indices.
+    """
+
+    # Read the leaflet.ndx file
+    with open(ndx, 'r') as file:
+        leaflet_data = file.readlines()
+
+    # Initialize dictionaries to store leaflet groups
+    leaflet_groups = {}
+    current_group = None
+
+    # Parse the leaflet.ndx file
+    for line in leaflet_data:
+        line = line.strip()
+        if line.startswith('[') and line.endswith(']'):
+            current_group = line[1:-1].strip()
+            leaflet_groups[current_group] = []
+        elif current_group is not None:
+            leaflet_groups[current_group].extend(map(int, line.split()))
+    return leaflet_groups
 
 
 if __name__ == '__main__':
