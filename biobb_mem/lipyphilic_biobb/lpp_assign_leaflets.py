@@ -194,14 +194,19 @@ def display_nglview(input_top_path: str, output_leaflets_path: str, frame: int =
         import nglview as nv
     except ImportError:
         raise ImportError('Please install the nglview package to visualize the leaflets.')
-    view = nv.show_file(input_top_path)
+    # Read the leaflets DataFrame
     df = pd.read_csv(output_leaflets_path)
     top_idx = df[(df['frame'] == frame) & (df['leaflet_index'] == 1)]['resindex'].values
     bot_idx = df[(df['frame'] == frame) & (df['leaflet_index'] == -1)]['resindex'].values
-
+    # Load the topology and convert the resindices to resnums (nglview uses resnums)
+    u = mda.Universe(input_top_path)
+    top_resnum = u.residues[top_idx].resnums
+    bot_resnum = u.residues[bot_idx].resnums
+    # Create the view
+    view = nv.show_file(input_top_path)
     view.update_ball_and_stick(selection='all', opacity=0.0)   # delete membrane
-    view.add_ball_and_stick(selection=", ".join(map(str, top_idx)), color='blue')
-    view.add_ball_and_stick(selection=", ".join(map(str, bot_idx)), color='yellow')
+    view.add_ball_and_stick(selection=", ".join(map(str, top_resnum)), color='blue')
+    view.add_ball_and_stick(selection=", ".join(map(str, bot_resnum)), color='yellow')
     return view
 
 
