@@ -131,7 +131,7 @@ class LPPAssignLeaflets(BiobbObject):
         # Save the results
         frames = leaflets.leaflets.shape[1]
         resnames = np.repeat(leaflets.membrane.resnames, frames)
-        resindices = np.tile(leaflets.membrane.resnums, frames)
+        resindices = np.tile(leaflets.membrane.resindices, frames)
         frame_numbers = np.repeat(np.arange(frames), leaflets.membrane.n_residues)
 
         df = pd.DataFrame({
@@ -187,6 +187,22 @@ def main():
                         input_traj_path=args.input_traj_path,
                         output_leaflets_path=args.output_leaflets_path,
                         properties=properties)
+
+
+def display_nglview(input_top_path: str, output_leaflets_path: str, frame: int = 0):
+    try:
+        import nglview as nv
+    except ImportError:
+        raise ImportError('Please install the nglview package to visualize the leaflets.')
+    view = nv.show_file(input_top_path)
+    df = pd.read_csv(output_leaflets_path)
+    top_idx = df[(df['frame'] == frame) & (df['leaflet_index'] == 1)]['resindex'].values
+    bot_idx = df[(df['frame'] == frame) & (df['leaflet_index'] == -1)]['resindex'].values
+
+    view.update_ball_and_stick(selection='all', opacity=0.0)   # delete membrane
+    view.add_ball_and_stick(selection=", ".join(map(str, top_idx)), color='blue')
+    view.add_ball_and_stick(selection=", ".join(map(str, bot_idx)), color='yellow')
+    return view
 
 
 if __name__ == '__main__':
