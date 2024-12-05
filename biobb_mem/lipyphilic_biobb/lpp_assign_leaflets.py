@@ -7,7 +7,7 @@ from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
 import MDAnalysis as mda
 from MDAnalysis.transformations.boxdimensions import set_dimensions
-from lipyphilic.lib.assign_leaflets import AssignLeaflets
+from lipyphilic.leaflets.assign_leaflets import AssignLeaflets
 import pandas as pd
 import numpy as np
 
