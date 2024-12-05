@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 
 """Module containing the MDAnalysis HOLE class and the command line interface."""
+import re
 import argparse
+import numpy as np
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
@@ -164,6 +166,63 @@ def main():
              input_traj_path=args.input_traj_path,
              output_hole_path=args.output_hole_path,
              properties=properties)
+
+
+def display_hole(input_top_path: str, output_hole_path: str = 'hole.vmd',
+                 frame: int = 0, opacity: float = 0.9):
+    """
+    Visualize a channel using NGLView from a VMD file.
+
+    Args:
+        input_top_path (str): Path to the input topology file.
+        output_hole_path (str, optional): Path to the VMD file containing the channel data. Default is 'hole.vmd'.
+        frame (int, optional): Frame index to visualize. Default is 0.
+        opacity (float, optional): Opacity of the visualization. Default is 0.9.
+    Returns:
+        nglview.NGLWidget: NGLView widget for visualizing the channel.
+    """
+
+    try:
+        import nglview as nv
+    except ImportError:
+        raise ImportError('Please install the nglview package to visualize the channel.')
+
+    # Read the VMD file and parse triangles
+    with open(output_hole_path, 'r') as f:
+        lines = f.readlines()
+
+    # Find lines with triangle coordinates
+    trinorms = []
+    for i, line in enumerate(lines):
+        if i > 3 and 'set triangle' in line:
+            vmd_set = re.sub(r'set triangles\(\d+\)', '', line)  # Remove set triangles(i)
+            vmd_set = re.sub(r'\{(\s*-?\d[^\s]*)(\s*-?\d[^\s]*)(\s*-?\d[^}]*)\}', r'[\1,\2,\3]', vmd_set)  # Convert { x y z } to [x,y,z]
+            vmd_set = vmd_set.replace('{', '[').replace('}', ']')  # Convert { to [ and } to ]
+            vmd_set = re.sub(r'\]\s*\[', '], [', vmd_set)  # Add commas between brackets
+            vmd_set = eval(vmd_set.strip())  # Evaluate string as list
+            # different hole colors
+            trinorms.append(vmd_set)
+
+    colors = np.array([[1, 0, 0],   # red
+                       [0, 1, 0],   # green
+                       [0, 0, 1]])  # blue
+    poss, cols, nors = [], [], []
+    for i, color in enumerate(colors):
+        if len(trinorms[frame][i]) > 0:
+            col_dat = np.array(trinorms[frame][i])
+            poss.append(col_dat[:, :3, :].flatten())
+            cols.append((np.zeros(col_dat.shape[0]*18).reshape(-1, 3) + color).flatten())
+            nors.append(col_dat[:, 3:, :].flatten())
+    poss = np.concatenate(poss)
+    cols = np.concatenate(cols)
+    nors = np.concatenate(nors)
+    # Create NGLView widget
+    view = nv.show_file(input_top_path)
+    # view.clear_representations()
+    mesh = ('mesh', poss, cols)
+    view._add_shape([mesh], name='my_shape')
+    view.update_representation(component=1, repr_index=0, opacity=opacity)
+    return view
 
 
 if __name__ == '__main__':
