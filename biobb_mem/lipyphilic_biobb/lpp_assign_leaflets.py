@@ -198,7 +198,7 @@ def display_nglview(input_top_path: str, output_leaflets_path: str, frame: int =
         output_leaflets_path (str): Path to the CSV file containing leaflet assignments.
         frame (int, optional): Frame number to visualize. Default is 0.
     Returns:
-        nv.NGLWidget: An NGLView widget displaying the membrane leaflets.
+        nglview.NGLWidget: An NGLView widget displaying the membrane leaflets.
     """
 
     try:

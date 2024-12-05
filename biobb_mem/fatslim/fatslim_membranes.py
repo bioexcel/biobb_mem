@@ -197,5 +197,46 @@ def parse_index(ndx):
     return leaflet_groups
 
 
+def display_fatslim(input_top_path: str, input_traj_path: str = None, output_ndx_path="leaflets.ndx", leaflets=True,
+                    colors=['blue', 'cyan', 'yellow', 'orange', 'purple', 'magenta']):
+    """
+    Visualize the leaflets of a membrane using NGLView.
+
+    Args:
+        input_top_path (str): Path to the input topology file.
+        input_traj_path (str, optional): Path to the input trajectory file. Default is None.
+        output_ndx_path (str, optional): Path to the output index file containing leaflet information. Default is "leaflets.ndx".
+        leaflets (bool, optional): If True, visualize individual leaflets. If False, visualize entire membranes. Default is True.
+        colors (list of str, optional): List of colors to use for visualizing the leaflets or membranes. Default is ['blue', 'cyan', 'yellow', 'orange', 'purple', 'magenta'].
+    Returns:
+        nglview.NGLWidget: An NGLView widget displaying the membrane leaflets.
+    """
+    try:
+        import nglview as nv
+        import numpy as np
+    except ImportError:
+        raise ImportError('Please install the nglview package to visualize the membrane/s.')
+
+    u = mda.Universe(input_top_path, coordinates=input_traj_path)
+    # Visualize the system with NGLView
+    view = nv.show_mdanalysis(u)
+    view.clear_representations()
+
+    leaflet_groups = parse_index(output_ndx_path)
+    n_mems = len(leaflet_groups.keys())//2
+
+    for n in range(n_mems):
+        # Convert atoms list to resnums (nglview uses cannot use resindex)
+        top_resn = u.atoms[np.array(leaflet_groups[f'membrane_{n+1}_leaflet_1'])-1].residues.resnums
+        bot_resn = u.atoms[np.array(leaflet_groups[f'membrane_{n+1}_leaflet_2'])-1].residues.resnums
+        if leaflets:
+            view.add_point(selection=", ".join(map(str, top_resn)), color=colors[n*2])   # change lipids in membrane to blue
+            view.add_point(selection=", ".join(map(str, bot_resn)), color=colors[n*2+1])   # change lipids in membrane to blue
+        else:
+            mem_resn = np.concatenate((top_resn, bot_resn))
+            view.add_point(selection=", ".join(map(str, mem_resn)), color=colors[n*2])   # change lipids in membrane to blue
+    return view
+
+
 if __name__ == '__main__':
     main()
