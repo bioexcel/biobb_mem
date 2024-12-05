@@ -8,6 +8,7 @@ from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
 import MDAnalysis as mda
+from MDAnalysis.transformations.boxdimensions import set_dimensions
 import shutil
 
 
@@ -19,13 +20,14 @@ class FatslimMembranes(BiobbObject):
 
     Args:
         input_top_path (str): Path to the input topology file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.pdb>`_. Accepted formats: tpr (edam:format_2333), gro (edam:format_2033), g96 (edam:format_2033), pdb (edam:format_1476), brk (edam:format_2033), ent (edam:format_1476).
-        input_traj_path (str): Path to the GROMACS trajectory file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.xtc>`_. Accepted formats: xtc (edam:format_3875), trr (edam:format_3910), cpt (edam:format_2333), gro (edam:format_2033), g96 (edam:format_2033), pdb (edam:format_1476), tng (edam:format_3876).
+        input_traj_path (str) (Optional): Path to the GROMACS trajectory file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.xtc>`_. Accepted formats: xtc (edam:format_3875), trr (edam:format_3910), cpt (edam:format_2333), gro (edam:format_2033), g96 (edam:format_2033), pdb (edam:format_1476), tng (edam:format_3876).
         output_ndx_path (str): Path to the output index NDX file. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.ndx>`_. Accepted formats: ndx (edam:format_2033).
         properties (dic - Python dictionary object containing the tool parameters, not input/output files):
             * **selection** (*str*) - ("resname DPPC and element P") Molecules used in the identification using MDAnalysis `selection language <https://docs.mdanalysis.org/stable/documentation_pages/selections.html>`_.
             * **cutoff** (*float*) - (2) Cutoff distance (in nm) to be used when leaflet identification is performed.
             * **begin_frame** (*int*) - (-1) First frame index to be used for analysis.
             * **end_frame** (*int*) - (-1) Last frame index to be used for analysis.
+            * **ignore_no_box** (*bool*) - (False) Ignore the absence of box information in the topology. If the topology does not contain box information, the box will be set to the minimum and maximum positions of the atoms.
             * **binary_path** (*str*) - ("fatslim") Path to the fatslim executable binary.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
@@ -55,7 +57,7 @@ class FatslimMembranes(BiobbObject):
 
     """
 
-    def __init__(self, input_top_path, input_traj_path, output_ndx_path, properties=None, **kwargs) -> None:
+    def __init__(self, input_top_path, output_ndx_path, input_traj_path=None, properties=None, **kwargs) -> None:
         properties = properties or {}
 
         # Call parent class constructor
@@ -74,6 +76,7 @@ class FatslimMembranes(BiobbObject):
         self.cutoff = properties.get('cutoff', 2.2)
         self.begin_frame = properties.get('begin_frame', -1)
         self.end_frame = properties.get('end_frame', -1)
+        self.ignore_no_box = properties.get('ignore_no_box', False)
         self.binary_path = properties.get('binary_path', 'fatslim')
         self.properties = properties
 
@@ -91,8 +94,18 @@ class FatslimMembranes(BiobbObject):
         self.stage_files()
 
         # Create index file using MDAnalysis
-        u = mda.Universe(self.stage_io_dict["in"]["input_top_path"],
-                         self.stage_io_dict["in"]["input_traj_path"])
+        u = mda.Universe(topology=self.stage_io_dict["in"]["input_top_path"],
+                         coordinates=self.stage_io_dict["in"].get("input_traj_path"))
+        if u.dimensions is None:
+            if self.ignore_no_box:
+                print('Warning: trajectory probably has no box variable. Setting dimensions ussing the minimum and maximum positions of the atoms.')
+                # Calculate the dimensions of the box
+                positions = u.atoms.positions
+                box_dimensions = positions.max(axis=0) - positions.min(axis=0)
+                u.trajectory.add_transformations(set_dimensions([*box_dimensions, 90, 90, 90]))
+            else:
+                raise ValueError('The trajectory does not contain box information. Please set the ignore_no_box property to True to ignore this error.')
+
         # Build the index to select the atoms from the membrane
         self.tmp_ndx = str(PurePath(fu.create_unique_dir()).joinpath('headgroups.ndx'))
         with mda.selections.gromacs.SelectionWriter(self.tmp_ndx, mode='w') as ndx:
@@ -137,7 +150,7 @@ class FatslimMembranes(BiobbObject):
         return self.return_code
 
 
-def fatslim_membranes(input_top_path: str, input_traj_path: str, output_ndx_path: str, properties: dict = None, **kwargs) -> int:
+def fatslim_membranes(input_top_path: str, output_ndx_path: str, input_traj_path: str = None, properties: dict = None, **kwargs) -> int:
     """Execute the :class:`FatslimMembranes <fatslim.fatslim_membranes.FatslimMembranes>` class and
     execute the :meth:`launch() <fatslim.fatslim_membranes.FatslimMembranes.launch>` method."""
 
@@ -155,8 +168,8 @@ def main():
     # Specific args of each building block
     required_args = parser.add_argument_group('required arguments')
     required_args.add_argument('--input_top_path', required=True, help='Path to the input structure or topology file. Accepted formats: ent, gro, pdb, tpr.')
-    required_args.add_argument('--input_traj_path', required=True, help='Path to the input trajectory to be processed. Accepted formats: gro, pdb, tng, trr, xtc.')
     required_args.add_argument('--output_ndx_path', required=True, help='Path to the GROMACS index file. Accepted formats: ndx')
+    parser.add_argument('--input_traj_path', required=False, help='Path to the input trajectory to be processed. Accepted formats: gro, pdb, tng, trr, xtc.')
 
     args = parser.parse_args()
     args.config = args.config or "{}"
@@ -217,7 +230,8 @@ def display_fatslim(input_top_path: str, input_traj_path: str = None, output_ndx
     except ImportError:
         raise ImportError('Please install the nglview package to visualize the membrane/s.')
 
-    u = mda.Universe(input_top_path, coordinates=input_traj_path)
+    u = mda.Universe(topology=input_top_path,
+                     coordinates=input_traj_path)
     # Visualize the system with NGLView
     view = nv.show_mdanalysis(u)
     view.clear_representations()

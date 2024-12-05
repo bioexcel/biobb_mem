@@ -45,6 +45,7 @@ lpp_assign_leaflets:
     ref_output_leaflets_path: file:test_reference_dir/lipyphilic_biobb/leaflets_data.csv
   properties:
     disable_logs: true
+    ignore_no_box: true
     lipid_sel: '(resname DPPC and name P8)'
 
 mda_hole:
@@ -66,5 +67,6 @@ fatslim_membranes:
     ref_output_ndx_path: file:test_reference_dir/fatslim/leaflets.ndx
   properties:
     disable_logs: true
+    ignore_no_box: true
     selection: '(resname DPPC and name P8)'
     cutoff: 2.2
