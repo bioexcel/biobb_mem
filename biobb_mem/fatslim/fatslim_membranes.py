@@ -110,20 +110,26 @@ class FatslimMembranes(BiobbObject):
         self.tmp_ndx = str(PurePath(fu.create_unique_dir()).joinpath('headgroups.ndx'))
         with mda.selections.gromacs.SelectionWriter(self.tmp_ndx, mode='w') as ndx:
             ndx.write(u.select_atoms(self.selection), name='headgroups')
-        # Convert topology .gro and add box dimensions if not available in the topology
-        self.tmp_cfg = str(PurePath(fu.create_unique_dir()).joinpath('output.gro'))
-        self.cmd = ['gmx', 'editconf',
-                    '-f', self.stage_io_dict["in"]["input_top_path"],
-                    '-o', self.tmp_cfg,
-                    '-box', ' '.join(map(str, u.dimensions[:3]))
-                    ]
+
+        if self.stage_io_dict["in"]["input_top_path"].endswith('gro'):
+            self.cfg = self.stage_io_dict["in"]["input_top_path"]
+            self.cmd = []
+        else:
+            # Convert topology .gro and add box dimensions if not available in the topology
+            self.cfg = str(PurePath(fu.create_unique_dir()).joinpath('output.gro'))
+            self.tmp_files.extend([PurePath(self.cfg).parent])
+            self.cmd = ['gmx', 'editconf',
+                        '-f', self.stage_io_dict["in"]["input_top_path"],
+                        '-o', self.cfg,
+                        '-box', ' '.join(map(str, u.dimensions[:3])), ';',
+                        ]
         self.tmp_out = str(PurePath(fu.create_unique_dir()).joinpath('output.ndx'))
+
         # Build command
         self.cmd.extend([
-            ';',
             self.binary_path, "membranes",
             "-n", self.tmp_ndx,
-            "-c", self.tmp_cfg,
+            "-c", self.cfg,
             "--output-index", self.tmp_out,
             "--cutoff", str(self.cutoff),
             "--begin-frame", str(self.begin_frame),
@@ -140,7 +146,6 @@ class FatslimMembranes(BiobbObject):
         self.tmp_files.extend([
             self.stage_io_dict.get("unique_dir"),
             PurePath(self.tmp_ndx).parent,
-            PurePath(self.tmp_cfg).parent,
             PurePath(self.tmp_out).parent
         ])
         self.remove_tmp_files()
@@ -210,10 +215,10 @@ def parse_index(ndx):
     return leaflet_groups
 
 
-def display_fatslim(input_top_path: str, input_traj_path: str = None, output_ndx_path="leaflets.ndx", leaflets=True,
-                    colors=['blue', 'cyan', 'yellow', 'orange', 'purple', 'magenta']):
+def display_fatslim(input_top_path: str, lipid_sel: str, input_traj_path: str = None, output_ndx_path="leaflets.ndx", leaflets=True,
+                    colors=['blue', 'cyan', 'yellow', 'orange', 'purple', 'magenta'], non_mem_color='red'):
     """
-    Visualize the leaflets of a membrane using NGLView.
+    Visualize the leaflets of a membrane using NGLView. The lipids in the membrane are colored according to their leaflet. The ones not in the membrane are colored in red.
 
     Args:
         input_top_path (str): Path to the input topology file.
@@ -239,16 +244,20 @@ def display_fatslim(input_top_path: str, input_traj_path: str = None, output_ndx
     leaflet_groups = parse_index(output_ndx_path)
     n_mems = len(leaflet_groups.keys())//2
 
+    non_mem_resn = set(u.select_atoms(lipid_sel).residues.resnums)
+    view.add_point(selection=", ".join(map(str, non_mem_resn)), color=non_mem_color)   # lipids without membrane
     for n in range(n_mems):
         # Convert atoms list to resnums (nglview uses cannot use resindex)
         top_resn = u.atoms[np.array(leaflet_groups[f'membrane_{n+1}_leaflet_1'])-1].residues.resnums
         bot_resn = u.atoms[np.array(leaflet_groups[f'membrane_{n+1}_leaflet_2'])-1].residues.resnums
+        non_mem_resn -= set(top_resn)
+        non_mem_resn -= set(bot_resn)
         if leaflets:
-            view.add_point(selection=", ".join(map(str, top_resn)), color=colors[n*2])   # change lipids in membrane to blue
-            view.add_point(selection=", ".join(map(str, bot_resn)), color=colors[n*2+1])   # change lipids in membrane to blue
+            view.add_point(selection=", ".join(map(str, top_resn)), color=colors[n*2])              # lipids in top leaflet
+            view.add_point(selection=", ".join(map(str, bot_resn)), color=colors[n*2+1])            # lipids in bot leaflet
         else:
             mem_resn = np.concatenate((top_resn, bot_resn))
-            view.add_point(selection=", ".join(map(str, mem_resn)), color=colors[n*2])   # change lipids in membrane to blue
+            view.add_point(selection=", ".join(map(str, mem_resn)), color=colors[n*2])              # lipids in membrane
     return view
 
 
