@@ -245,7 +245,6 @@ def display_fatslim(input_top_path: str, lipid_sel: str, input_traj_path: str = 
     n_mems = len(leaflet_groups.keys())//2
 
     non_mem_resn = set(u.select_atoms(lipid_sel).residues.resnums)
-    view.add_point(selection=", ".join(map(str, non_mem_resn)), color=non_mem_color)   # lipids without membrane
     for n in range(n_mems):
         # Convert atoms list to resnums (nglview uses cannot use resindex)
         top_resn = u.atoms[np.array(leaflet_groups[f'membrane_{n+1}_leaflet_1'])-1].residues.resnums
@@ -258,6 +257,8 @@ def display_fatslim(input_top_path: str, lipid_sel: str, input_traj_path: str = 
         else:
             mem_resn = np.concatenate((top_resn, bot_resn))
             view.add_point(selection=", ".join(map(str, mem_resn)), color=colors[n*2])              # lipids in membrane
+    if len(non_mem_resn) > 0:
+        view.add_point(selection=", ".join(map(str, non_mem_resn)), color=non_mem_color)   # lipids without membrane
     return view
 
 
