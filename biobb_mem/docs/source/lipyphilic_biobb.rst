@@ -11,3 +11,11 @@ lipyphilic_biobb.lpp_assign_leaflets module
     :members:
     :undoc-members:
     :show-inheritance:
+
+lipyphilic_biobb.lpp_zpositions module
+---------------------------------------------
+
+.. automodule:: lipyphilic_biobb.lpp_zpositions
+    :members:
+    :undoc-members:
+    :show-inheritance:
