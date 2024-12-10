@@ -132,9 +132,9 @@ class LPPZPositions(BiobbObject):
         )
         # Save the results
         frames = positions.z_positions.shape[1]
-        resnames = np.repeat(positions.membrane.resnames, frames)
-        resindices = np.tile(positions.membrane.resindices, frames)
-        frame_numbers = np.repeat(np.arange(frames), positions.membrane.n_residues)
+        resnames = np.repeat(positions._height_atoms.resnames, frames)
+        resindices = np.tile(positions._height_atoms.resindices, frames)
+        frame_numbers = np.repeat(np.arange(frames), positions._height_atoms.n_residues)
 
         df = pd.DataFrame({
             'resname': resnames,
