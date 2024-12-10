@@ -48,6 +48,18 @@ lpp_assign_leaflets:
     ignore_no_box: true
     lipid_sel: '(resname DPPC and name P8)'
 
+lpp_zpositions:
+  paths:
+    input_top_path: file:test_data_dir/A01JD/A01JD.pdb
+    input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
+    output_positions_path: zpositions.csv
+    ref_output_positions_path: file:test_reference_dir/lipyphilic_biobb/zpositions.csv
+  properties:
+    disable_logs: true
+    ignore_no_box: true
+    lipid_sel: '(resname DPPC and name P8)'
+    height_sel: '(resname DPPC and name P8)'
+
 mda_hole:
   paths:
     input_top_path: file:test_data_dir/A01JD/A01JD.pdb
