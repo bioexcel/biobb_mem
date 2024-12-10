@@ -46,7 +46,7 @@
         "biobb_common ==5.0.0",
         "ambertools >=22.0",
         "gromacs",
-        "lipyphilic >=0.11.0",
+        "lipyphilic ==0.10.0",
         "chap",
         "hole2",
         "fatslim ==0.2.2"

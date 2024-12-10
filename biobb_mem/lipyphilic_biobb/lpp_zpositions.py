@@ -7,7 +7,7 @@ from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
 import MDAnalysis as mda
 from MDAnalysis.transformations.boxdimensions import set_dimensions
-from lipyphilic.analysis.z_positions import ZPositions
+from lipyphilic.lib.z_positions import ZPositions
 import pandas as pd
 import numpy as np
 
@@ -49,7 +49,7 @@ class LPPZPositions(BiobbObject):
     Info:
         * wrapped_software:
             * name: LiPyphilic
-            * version: 0.11.0
+            * version: 0.10.0
             * license: GPL-2.0
         * ontology:
             * name: EDAM
