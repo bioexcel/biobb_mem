@@ -21,7 +21,7 @@ class LPPZPositions(BiobbObject):
     Args:
         input_top_path (str): Path to the input structure or topology file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.pdb>`_. Accepted formats: crd (edam:3878), gro (edam:2033), mdcrd (edam:3878), mol2 (edam:3816), pdb (edam:1476), pdbqt (edam:1476), prmtop (edam:3881), psf (edam:3882), top (edam:3881), tpr (edam:2333), xml (edam:2332), xyz (edam:3887).
         input_traj_path (str): Path to the input trajectory to be processed. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc>`_. Accepted formats: arc (edam:2333), crd (edam:3878), dcd (edam:3878), ent (edam:1476), gro (edam:2033), inpcrd (edam:3878), mdcrd (edam:3878), mol2 (edam:3816), nc (edam:3650), pdb (edam:1476), pdbqt (edam:1476), restrt (edam:3886), tng (edam:3876), trr (edam:3910), xtc (edam:3875), xyz (edam:3887).
-        output_positions_path (str): Path to the output z positions . File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/lipyphilic_biobb/zpositions.csv>`_. Accepted formats: csv (edam:format_3752).
+        output_positions_path (str): Path to the output z positions. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/lipyphilic_biobb/zpositions.csv>`_. Accepted formats: csv (edam:format_3752).
         properties (dic - Python dictionary object containing the tool parameters, not input/output files):
             * **start** (*int*) - (None) Starting frame for slicing.
             * **stop** (*int*) - (None) Ending frame for slicing.
@@ -171,14 +171,14 @@ def lpp_zpositions(input_top_path: str, input_traj_path: str, output_positions_p
 
 def main():
     """Command line execution of this building block. Please check the command line documentation."""
-    parser = argparse.ArgumentParser(description="Assign lipids to leaflets in a bilayer.", formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999))
+    parser = argparse.ArgumentParser(description="Calculate the z distance in of lipids to the bilayer center.", formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999))
     parser.add_argument('--config', required=False, help='Configuration file')
 
     # Specific args of each building block
     required_args = parser.add_argument_group('required arguments')
     required_args.add_argument('--input_top_path', required=True, help='Path to the input structure or topology file. Accepted formats: crd, gro, mdcrd, mol2, pdb, pdbqt, prmtop, psf, top, tpr, xml, xyz.')
     required_args.add_argument('--input_traj_path', required=True, help='Path to the input trajectory to be processed. Accepted formats: arc, crd, dcd, ent, gro, inpcrd, mdcrd, mol2, nc, pdb, pdbqt, restrt, tng, trr, xtc, xyz.')
-    required_args.add_argument('--output_positions_path', required=True, help='Path to the output processed analysis.')
+    required_args.add_argument('--output_positions_path', required=True, help=' Path to the output z positions.')
 
     args = parser.parse_args()
     args.config = args.config or "{}"
@@ -189,38 +189,6 @@ def main():
                    input_traj_path=args.input_traj_path,
                    output_positions_path=args.output_positions_path,
                    properties=properties)
-
-
-def display_nglview(input_top_path: str, output_positions_path: str, frame: int = 0):
-    """
-    Visualize the leaflets of a membrane using NGLView.
-
-    Args:
-        input_top_path (str): Path to the input topology file.
-        output_positions_path (str): Path to the CSV file containing leaflet assignments.
-        frame (int, optional): Frame number to visualize. Default is 0.
-    Returns:
-        nglview.NGLWidget: An NGLView widget displaying the membrane leaflets.
-    """
-
-    try:
-        import nglview as nv
-    except ImportError:
-        raise ImportError('Please install the nglview package to visualize the leaflets.')
-    # Read the leaflets DataFrame
-    df = pd.read_csv(output_positions_path)
-    top_idx = df[(df['frame'] == frame) & (df['leaflet_index'] == 1)]['resindex'].values
-    bot_idx = df[(df['frame'] == frame) & (df['leaflet_index'] == -1)]['resindex'].values
-    # Load the topology and convert the resindices to resnums (nglview uses resnums)
-    u = mda.Universe(input_top_path)
-    top_resnum = u.residues[top_idx].resnums
-    bot_resnum = u.residues[bot_idx].resnums
-    # Create the view
-    view = nv.show_file(input_top_path)
-    view.update_ball_and_stick(selection='all', opacity=0.0)   # delete membrane
-    view.add_ball_and_stick(selection=", ".join(map(str, top_resnum)), color='blue')
-    view.add_ball_and_stick(selection=", ".join(map(str, bot_resnum)), color='yellow')
-    return view
 
 
 if __name__ == '__main__':
