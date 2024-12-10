@@ -51,7 +51,7 @@ class CpptrajDensity(BiobbObject):
     Info:
         * wrapped_software:
             * name: Ambertools Cpptraj
-            * version: >=22.0
+            * version: >=22.5
             * license: GNU
         * ontology:
             * name: EDAM

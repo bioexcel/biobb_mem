@@ -49,7 +49,7 @@ class LPPZPositions(BiobbObject):
     Info:
         * wrapped_software:
             * name: LiPyphilic
-            * version: 0.10.0
+            * version: 0.11.0
             * license: GPL-2.0
         * ontology:
             * name: EDAM
