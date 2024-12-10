@@ -1,6 +1,11 @@
 
 # Biobb Membrane changelog
 
+## What's new in version [5.0.3](https://github.com/bioexcel/biobb_mem/releases/tag/v5.0.3)?
+### New features
+
+* [FEATURE] New lpp_zpositions analysis.
+
 ## What's new in version [5.0.2](https://github.com/bioexcel/biobb_mem/releases/tag/v5.0.2)?
 ### New features
 
