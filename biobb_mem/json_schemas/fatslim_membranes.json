@@ -18,7 +18,6 @@
     },
     "required": [
         "input_top_path",
-        "input_traj_path",
         "output_ndx_path"
     ],
     "properties": {
@@ -162,6 +161,12 @@
                     "default": -1,
                     "wf_prop": false,
                     "description": "Last frame index to be used for analysis."
+                },
+                "ignore_no_box": {
+                    "type": "boolean",
+                    "default": false,
+                    "wf_prop": false,
+                    "description": "Ignore the absence of box information in the topology. If the topology does not contain box information, the box will be set to the minimum and maximum positions of the atoms."
                 },
                 "binary_path": {
                     "type": "string",

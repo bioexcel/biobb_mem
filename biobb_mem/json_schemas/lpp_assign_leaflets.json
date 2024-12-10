@@ -214,7 +214,7 @@
             "type": "string",
             "description": "Path to the output leaflet assignments",
             "filetype": "output",
-            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/lipyphilic_biobb/leaflets.csv",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/lipyphilic_biobb/leaflets_data.csv",
             "enum": [
                 ".*\\.csv$"
             ],
@@ -273,7 +273,7 @@
                 },
                 "ignore_no_box": {
                     "type": "boolean",
-                    "default": true,
+                    "default": false,
                     "wf_prop": false,
                     "description": "Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory."
                 },
