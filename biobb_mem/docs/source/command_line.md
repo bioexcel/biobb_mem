@@ -13,19 +13,19 @@ Command:
 ```python
 fatslim_membranes -h
 ```
-    usage: fatslim_membranes [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH --output_ndx_path OUTPUT_NDX_PATH
+    usage: fatslim_membranes [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --output_ndx_path OUTPUT_NDX_PATH [--input_traj_path INPUT_TRAJ_PATH]
     
     Calculates the density along an axis of a given cpptraj compatible trajectory.
     
     options:
       -h, --help            show this help message and exit
       --config CONFIG       Configuration file
+      --input_traj_path INPUT_TRAJ_PATH
+                            Path to the input trajectory to be processed. Accepted formats: gro, pdb, tng, trr, xtc.
     
     required arguments:
       --input_top_path INPUT_TOP_PATH
                             Path to the input structure or topology file. Accepted formats: ent, gro, pdb, tpr.
-      --input_traj_path INPUT_TRAJ_PATH
-                            Path to the input trajectory to be processed. Accepted formats: gro, pdb, tng, trr, xtc.
       --output_ndx_path OUTPUT_NDX_PATH
                             Path to the GROMACS index file. Accepted formats: ndx
 ### I / O Arguments
@@ -43,6 +43,7 @@ Config parameters for this building block:
 * **cutoff** (*number*): (2.0) Cutoff distance (in nm) to be used when leaflet identification is performed..
 * **begin_frame** (*integer*): (-1) First frame index to be used for analysis..
 * **end_frame** (*integer*): (-1) Last frame index to be used for analysis..
+* **ignore_no_box** (*boolean*): (False) Ignore the absence of box information in the topology. If the topology does not contain box information, the box will be set to the minimum and maximum positions of the atoms..
 * **binary_path** (*string*): (fatslim) Path to the fatslim executable binary..
 * **remove_tmp** (*boolean*): (True) Remove temporal files..
 * **restart** (*boolean*): (False) Do not execute if output files exist..
@@ -53,6 +54,7 @@ Config parameters for this building block:
 properties:
   cutoff: 2.2
   disable_logs: true
+  ignore_no_box: true
   selection: (resname DPPC and name P8)
 
 ```
@@ -66,6 +68,7 @@ fatslim_membranes --config config_fatslim_membranes.yml --input_top_path A01JD.p
 {
   "properties": {
     "disable_logs": true,
+    "ignore_no_box": true,
     "selection": "(resname DPPC and name P8)",
     "cutoff": 2.2
   }
@@ -104,7 +107,7 @@ Syntax: input_argument (datatype) : Definition
 Config input / output arguments for this building block:
 * **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.pdb). Accepted formats: CRD, GRO, MDCRD, MOL2, PDB, PDBQT, PRMTOP, PSF, TOP, TPR, XML, XYZ
 * **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc). Accepted formats: ARC, CRD, DCD, ENT, GRO, INPCRD, MDCRD, MOL2, NC, PDB, PDBQT, RESTRT, TNG, TRR, XTC, XYZ
-* **output_leaflets_path** (*string*): Path to the output leaflet assignments. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/lipyphilic_biobb/leaflets.csv). Accepted formats: CSV
+* **output_leaflets_path** (*string*): Path to the output leaflet assignments. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/lipyphilic_biobb/leaflets_data.csv). Accepted formats: CSV
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
 
@@ -116,7 +119,7 @@ Config parameters for this building block:
 * **midplane_sel** (*string*): (None) Selection string for residues that may be midplane. Any residues not in this selection will be assigned to a leaflet regardless of its proximity to the midplane. The default is `None`, in which case all lipids will be assigned to either the upper or lower leaflet..
 * **midplane_cutoff** (*number*): (0.0) Minimum distance in *z* an atom must be from the midplane to be assigned to a leaflet rather than the midplane. The default is `0`, in which case all lipids will be assigned to either the upper or lower leaflet. Must be non-negative..
 * **n_bins** (*integer*): (1) Number of bins in *x* and *y* to use to create a grid of membrane patches. Local membrane midpoints are computed for each patch, and lipids assigned a leaflet based on the distance to their local membrane midpoint. The default is `1`, which is equivalent to computing a single global midpoint..
-* **ignore_no_box** (*boolean*): (True) Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory..
+* **ignore_no_box** (*boolean*): (False) Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory..
 * **remove_tmp** (*boolean*): (True) Remove temporal files..
 * **restart** (*boolean*): (False) Do not execute if output files exist..
 * **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
@@ -125,12 +128,13 @@ Config parameters for this building block:
 ```python
 properties:
   disable_logs: true
+  ignore_no_box: true
   lipid_sel: (resname DPPC and name P8)
 
 ```
 #### Command line
 ```python
-lpp_assign_leaflets --config config_lpp_assign_leaflets.yml --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_leaflets_path leaflets.csv
+lpp_assign_leaflets --config config_lpp_assign_leaflets.yml --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_leaflets_path leaflets_data.csv
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_lpp_assign_leaflets.json)
@@ -138,13 +142,14 @@ lpp_assign_leaflets --config config_lpp_assign_leaflets.yml --input_top_path A01
 {
   "properties": {
     "disable_logs": true,
+    "ignore_no_box": true,
     "lipid_sel": "(resname DPPC and name P8)"
   }
 }
 ```
 #### Command line
 ```python
-lpp_assign_leaflets --config config_lpp_assign_leaflets.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_leaflets_path leaflets.csv
+lpp_assign_leaflets --config config_lpp_assign_leaflets.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_leaflets_path leaflets_data.csv
 ```
 
 ## Mda_hole
@@ -175,7 +180,7 @@ Syntax: input_argument (datatype) : Definition
 Config input / output arguments for this building block:
 * **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.pdb). Accepted formats: CRD, GRO, MDCRD, MOL2, PDB, PDBQT, PRMTOP, PSF, TOP, TPR, XML, XYZ
 * **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc). Accepted formats: ARC, CRD, DCD, ENT, GRO, INPCRD, MDCRD, MOL2, NC, PDB, PDBQT, RESTRT, TNG, TRR, XTC, XYZ
-* **output_hole_path** (*string*): Path to the output HOLE analysis results. File type: output. [Sample file](None). Accepted formats: VMD
+* **output_hole_path** (*string*): Path to the output HOLE analysis results. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/mdanalysis_biobb/hole.vmd). Accepted formats: VMD
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
 
@@ -204,7 +209,7 @@ properties:
 ```
 #### Command line
 ```python
-mda_hole --config config_mda_hole.yml --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_hole_path output.vmd
+mda_hole --config config_mda_hole.yml --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_hole_path hole.vmd
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_mda_hole.json)
@@ -219,7 +224,81 @@ mda_hole --config config_mda_hole.yml --input_top_path A01JD.pdb --input_traj_pa
 ```
 #### Command line
 ```python
-mda_hole --config config_mda_hole.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_hole_path output.vmd
+mda_hole --config config_mda_hole.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_hole_path hole.vmd
+```
+
+## Lpp_zpositions
+Wrapper of the LiPyphilic ZPositions module for calculating the z distance in of lipids to the bilayer center.
+### Get help
+Command:
+```python
+lpp_zpositions -h
+```
+    usage: lpp_zpositions [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH --output_positions_path OUTPUT_POSITIONS_PATH
+    
+    Calculate the z distance in of lipids to the bilayer center.
+    
+    options:
+      -h, --help            show this help message and exit
+      --config CONFIG       Configuration file
+    
+    required arguments:
+      --input_top_path INPUT_TOP_PATH
+                            Path to the input structure or topology file. Accepted formats: crd, gro, mdcrd, mol2, pdb, pdbqt, prmtop, psf, top, tpr, xml, xyz.
+      --input_traj_path INPUT_TRAJ_PATH
+                            Path to the input trajectory to be processed. Accepted formats: arc, crd, dcd, ent, gro, inpcrd, mdcrd, mol2, nc, pdb, pdbqt, restrt, tng, trr, xtc, xyz.
+      --output_positions_path OUTPUT_POSITIONS_PATH
+                             Path to the output z positions.
+### I / O Arguments
+Syntax: input_argument (datatype) : Definition
+
+Config input / output arguments for this building block:
+* **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.pdb). Accepted formats: CRD, GRO, MDCRD, MOL2, PDB, PDBQT, PRMTOP, PSF, TOP, TPR, XML, XYZ
+* **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc). Accepted formats: ARC, CRD, DCD, ENT, GRO, INPCRD, MDCRD, MOL2, NC, PDB, PDBQT, RESTRT, TNG, TRR, XTC, XYZ
+* **output_positions_path** (*string*): Path to the output z positions. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/lipyphilic_biobb/zpositions.csv). Accepted formats: CSV
+### Config
+Syntax: input_parameter (datatype) - (default_value) Definition
+
+Config parameters for this building block:
+* **start** (*integer*): (None) Starting frame for slicing..
+* **stop** (*integer*): (None) Ending frame for slicing..
+* **steps** (*integer*): (None) Step for slicing..
+* **lipid_sel** (*string*): (all) Selection string for the lipids in a membrane. The selection should cover **all** residues in the membrane, including cholesterol..
+* **height_sel** (*string*): (all) Atom selection for the molecules for which the z position will be calculated..
+* **n_bins** (*integer*): (1) Number of bins in *x* and *y* to use to create a grid of membrane patches. Local membrane midpoints are computed for each patch, and lipids assigned a leaflet based on the distance to their local membrane midpoint. The default is `1`, which is equivalent to computing a single global midpoint..
+* **ignore_no_box** (*boolean*): (False) Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory..
+* **remove_tmp** (*boolean*): (True) Remove temporal files..
+* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
+### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_lpp_zpositions.yml)
+```python
+properties:
+  disable_logs: true
+  height_sel: (resname DPPC and name P8)
+  ignore_no_box: true
+  lipid_sel: (resname DPPC and name P8)
+
+```
+#### Command line
+```python
+lpp_zpositions --config config_lpp_zpositions.yml --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_positions_path zpositions.csv
+```
+### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_lpp_zpositions.json)
+```python
+{
+  "properties": {
+    "disable_logs": true,
+    "ignore_no_box": true,
+    "lipid_sel": "(resname DPPC and name P8)",
+    "height_sel": "(resname DPPC and name P8)"
+  }
+}
+```
+#### Command line
+```python
+lpp_zpositions --config config_lpp_zpositions.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_positions_path zpositions.csv
 ```
 
 ## Cpptraj_density

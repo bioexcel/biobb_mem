@@ -28,6 +28,12 @@
             "desc" : "Assign lipids to leaflets in a bilayer.",
             "exec" : "lpp_assign_leaflets",
             "docs": "https://biobb-mem.readthedocs.io/en/latest/lipyphilic_biobb.html#module-lipyphilic_biobb.lpp_assign_leaflets"
+        },{
+            "block" : "LPPZPositions", 
+            "tool" : "lpp_zpositions", 
+            "desc" : "Calculate the z distance in of lipids to the bilayer center.",
+            "exec" : "lpp_zpositions",
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/lipyphilic_biobb.html#module-lipyphilic_biobb.lpp_zpositions"
         },
         {
             "block" : "FatslimMembranes", 

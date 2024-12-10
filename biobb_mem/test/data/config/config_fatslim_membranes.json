@@ -1,6 +1,7 @@
 {
   "properties": {
     "disable_logs": true,
+    "ignore_no_box": true,
     "selection": "(resname DPPC and name P8)",
     "cutoff": 2.2
   }
