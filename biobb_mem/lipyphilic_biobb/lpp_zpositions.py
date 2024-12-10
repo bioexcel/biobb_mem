@@ -191,5 +191,30 @@ def main():
                    properties=properties)
 
 
+def frame_df(output_positions_path):
+    """
+    Processes a CSV file containing z-position data and calculates the mean positive, mean negative,
+    thickness, and standard deviation of thickness for each frame.
+
+    Args:
+        output_positions_path (str): Path to the CSV file containing z-position data.
+    Returns:
+        pandas.DataFrame: A DataFrame with the following columns:
+            - mean_positive: Mean of positive z-positions for each frame.
+            - mean_negative: Mean of negative z-positions for each frame.
+            - thickness: Difference between mean_positive and mean_negative for each frame.
+            - std_thickness: Standard deviation of the absolute z-positions for each frame.
+    """
+
+    df = pd.read_csv(output_positions_path)
+    grouped = df.groupby('frame')['zposition'].agg(
+        mean_positive=lambda x: x[x > 0].mean(),
+        mean_negative=lambda x: x[x < 0].mean()
+    )
+    grouped['thickness'] = grouped['mean_positive'] - grouped['mean_negative']
+    grouped['std_thickness'] = df.groupby('frame')['zposition'].apply(lambda x: x.abs().std())
+    return grouped
+
+
 if __name__ == '__main__':
     main()
