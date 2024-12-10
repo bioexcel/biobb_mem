@@ -226,6 +226,7 @@ def display_fatslim(input_top_path: str, lipid_sel: str, input_traj_path: str = 
         output_ndx_path (str, optional): Path to the output index file containing leaflet information. Default is "leaflets.ndx".
         leaflets (bool, optional): If True, visualize individual leaflets. If False, visualize entire membranes. Default is True.
         colors (list of str, optional): List of colors to use for visualizing the leaflets or membranes. Default is ['blue', 'cyan', 'yellow', 'orange', 'purple', 'magenta'].
+        non_mem_color (str, optional): Color to use for visualizing lipids not in the membrane. Default is 'red'.
     Returns:
         nglview.NGLWidget: An NGLView widget displaying the membrane leaflets.
     """
