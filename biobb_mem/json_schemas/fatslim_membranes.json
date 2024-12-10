@@ -26,7 +26,7 @@
             "type": "string",
             "description": "Path to the input topology file",
             "filetype": "input",
-            "sample": "https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.pdb",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.pdb",
             "enum": [
                 ".*\\.tpr$",
                 ".*\\.gro$",
@@ -72,7 +72,7 @@
             "type": "string",
             "description": "Path to the GROMACS trajectory file",
             "filetype": "input",
-            "sample": "https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.xtc",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc",
             "enum": [
                 ".*\\.xtc$",
                 ".*\\.trr$",
@@ -124,7 +124,7 @@
             "type": "string",
             "description": "Path to the output index NDX file",
             "filetype": "output",
-            "sample": "https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.ndx",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.ndx",
             "enum": [
                 ".*\\.ndx$"
             ],

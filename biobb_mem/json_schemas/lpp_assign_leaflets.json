@@ -26,7 +26,7 @@
             "type": "string",
             "description": "Path to the input structure or topology file",
             "filetype": "input",
-            "sample": "https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.pdb",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.pdb",
             "enum": [
                 ".*\\.crd$",
                 ".*\\.gro$",
@@ -108,7 +108,7 @@
             "type": "string",
             "description": "Path to the input trajectory to be processed",
             "filetype": "input",
-            "sample": "https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/data/A01JD/A01JD.xtc",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc",
             "enum": [
                 ".*\\.arc$",
                 ".*\\.crd$",
@@ -214,7 +214,7 @@
             "type": "string",
             "description": "Path to the output leaflet assignments",
             "filetype": "output",
-            "sample": "https://github.com/bioexcel/biobb_mem/raw/master/biobb_mem/test/reference/lipyphilic_biobb/leaflets.csv",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/lipyphilic_biobb/leaflets.csv",
             "enum": [
                 ".*\\.csv$"
             ],
