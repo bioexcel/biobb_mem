@@ -71,15 +71,14 @@ class LPPAssignLeaflets(BiobbObject):
             "in": {"input_top_path": input_top_path, "input_traj_path": input_traj_path},
             "out": {"output_leaflets_path": output_leaflets_path}
         }
-
-        # Properties specific for BB
+        self.start = properties.get('start', None)
+        self.stop = properties.get('stop', None)
+        self.steps = properties.get('steps', None)
         self.lipid_sel = properties.get('lipid_sel', 'all')
         self.midplane_sel = properties.get('midplane_sel', None)
         self.midplane_cutoff = properties.get('midplane_cutoff', None)
         self.n_bins = properties.get('n_bins', 1)
-        self.start = properties.get('start', None)
-        self.stop = properties.get('stop', None)
-        self.steps = properties.get('steps', None)
+        # Properties specific for BB
         self.ignore_no_box = properties.get('ignore_no_box', True)
         self.properties = properties
 

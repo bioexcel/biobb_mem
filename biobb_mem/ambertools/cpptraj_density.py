@@ -94,7 +94,7 @@ class CpptrajDensity(BiobbObject):
         self.check_arguments()
 
     def create_instructions_file(self, stage_io_dict, out_log, err_log):
-        """Creates an input file using the properties file settings"""
+        """Creates an input file using the properties file settings."""
         instructions_list = []
         # different path if container execution or not
         self.instructions_file = str(PurePath(fu.create_unique_dir()).joinpath(self.instructions_file))
