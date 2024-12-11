@@ -209,7 +209,9 @@ def frame_df(output_positions_path):
     df = pd.read_csv(output_positions_path)
     grouped = df.groupby('frame')['zposition'].agg(
         mean_positive=lambda x: x[x > 0].mean(),
-        mean_negative=lambda x: x[x < 0].mean()
+        mean_negative=lambda x: x[x < 0].mean(),
+        std_positive=lambda x: x[x > 0].std(),
+        std_negative=lambda x: x[x < 0].std()
     )
     grouped['thickness'] = grouped['mean_positive'] - grouped['mean_negative']
     grouped['std_thickness'] = df.groupby('frame')['zposition'].apply(lambda x: x.abs().std())
