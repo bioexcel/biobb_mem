@@ -15,7 +15,7 @@ import numpy as np
 class LPPZPositions(BiobbObject):
     """
     | biobb_mem LPPZPositions
-    | Wrapper of the LiPyphilic ZPositions module for calculating the z distance in of lipids to the bilayer center.
+    | Wrapper of the LiPyphilic ZPositions module for calculating the z distance of lipids to the bilayer center.
     | LiPyphilic is a Python package for analyzing MD simulations of lipid bilayers. The parameter names and defaults are the same as the ones in the official `Lipyphilic documentation <https://lipyphilic.readthedocs.io/en/latest/reference/analysis/z_pos.html>`_.
 
     Args:
