@@ -54,7 +54,7 @@
         "gromacs",
         "lipyphilic ==0.10.0",
         "chap",
-        "hole2",
+        "mdahole2",
         "fatslim ==0.2.2"
     ],
     "keywords" : [

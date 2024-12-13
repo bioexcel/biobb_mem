@@ -8,14 +8,14 @@ from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
 import MDAnalysis as mda
-from MDAnalysis.analysis import hole2
+from mdahole2.analysis import HoleAnalysis
 
 
 class MDAHole(BiobbObject):
     """
     | biobb_mem MDAHole
     | Wrapper of the MDAnalysis HOLE module for analyzing ion channel pores or transporter pathways.
-    | MDAnalysis HOLE provides an interface to the HOLE suite of tools to analyze pore dimensions and properties along a channel or transporter pathway. The parameter names and defaults follow the `MDAnalysis HOLE <https://docs.mdanalysis.org/stable/documentation_pages/analysis/hole2.html>`_  implementation.
+    | MDAnalysis HOLE provides an interface to the HOLE suite of tools to analyze pore dimensions and properties along a channel or transporter pathway. The parameter names and defaults follow the `MDAnalysis HOLE <https://www.mdanalysis.org/mdahole2/api.html>`_  implementation.
 
     Args:
         input_top_path (str): Path to the input structure or topology file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.pdb>`_. Accepted formats: crd (edam:3878), gro (edam:2033), mdcrd (edam:3878), mol2 (edam:3816), pdb (edam:1476), pdbqt (edam:1476), prmtop (edam:3881), psf (edam:3882), top (edam:3881), tpr (edam:2333), xml (edam:2332), xyz (edam:3887).
@@ -104,9 +104,9 @@ class MDAHole(BiobbObject):
                          self.stage_io_dict["in"]["input_traj_path"])
 
         # Create HoleAnalysis object
-        hole = hole2.HoleAnalysis(
+        hole = HoleAnalysis(
             universe=u,
-            select=self.select,
+            select=self.select, 
             cpoint=self.cpoint,
             cvect=self.cvect,
             sample=self.sample,
