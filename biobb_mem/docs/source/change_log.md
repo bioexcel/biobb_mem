@@ -1,6 +1,11 @@
 
 # Biobb Membrane changelog
 
+## What's new in version [5.0.4](https://github.com/bioexcel/biobb_mem/releases/tag/v5.0.3)?
+### New features
+
+* [UPDATE] New output_csv_path argument for mda_hole.
+
 ## What's new in version [5.0.3](https://github.com/bioexcel/biobb_mem/releases/tag/v5.0.3)?
 ### New features
 
