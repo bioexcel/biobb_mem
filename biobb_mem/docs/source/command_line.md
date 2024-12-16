@@ -159,7 +159,7 @@ Command:
 ```python
 mda_hole -h
 ```
-    usage: mda_hole [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH --output_hole_path OUTPUT_HOLE_PATH
+    usage: mda_hole [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH --output_hole_path OUTPUT_HOLE_PATH --output_csv_path OUTPUT_CSV_PATH
     
     Analyze ion channel pores or transporter pathways.
     
@@ -174,6 +174,8 @@ mda_hole -h
                             Path to the input trajectory to be processed. Accepted formats: arc, crd, dcd, ent, gro, inpcrd, mdcrd, mol2, nc, pdb, pdbqt, restrt, tng, trr, xtc, xyz.
       --output_hole_path OUTPUT_HOLE_PATH
                             Path to the output HOLE analysis results. Accepted formats: vmd.
+      --output_csv_path OUTPUT_CSV_PATH
+                            Path to the output CSV file containing the radius and coordinates of the pore. Accepted formats: csv.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
@@ -181,6 +183,7 @@ Config input / output arguments for this building block:
 * **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.pdb). Accepted formats: CRD, GRO, MDCRD, MOL2, PDB, PDBQT, PRMTOP, PSF, TOP, TPR, XML, XYZ
 * **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc). Accepted formats: ARC, CRD, DCD, ENT, GRO, INPCRD, MDCRD, MOL2, NC, PDB, PDBQT, RESTRT, TNG, TRR, XTC, XYZ
 * **output_hole_path** (*string*): Path to the output HOLE analysis results. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/mdanalysis_biobb/hole.vmd). Accepted formats: VMD
+* **output_csv_path** (*string*): Path to the output CSV file containing the radius and coordinates of the pore. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/mdanalysis_biobb/hole_profile.csv). Accepted formats: CSV
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
 
@@ -209,7 +212,7 @@ properties:
 ```
 #### Command line
 ```python
-mda_hole --config config_mda_hole.yml --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_hole_path hole.vmd
+mda_hole --config config_mda_hole.yml --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_hole_path hole.vmd --output_csv_path hole_profile.csv
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_mda_hole.json)
@@ -224,11 +227,11 @@ mda_hole --config config_mda_hole.yml --input_top_path A01JD.pdb --input_traj_pa
 ```
 #### Command line
 ```python
-mda_hole --config config_mda_hole.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_hole_path hole.vmd
+mda_hole --config config_mda_hole.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_hole_path hole.vmd --output_csv_path hole_profile.csv
 ```
 
 ## Lpp_zpositions
-Wrapper of the LiPyphilic ZPositions module for calculating the z distance in of lipids to the bilayer center.
+Wrapper of the LiPyphilic ZPositions module for calculating the z distance of lipids to the bilayer center.
 ### Get help
 Command:
 ```python

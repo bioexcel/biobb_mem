@@ -19,7 +19,8 @@
     "required": [
         "input_top_path",
         "input_traj_path",
-        "output_hole_path"
+        "output_hole_path",
+        "output_csv_path"
     ],
     "properties": {
         "input_top_path": {
@@ -223,6 +224,21 @@
                     "extension": ".*\\.vmd$",
                     "description": "Path to the output HOLE analysis results",
                     "edam": "format_2330"
+                }
+            ]
+        },
+        "output_csv_path": {
+            "type": "string",
+            "description": "Path to the output CSV file containing the radius and coordinates of the pore",
+            "filetype": "output",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/mdanalysis_biobb/hole_profile.csv",
+            "enum": [
+                ".*\\.csv$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.csv$",
+                    "description": "Path to the output CSV file containing the radius and coordinates of the pore"
                 }
             ]
         },
