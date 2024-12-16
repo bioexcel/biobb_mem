@@ -4,6 +4,7 @@
 import re
 import argparse
 import numpy as np
+import pandas as pd
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
@@ -21,6 +22,7 @@ class MDAHole(BiobbObject):
         input_top_path (str): Path to the input structure or topology file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.pdb>`_. Accepted formats: crd (edam:3878), gro (edam:2033), mdcrd (edam:3878), mol2 (edam:3816), pdb (edam:1476), pdbqt (edam:1476), prmtop (edam:3881), psf (edam:3882), top (edam:3881), tpr (edam:2333), xml (edam:2332), xyz (edam:3887).
         input_traj_path (str): Path to the input trajectory to be processed. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc>`_. Accepted formats: arc (edam:2333), crd (edam:3878), dcd (edam:3878), ent (edam:1476), gro (edam:2033), inpcrd (edam:3878), mdcrd (edam:3878), mol2 (edam:3816), nc (edam:3650), pdb (edam:1476), pdbqt (edam:1476), restrt (edam:3886), tng (edam:3876), trr (edam:3910), xtc (edam:3875), xyz (edam:3887).
         output_hole_path (str): Path to the output HOLE analysis results. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/mdanalysis_biobb/hole.vmd>`_. Accepted formats: vmd (edam:format_2330).
+        output_csv_path (str): Path to the output CSV file containing the radius and coordinates of the pore. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/mdanalysis_biobb/hole_profile.csv>`_. Accepted formats: csv.
         properties (dic - Python dictionary object containing the tool parameters, not input/output files):
             * **start** (*int*) - (None) Starting frame for slicing.
             * **stop** (*int*) - (None) Ending frame for slicing.
@@ -47,6 +49,7 @@ class MDAHole(BiobbObject):
             mda_hole(input_top_path='/path/to/myTopology.pdb',
                     input_traj_path='/path/to/myTrajectory.xtc',
                     output_hole_path='/path/to/hole_analysis.csv',
+                    output_hole_path='/path/to/hole_profile.csv',
                     properties=prop)
 
     Info:
@@ -59,7 +62,7 @@ class MDAHole(BiobbObject):
             * schema: http://edamontology.org/EDAM.owl
     """
 
-    def __init__(self, input_top_path, input_traj_path, output_hole_path,
+    def __init__(self, input_top_path, input_traj_path, output_hole_path, output_csv_path=None,
                  properties=None, **kwargs) -> None:
         properties = properties or {}
 
@@ -70,7 +73,7 @@ class MDAHole(BiobbObject):
         # Input/Output files
         self.io_dict = {
             "in": {"input_top_path": input_top_path, "input_traj_path": input_traj_path},
-            "out": {"output_hole_path": output_hole_path}
+            "out": {"output_hole_path": output_hole_path, "output_csv_path": output_csv_path}
         }
 
         # Properties specific for MDAHole
@@ -106,7 +109,7 @@ class MDAHole(BiobbObject):
         # Create HoleAnalysis object
         hole = HoleAnalysis(
             universe=u,
-            select=self.select, 
+            select=self.select,
             cpoint=self.cpoint,
             cvect=self.cvect,
             sample=self.sample,
@@ -118,6 +121,17 @@ class MDAHole(BiobbObject):
             stop=self.stop,
             step=self.steps
         )
+        # Save the results to a CSV file
+        all_frames = []
+        for frame in hole.results.profiles.keys():
+            rxn_coord = hole.results.profiles[frame].rxn_coord
+            radius = hole.results.profiles[frame].radius
+            df_frame = pd.DataFrame({'Frame': frame, 'Pore Coordinate': rxn_coord, 'Radius': radius})
+            all_frames.append(df_frame)
+        # Concatenate all frames into a single DataFrame
+        df_all_frames = pd.concat(all_frames, ignore_index=True)
+        df_all_frames.to_csv(self.stage_io_dict["out"]["output_csv_path"], index=False)
+
         hole.create_vmd_surface(
             self.stage_io_dict["out"]["output_hole_path"],
             dot_density=self.dot_density
@@ -136,13 +150,14 @@ class MDAHole(BiobbObject):
         return self.return_code
 
 
-def mda_hole(input_top_path: str, input_traj_path: str, output_hole_path: str = None, properties: dict = None, **kwargs) -> int:
+def mda_hole(input_top_path: str, input_traj_path: str, output_hole_path: str, output_csv_path: str, properties: dict = None, **kwargs) -> int:
     """Execute the :class:`MDAHole <mdanalysis_biobb.mda_hole.MDAHole>` class and
     execute the :meth:`launch() <mdanalysis_biobb.mda_hole.MDAHole.launch>` method."""
 
     return MDAHole(input_top_path=input_top_path,
                    input_traj_path=input_traj_path,
                    output_hole_path=output_hole_path,
+                   output_csv_path=output_csv_path,
                    properties=properties, **kwargs).launch()
 
 
@@ -156,6 +171,7 @@ def main():
     required_args.add_argument('--input_top_path', required=True, help='Path to the input structure or topology file. Accepted formats: crd, gro, mdcrd, mol2, pdb, pdbqt, prmtop, psf, top, tpr, xml, xyz.')
     required_args.add_argument('--input_traj_path', required=True, help='Path to the input trajectory to be processed. Accepted formats: arc, crd, dcd, ent, gro, inpcrd, mdcrd, mol2, nc, pdb, pdbqt, restrt, tng, trr, xtc, xyz.')
     required_args.add_argument('--output_hole_path', required=True, help='Path to the output HOLE analysis results. Accepted formats: vmd.')
+    required_args.add_argument('--output_csv_path', required=True, help='Path to the output CSV file containing the radius and coordinates of the pore. Accepted formats: csv.')
 
     args = parser.parse_args()
     args.config = args.config or "{}"
@@ -165,10 +181,12 @@ def main():
     mda_hole(input_top_path=args.input_top_path,
              input_traj_path=args.input_traj_path,
              output_hole_path=args.output_hole_path,
+             output_csv_path=args.output_csv_path,
              properties=properties)
 
 
-def display_hole(input_top_path: str, output_hole_path: str = 'hole.vmd',
+def display_hole(input_top_path: str, input_traj_path: str,
+                 output_hole_path: str = 'hole.vmd',
                  frame: int = 0, opacity: float = 0.9):
     """
     Visualize a channel using NGLView from a VMD file.
@@ -202,7 +220,7 @@ def display_hole(input_top_path: str, output_hole_path: str = 'hole.vmd',
             vmd_set = eval(vmd_set.strip())  # Evaluate string as list
             # different hole colors
             trinorms.append(vmd_set)
-
+    # Create a list of positions, colors, and normals
     colors = np.array([[1, 0, 0],   # red
                        [0, 1, 0],   # green
                        [0, 0, 1]])  # blue
@@ -210,14 +228,15 @@ def display_hole(input_top_path: str, output_hole_path: str = 'hole.vmd',
     for i, color in enumerate(colors):
         if len(trinorms[frame][i]) > 0:
             col_dat = np.array(trinorms[frame][i])
-            poss.append(col_dat[:, :3, :].flatten())
-            cols.append((np.zeros(col_dat.shape[0]*18).reshape(-1, 3) + color).flatten())
-            nors.append(col_dat[:, 3:, :].flatten())
+            poss.append(col_dat[:, :3, :].flatten())  # 3 first elements are positions
+            cols.append((np.zeros(col_dat.shape[0]*18).reshape(-1, 3) + color).flatten())  # 3 colors for each vertex
+            nors.append(col_dat[:, 3:, :].flatten())  # 3 last elements are normals
     poss = np.concatenate(poss)
     cols = np.concatenate(cols)
     nors = np.concatenate(nors)
     # Create NGLView widget
-    view = nv.show_file(input_top_path)
+    u = mda.Universe(input_top_path, input_traj_path)
+    view = nv.show_mdanalysis(u)
     # view.clear_representations()
     mesh = ('mesh', poss, cols)
     view._add_shape([mesh], name='my_shape')
