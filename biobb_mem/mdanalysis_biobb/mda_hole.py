@@ -2,6 +2,7 @@
 
 """Module containing the MDAnalysis HOLE class and the command line interface."""
 import re
+import os
 import argparse
 import numpy as np
 import pandas as pd
@@ -105,7 +106,9 @@ class MDAHole(BiobbObject):
         # Load the universe
         u = mda.Universe(self.stage_io_dict["in"]["input_top_path"],
                          self.stage_io_dict["in"]["input_traj_path"])
-
+        # save current directory and move to temporary
+        cwd = os.getcwd()
+        os.chdir(self.stage_io_dict.get("unique_dir"))
         # Create HoleAnalysis object
         hole = HoleAnalysis(
             universe=u,
@@ -113,7 +116,8 @@ class MDAHole(BiobbObject):
             cpoint=self.cpoint,
             cvect=self.cvect,
             sample=self.sample,
-            executable=self.executable
+            executable=self.executable,
+            end_radius=self.end_radius
         )
         # Run the analysis with step parameter
         hole.run(
@@ -137,6 +141,8 @@ class MDAHole(BiobbObject):
             dot_density=self.dot_density
         )
         hole.delete_temporary_files()
+        # move back to original directory
+        os.chdir(cwd)
         # Copy files to host
         self.copy_to_host()
         # remove temporary folder(s)
