@@ -193,7 +193,7 @@ def parse_index(ndx):
     Args:
         ndx (str): Path to the GROMACS index file (.ndx).
     Returns:
-        dict: A dictionary where keys are group names and values are lists of integers representing atom indices.
+        dict: A dictionary where keys are group names for each leaflet in format "membrane_1_leaflet_1" and values are lists of integers representing atom indices.
     """
 
     # Read the leaflet.ndx file
