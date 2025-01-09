@@ -10,7 +10,7 @@ from biobb_common.tools import file_utils as fu
 import MDAnalysis as mda
 from MDAnalysis.transformations.boxdimensions import set_dimensions
 import shutil
-
+import numpy as np
 
 class FatslimMembranes(BiobbObject):
     """
@@ -28,6 +28,7 @@ class FatslimMembranes(BiobbObject):
             * **begin_frame** (*int*) - (-1) First frame index to be used for analysis.
             * **end_frame** (*int*) - (-1) Last frame index to be used for analysis.
             * **ignore_no_box** (*bool*) - (False) Ignore the absence of box information in the topology. If the topology does not contain box information, the box will be set to the minimum and maximum positions of the atoms.
+            * **return_hydrogen** (*bool*) - (False) Include hydrogen atoms in the output index file.
             * **binary_path** (*str*) - ("fatslim") Path to the fatslim executable binary.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
@@ -77,6 +78,7 @@ class FatslimMembranes(BiobbObject):
         self.begin_frame = properties.get('begin_frame', -1)
         self.end_frame = properties.get('end_frame', -1)
         self.ignore_no_box = properties.get('ignore_no_box', False)
+        self.return_hydrogen = properties.get('return_hydrogen', False)
         self.binary_path = properties.get('binary_path', 'fatslim')
         self.properties = properties
 
@@ -138,7 +140,19 @@ class FatslimMembranes(BiobbObject):
 
         # Run Biobb block
         self.run_biobb()
-        shutil.move(self.tmp_out[:-4]+'_0000.ndx', self.stage_io_dict["out"]["output_ndx_path"])
+        # Fatslim ignore H atoms so we add them manually
+        if self.return_hydrogen:
+            # Parse the atoms indices of the membrane without Hs
+            leaflet_groups = parse_index(self.tmp_out[:-4]+'_0000.ndx')
+            with mda.selections.gromacs.SelectionWriter(self.stage_io_dict["out"]["output_ndx_path"], mode='w') as ndx:
+                for key, value in leaflet_groups.items():
+                    # Select the residues using atom indexes
+                    res_sele = set(u.atoms[np.array(value)-1].residues.resindices)
+                    # Use the rexindex to select all the atoms of the residue
+                    sele = f"resindex {' '.join(map(str, res_sele))}"
+                    ndx.write(u.select_atoms(sele), name=key)
+        else:
+            shutil.move(self.tmp_out[:-4]+'_0000.ndx', self.stage_io_dict["out"]["output_ndx_path"])
         # Copy files to host
         self.copy_to_host()
 
@@ -232,7 +246,6 @@ def display_fatslim(input_top_path: str, lipid_sel: str, input_traj_path: str = 
     """
     try:
         import nglview as nv
-        import numpy as np
     except ImportError:
         raise ImportError('Please install the nglview package to visualize the membrane/s.')
 
@@ -253,11 +266,11 @@ def display_fatslim(input_top_path: str, lipid_sel: str, input_traj_path: str = 
         non_mem_resn -= set(top_resn)
         non_mem_resn -= set(bot_resn)
         if leaflets:
-            view.add_point(selection=", ".join(map(str, top_resn)), color=colors[n*2])              # lipids in top leaflet
-            view.add_point(selection=", ".join(map(str, bot_resn)), color=colors[n*2+1])            # lipids in bot leaflet
+            view.add_point(selection=", ".join(map(str, top_resn)), color=colors[n*2])     # lipids in top leaflet
+            view.add_point(selection=", ".join(map(str, bot_resn)), color=colors[n*2+1])   # lipids in bot leaflet
         else:
             mem_resn = np.concatenate((top_resn, bot_resn))
-            view.add_point(selection=", ".join(map(str, mem_resn)), color=colors[n*2])              # lipids in membrane
+            view.add_point(selection=", ".join(map(str, mem_resn)), color=colors[n*2])     # lipids in membrane
     if len(non_mem_resn) > 0:
         view.add_point(selection=", ".join(map(str, non_mem_resn)), color=non_mem_color)   # lipids without membrane
     return view
