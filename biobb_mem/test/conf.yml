@@ -37,6 +37,18 @@ cpptraj_density_complex:
     axis: y
     disable_logs: false
 
+fatslim_membranes:
+  paths:
+    input_top_path: file:test_data_dir/A01JD/A01JD.pdb
+    input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
+    output_ndx_path: leaflets.ndx
+    ref_output_ndx_path: file:test_reference_dir/fatslim/leaflets.ndx
+  properties:
+    disable_logs: true
+    ignore_no_box: true
+    selection: '(resname DPPC and name P8)'
+    cutoff: 2.2
+    
 lpp_assign_leaflets:
   paths:
     input_top_path: file:test_data_dir/A01JD/A01JD.pdb
@@ -72,15 +84,3 @@ mda_hole:
     disable_logs: true
     select: 'protein'
     steps: 5
-
-fatslim_membranes:
-  paths:
-    input_top_path: file:test_data_dir/A01JD/A01JD.pdb
-    input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
-    output_ndx_path: leaflets.ndx
-    ref_output_ndx_path: file:test_reference_dir/fatslim/leaflets.ndx
-  properties:
-    disable_logs: true
-    ignore_no_box: true
-    selection: '(resname DPPC and name P8)'
-    cutoff: 2.2

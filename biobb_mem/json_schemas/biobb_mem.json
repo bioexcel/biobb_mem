@@ -9,18 +9,18 @@
     "version": "5.0.4",
     "tools" : [
         {
-            "block" : "MDAHole", 
-            "tool" : "mda_hole", 
-            "desc" : "Wrapper of the MDAnalysis Hole module for analyzing hole geometry in protein channels and other macromolecular structures.",
-            "exec" : "mda_hole",
-            "docs": "https://biobb-mem.readthedocs.io/en/latest/mdanalysis_biobb.html#module-mdanalysis_biobb.mda_hole"
-        },
-        {
             "block" : "CpptrajDensity", 
             "tool" : "density",
             "desc" : "Calculates the density along an axis of a given cpptraj compatible trajectory.",
             "exec" : "cpptraj_density",
             "docs": "https://biobb-mem.readthedocs.io/en/latest/ambertools.html#module-ambertools.cpptraj_density"
+        },
+        {
+            "block" : "FatslimMembranes", 
+            "tool" : "fatslim_membranes", 
+            "desc" : "Identify membrane types and leaflets.",
+            "exec" : "fatslim_membranes",
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/fatslim.html#module-fatslim.fatslim_membranes"
         },
         {
             "block" : "LPPAssignLeaflets", 
@@ -36,11 +36,11 @@
             "docs": "https://biobb-mem.readthedocs.io/en/latest/lipyphilic_biobb.html#module-lipyphilic_biobb.lpp_zpositions"
         },
         {
-            "block" : "FatslimMembranes", 
-            "tool" : "fatslim_membranes", 
-            "desc" : "Identify membrane types and leaflets.",
-            "exec" : "fatslim_membranes",
-            "docs": "https://biobb-mem.readthedocs.io/en/latest/fatslim.html#module-fatslim.fatslim_membranes"
+            "block" : "MDAHole", 
+            "tool" : "mda_hole", 
+            "desc" : "Wrapper of the MDAnalysis Hole module for analyzing hole geometry in protein channels and other macromolecular structures.",
+            "exec" : "mda_hole",
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/mdanalysis_biobb.html#module-mdanalysis_biobb.mda_hole"
         }
     ],
     "dep_pypi" : [
