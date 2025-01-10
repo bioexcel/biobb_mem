@@ -168,6 +168,12 @@
                     "wf_prop": false,
                     "description": "Ignore the absence of box information in the topology. If the topology does not contain box information, the box will be set to the minimum and maximum positions of the atoms."
                 },
+                "return_hydrogen": {
+                    "type": "boolean",
+                    "default": false,
+                    "wf_prop": false,
+                    "description": "Include hydrogen atoms in the output index file."
+                },
                 "binary_path": {
                     "type": "string",
                     "default": "fatslim",
