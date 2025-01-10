@@ -4,9 +4,9 @@
     "github": "https://github.com/bioexcel/biobb_mem",
     "readthedocs": "https://biobb-mem.readthedocs.io/en/latest/",
     "conda": "https://anaconda.org/bioconda/biobb_mem",
-    "docker": "https://quay.io/biocontainers/biobb_mem:5.0.4--pyhdfd78af_0",
-    "singularity": "https://depot.galaxyproject.org/singularity/biobb_mem:5.0.4--pyhdfd78af_0",
-    "version": "5.0.4",
+    "docker": "https://quay.io/biocontainers/biobb_mem:5.0.5--pyhdfd78af_0",
+    "singularity": "https://depot.galaxyproject.org/singularity/biobb_mem:5.0.5--pyhdfd78af_0",
+    "version": "5.0.5",
     "tools" : [
         {
             "block" : "CpptrajDensity", 

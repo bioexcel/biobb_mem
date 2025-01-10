@@ -1,7 +1,12 @@
 
 # Biobb Membrane changelog
 
-## What's new in version [5.0.4](https://github.com/bioexcel/biobb_mem/releases/tag/v5.0.3)?
+## What's new in version [5.0.5](https://github.com/bioexcel/biobb_mem/releases/tag/v5.0.5)?
+### New features
+
+* [UPDATE] Add return_hydrogen to fatslim.
+
+## What's new in version [5.0.4](https://github.com/bioexcel/biobb_mem/releases/tag/v5.0.4)?
 ### New features
 
 * [UPDATE] New output_csv_path argument for mda_hole.
