@@ -12,6 +12,7 @@ from MDAnalysis.transformations.boxdimensions import set_dimensions
 import shutil
 import numpy as np
 
+
 class FatslimMembranes(BiobbObject):
     """
     | biobb_mem FatslimMembranes
