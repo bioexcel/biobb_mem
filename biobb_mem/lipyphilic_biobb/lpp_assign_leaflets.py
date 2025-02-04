@@ -6,7 +6,7 @@ from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
 import MDAnalysis as mda
-from MDAnalysis.transformations.boxdimensions import set_dimensions
+from biobb_mem.lipyphilic_biobb import calculate_box
 from lipyphilic.lib.assign_leaflets import AssignLeaflets
 import pandas as pd
 import numpy as np
@@ -100,19 +100,7 @@ class LPPAssignLeaflets(BiobbObject):
         if u.dimensions is None:
             if self.ignore_no_box:
                 print('Warning: trajectory probably has no box variable. Setting dimensions ussing the minimum and maximum positions of the atoms.')
-                # Initialize min and max positions with extreme values
-                min_pos = np.full(3, np.inf)
-                max_pos = np.full(3, -np.inf)
-
-                # Iterate over all frames to find the overall min and max positions
-                for ts in u.trajectory:
-                    positions = u.atoms.positions
-                    min_pos = np.minimum(min_pos, positions.min(axis=0))
-                    max_pos = np.maximum(max_pos, positions.max(axis=0))
-
-                # Calculate the dimensions of the box
-                box_dimensions = max_pos - min_pos
-                u.trajectory.add_transformations(set_dimensions([*box_dimensions, 90, 90, 90]))
+                calculate_box(u)
             else:
                 raise ValueError('The trajectory does not contain box information. Please set the ignore_no_box property to True to ignore this error.')
 
