@@ -12,6 +12,7 @@ from MDAnalysis.transformations.boxdimensions import set_dimensions
 import shutil
 import numpy as np
 
+
 class FatslimMembranes(BiobbObject):
     """
     | biobb_mem FatslimMembranes
@@ -207,7 +208,7 @@ def parse_index(ndx):
     Args:
         ndx (str): Path to the GROMACS index file (.ndx).
     Returns:
-        dict: A dictionary where keys are group names for each leaflet in format "membrane_1_leaflet_1" and values are lists of integers representing atom indices.
+        dict: A dictionary where keys are group names for each leaflet in format "membrane_1_leaflet_1" and values are lists of integers representing atom indices starting from 1.
     """
 
     # Read the leaflet.ndx file
