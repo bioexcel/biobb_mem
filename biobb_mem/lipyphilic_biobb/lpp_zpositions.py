@@ -6,7 +6,7 @@ from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
 import MDAnalysis as mda
-from biobb_mem.lipyphilic_biobb import calculate_box
+from biobb_mem.lipyphilic_biobb.common import calculate_box
 from lipyphilic.lib.z_positions import ZPositions
 import pandas as pd
 import numpy as np

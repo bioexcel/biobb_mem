@@ -6,7 +6,7 @@ from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
 import MDAnalysis as mda
-from biobb_mem.lipyphilic_biobb import calculate_box
+from biobb_mem.lipyphilic_biobb.common import calculate_box
 from lipyphilic.lib.assign_leaflets import AssignLeaflets
 import pandas as pd
 import numpy as np
@@ -21,7 +21,7 @@ class LPPAssignLeaflets(BiobbObject):
     Args:
         input_top_path (str): Path to the input structure or topology file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.pdb>`_. Accepted formats: crd (edam:3878), gro (edam:2033), mdcrd (edam:3878), mol2 (edam:3816), pdb (edam:1476), pdbqt (edam:1476), prmtop (edam:3881), psf (edam:3882), top (edam:3881), tpr (edam:2333), xml (edam:2332), xyz (edam:3887).
         input_traj_path (str): Path to the input trajectory to be processed. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc>`_. Accepted formats: arc (edam:2333), crd (edam:3878), dcd (edam:3878), ent (edam:1476), gro (edam:2033), inpcrd (edam:3878), mdcrd (edam:3878), mol2 (edam:3816), nc (edam:3650), pdb (edam:1476), pdbqt (edam:1476), restrt (edam:3886), tng (edam:3876), trr (edam:3910), xtc (edam:3875), xyz (edam:3887).
-        output_leaflets_path (str): Path to the output leaflet assignments. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/lipyphilic_biobb/leaflets_data.csv>`_. Accepted formats: csv (edam:format_3752).
+        output_leaflets_path (str): Path to the output leaflet assignments. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/lipyphilic_biobb/leaflets_data.csv>`_. Accepted formats: csv (edam:format_3752), npy  (edam:format_4003).
         properties (dic - Python dictionary object containing the tool parameters, not input/output files):
             * **start** (*int*) - (None) Starting frame for slicing.
             * **stop** (*int*) - (None) Ending frame for slicing.
@@ -118,22 +118,26 @@ class LPPAssignLeaflets(BiobbObject):
             stop=self.stop,
             step=self.steps
         )
-        # Save the results
-        frames = leaflets.leaflets.shape[1]
-        resnames = np.repeat(leaflets.membrane.resnames, frames)
-        resindices = np.tile(leaflets.membrane.resindices, frames)
-        frame_numbers = np.repeat(np.arange(frames), leaflets.membrane.n_residues)
 
-        df = pd.DataFrame({
-            'resname': resnames,
-            'resindex': resindices,
-            'frame': frame_numbers,
-            'leaflet_index': leaflets.leaflets.T.flatten()
-        })
+        out_format = self.stage_io_dict["out"]["output_leaflets_path"].split('.')[-1]
+        if out_format == 'csv':
+            # Save the results
+            frames = leaflets.leaflets.shape[1]
+            resnames = np.repeat(leaflets.membrane.resnames, frames)
+            resindices = np.tile(leaflets.membrane.resindices, frames)
+            frame_numbers = np.repeat(np.arange(frames), leaflets.membrane.n_residues)
 
-        # Save the DataFrame to a CSV file
-        df.to_csv(self.stage_io_dict["out"]["output_leaflets_path"], index=False)
+            df = pd.DataFrame({
+                'resname': resnames,
+                'resindex': resindices,
+                'frame': frame_numbers,
+                'leaflet_index': leaflets.leaflets.T.flatten()
+            })
 
+            # Save the DataFrame to a CSV file
+            df.to_csv(self.stage_io_dict["out"]["output_leaflets_path"], index=False)
+        elif out_format == 'npy':
+            np.save(self.stage_io_dict["out"]["output_leaflets_path"], leaflets.leaflets)
         # Copy files to host
         self.copy_to_host()
         # remove temporary folder(s)
