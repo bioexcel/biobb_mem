@@ -60,6 +60,18 @@ lpp_assign_leaflets:
     ignore_no_box: true
     lipid_sel: '(resname DPPC and name P8)'
 
+lpp_flip_flop:
+  paths:
+    input_top_path: file:test_data_dir/A01JD/A01JD.pdb
+    input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
+    input_leaflets_path: file:test_reference_dir/lipyphilic_biobb/leaflets_data.csv
+    output_flip_flop_path: flip_flop.csv
+    ref_output_flip_flop_path: file:test_reference_dir/lipyphilic_biobb/flip_flop.csv
+  properties:
+    disable_logs: true
+    ignore_no_box: true
+    lipid_sel: '(resname DPPC and name P8)'
+
 lpp_zpositions:
   paths:
     input_top_path: file:test_data_dir/A01JD/A01JD.pdb
