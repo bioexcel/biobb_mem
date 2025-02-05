@@ -24,7 +24,7 @@ class FatslimMembranes(BiobbObject):
         input_traj_path (str) (Optional): Path to the GROMACS trajectory file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc>`_. Accepted formats: xtc (edam:format_3875), trr (edam:format_3910), cpt (edam:format_2333), gro (edam:format_2033), g96 (edam:format_2033), pdb (edam:format_1476), tng (edam:format_3876).
         output_ndx_path (str): Path to the output index NDX file. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.ndx>`_. Accepted formats: ndx (edam:format_2033).
         properties (dic - Python dictionary object containing the tool parameters, not input/output files):
-            * **selection** (*str*) - ("resname DPPC and element P") Molecules used in the identification using MDAnalysis `selection language <https://docs.mdanalysis.org/stable/documentation_pages/selections.html>`_.
+            * **selection** (*str*) - ("not protein and element P") Headgroups used in the identification using MDAnalysis `selection language <https://docs.mdanalysis.org/stable/documentation_pages/selections.html>`_.
             * **cutoff** (*float*) - (2) Cutoff distance (in nm) to be used when leaflet identification is performed.
             * **begin_frame** (*int*) - (-1) First frame index to be used for analysis.
             * **end_frame** (*int*) - (-1) Last frame index to be used for analysis.
@@ -74,8 +74,8 @@ class FatslimMembranes(BiobbObject):
         }
 
         # Properties specific for BB
-        self.selection = properties.get('selection', "resname DPPC or resname POPC) and element P")
-        self.cutoff = properties.get('cutoff', 2.2)
+        self.selection = properties.get('selection', "not protein and element P")
+        self.cutoff = properties.get('cutoff', 2)
         self.begin_frame = properties.get('begin_frame', -1)
         self.end_frame = properties.get('end_frame', -1)
         self.ignore_no_box = properties.get('ignore_no_box', False)
