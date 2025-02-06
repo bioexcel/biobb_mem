@@ -48,6 +48,17 @@ fatslim_membranes:
     ignore_no_box: true
     selection: '(resname DPPC and name P8)'
     cutoff: 2.2
+
+fatslim_apl:
+  paths:
+    input_top_path: file:test_data_dir/A01JD/A01JD.pdb
+    input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
+    output_csv_path: apl.csv
+    ref_output_csv_path: file:test_reference_dir/fatslim/apl.csv
+  properties:
+    disable_logs: true
+    ignore_no_box: true
+    selection: '(resname DPPC and name P8)'
     
 lpp_assign_leaflets:
   paths:
