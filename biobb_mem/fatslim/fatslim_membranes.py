@@ -8,7 +8,7 @@ from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
 from biobb_common.tools import file_utils as fu
 import MDAnalysis as mda
-from MDAnalysis.transformations.boxdimensions import set_dimensions
+from biobb_mem.fatslim.common import calculate_box
 import shutil
 import numpy as np
 
@@ -102,11 +102,7 @@ class FatslimMembranes(BiobbObject):
         if u.dimensions is None:
             # FATSLiM ValueError: Box does not correspond to PBC=xyz
             if self.ignore_no_box:
-                print('Setting box dimensions using the minimum and maximum positions of the atoms.')
-                # Calculate the dimensions of the box
-                positions = u.atoms.positions
-                box_dimensions = positions.max(axis=0) - positions.min(axis=0)
-                u.trajectory.add_transformations(set_dimensions([*box_dimensions, 90, 90, 90]))
+                calculate_box(u)
             else:
                 print('The trajectory does not contain box information. Please set the ignore_no_box property to True to ignore this error.')
 

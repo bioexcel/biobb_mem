@@ -4,6 +4,7 @@ from MDAnalysis.transformations.boxdimensions import set_dimensions
 
 
 def calculate_box(u):
+    print('Warning: trajectory probably has no box variable. Setting dimensions using the minimum and maximum positions of the atoms.')
     # Initialize min and max positions with extreme values
     min_pos = np.full(3, np.inf)
     max_pos = np.full(3, -np.inf)
