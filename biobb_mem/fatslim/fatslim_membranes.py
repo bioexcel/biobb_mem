@@ -22,9 +22,10 @@ class FatslimMembranes(BiobbObject):
     Args:
         input_top_path (str): Path to the input topology file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.pdb>`_. Accepted formats: tpr (edam:format_2333), gro (edam:format_2033), g96 (edam:format_2033), pdb (edam:format_1476), brk (edam:format_2033), ent (edam:format_1476).
         input_traj_path (str) (Optional): Path to the GROMACS trajectory file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc>`_. Accepted formats: xtc (edam:format_3875), trr (edam:format_3910), cpt (edam:format_2333), gro (edam:format_2033), g96 (edam:format_2033), pdb (edam:format_1476), tng (edam:format_3876).
-        output_ndx_path (str): Path to the output index NDX file. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.ndx>`_. Accepted formats: ndx (edam:format_2033).
+        input_ndx_path (str) (Optional): Path to the input lipid headgroups index NDX file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.ndx>`_. Accepted formats: ndx (edam:format_2033).
+        output_ndx_path (str): Path to the output index NDX file. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/fatslim/leaflets.ndx>`_. Accepted formats: ndx (edam:format_2033).
         properties (dic - Python dictionary object containing the tool parameters, not input/output files):
-            * **selection** (*str*) - ("not protein and element P") Headgroups used in the identification using MDAnalysis `selection language <https://docs.mdanalysis.org/stable/documentation_pages/selections.html>`_.
+            * **selection** (*str*) - ("not protein and element P") Alternative ot the NDX file for choosing the Headgroups used in the identification using MDAnalysis `selection language <https://docs.mdanalysis.org/stable/documentation_pages/selections.html>`_.
             * **cutoff** (*float*) - (2) Cutoff distance (in nm) to be used when leaflet identification is performed.
             * **begin_frame** (*int*) - (-1) First frame index to be used for analysis.
             * **end_frame** (*int*) - (-1) Last frame index to be used for analysis.
@@ -59,7 +60,8 @@ class FatslimMembranes(BiobbObject):
 
     """
 
-    def __init__(self, input_top_path, output_ndx_path, input_traj_path=None, properties=None, **kwargs) -> None:
+    def __init__(self, input_top_path, output_ndx_path, input_traj_path=None, 
+                 input_ndx_path=None, properties=None, **kwargs) -> None:
         properties = properties or {}
 
         # Call parent class constructor
@@ -69,7 +71,9 @@ class FatslimMembranes(BiobbObject):
         # Input/Output files
         self.io_dict = {
             "in": {"input_top_path": input_top_path,
-                   "input_traj_path": input_traj_path},
+                   "input_traj_path": input_traj_path,
+                   "input_ndx_path": input_ndx_path
+                   },
             "out": {"output_ndx_path": output_ndx_path}
         }
 
@@ -107,9 +111,12 @@ class FatslimMembranes(BiobbObject):
                 print('The trajectory does not contain box information. Please set the ignore_no_box property to True to ignore this error.')
 
         # Build the index to select the atoms from the membrane
-        self.tmp_ndx = str(PurePath(fu.create_unique_dir()).joinpath('headgroups.ndx'))
-        with mda.selections.gromacs.SelectionWriter(self.tmp_ndx, mode='w') as ndx:
-            ndx.write(u.select_atoms(self.selection), name='headgroups')
+        if self.stage_io_dict["in"].get('input_ndx_path', None):
+            self.tmp_ndx = self.stage_io_dict["in"]["input_ndx_path"]
+        else:
+            self.tmp_ndx = str(PurePath(fu.create_unique_dir()).joinpath('headgroups.ndx'))
+            with mda.selections.gromacs.SelectionWriter(self.tmp_ndx, mode='w') as ndx:
+                ndx.write(u.select_atoms(self.selection), name='headgroups')
 
         if self.stage_io_dict["in"]["input_top_path"].endswith('gro'):
             self.cfg = self.stage_io_dict["in"]["input_top_path"]
@@ -167,12 +174,13 @@ class FatslimMembranes(BiobbObject):
         return self.return_code
 
 
-def fatslim_membranes(input_top_path: str, output_ndx_path: str, input_traj_path: str = None, properties: dict = None, **kwargs) -> int:
+def fatslim_membranes(input_top_path: str, output_ndx_path: str, input_traj_path: str = None, input_ndx_path: str = None, properties: dict = None, **kwargs) -> int:
     """Execute the :class:`FatslimMembranes <fatslim.fatslim_membranes.FatslimMembranes>` class and
     execute the :meth:`launch() <fatslim.fatslim_membranes.FatslimMembranes.launch>` method."""
 
     return FatslimMembranes(input_top_path=input_top_path,
                             input_traj_path=input_traj_path,
+                            input_ndx_path=input_ndx_path,
                             output_ndx_path=output_ndx_path,
                             properties=properties, **kwargs).launch()
 
@@ -187,6 +195,7 @@ def main():
     required_args.add_argument('--input_top_path', required=True, help='Path to the input structure or topology file. Accepted formats: ent, gro, pdb, tpr.')
     required_args.add_argument('--output_ndx_path', required=True, help='Path to the GROMACS index file. Accepted formats: ndx')
     parser.add_argument('--input_traj_path', required=False, help='Path to the input trajectory to be processed. Accepted formats: gro, pdb, tng, trr, xtc.')
+    parser.add_argument('--input_ndx_path', required=False, help='Path to the input lipid headgroups index NDX file. Accepted formats: ndx.')
 
     args = parser.parse_args()
     args.config = args.config or "{}"
@@ -195,6 +204,8 @@ def main():
     # Specific call of each building block
     fatslim_membranes(input_top_path=args.input_top_path,
                       output_ndx_path=args.output_ndx_path,
+                      input_traj_path=args.input_traj_path,
+                      input_ndx_path=args.input_ndx_path,
                       properties=properties)
 
 

@@ -58,7 +58,7 @@ fatslim_apl:
   properties:
     disable_logs: true
     ignore_no_box: true
-    selection: '(resname DPPC and name P8)'
+    lipid_selection: '(resname DPPC and name P8)'
     
 lpp_assign_leaflets:
   paths:
