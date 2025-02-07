@@ -21,8 +21,8 @@ class FatslimAPL(BiobbObject):
     Args:
         input_top_path (str): Path to the input topology file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.pdb>`_. Accepted formats: tpr (edam:format_2333), gro (edam:format_2033), g96 (edam:format_2033), pdb (edam:format_1476), brk (edam:format_2033), ent (edam:format_1476).
         input_traj_path (str) (Optional): Path to the GROMACS trajectory file. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc>`_. Accepted formats: xtc (edam:format_3875), trr (edam:format_3910), cpt (edam:format_2333), gro (edam:format_2033), g96 (edam:format_2033), pdb (edam:format_1476), tng (edam:format_3876).
-        input_ndx_path (str) (Optional): Path to the input index NDX file for lipid headgroups and the interacting group. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.ndx>`_. Accepted formats: ndx (edam:format_2033).
-        output_csv_path (str): Path to the output CSV file. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/...>`_. Accepted formats: csv (edam:format_3752).
+        input_ndx_path (str) (Optional): Path to the input index NDX file for lipid headgroups and the interacting group. File type: input. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/headgroups.ndx>`_. Accepted formats: ndx (edam:format_2033).
+        output_csv_path (str): Path to the output CSV file. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/fatslim/apl.ndx>`_. Accepted formats: csv (edam:format_3752).
         properties (dic - Python dictionary object containing the tool parameters, not input/output files):
             * **lipid_selection** (*str*) - ("not protein and element P") Headgroups MDAnalysis `selection <https://docs.mdanalysis.org/stable/documentation_pages/selections.html>`_.
             * **protein_selection** (*str*) - ("protein") Protein selection interacting with the membrane.
@@ -114,7 +114,7 @@ class FatslimAPL(BiobbObject):
         if self.stage_io_dict["in"].get('input_ndx_path', None):
             self.tmp_ndx = self.stage_io_dict["in"]["input_ndx_path"]
         else:
-            self.tmp_ndx = str(PurePath(fu.create_unique_dir()).joinpath('index.ndx'))
+            self.tmp_ndx = str(PurePath(fu.create_unique_dir()).joinpath('apl_inp.ndx'))
             with mda.selections.gromacs.SelectionWriter(self.tmp_ndx, mode='w') as ndx:
                 ndx.write(u.select_atoms(self.lipid_selection), name='headgroups')
                 ndx.write(u.select_atoms(self.protein_selection), name='protein')

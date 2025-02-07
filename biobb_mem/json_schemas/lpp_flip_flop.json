@@ -1,8 +1,8 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "$id": "http://bioexcel.eu/biobb_mem/json_schemas/1.0/lpp_assign_leaflets",
-    "name": "biobb_mem LPPAssignLeaflets",
-    "title": "Wrapper of the LiPyphilic AssignLeaflets module for assigning lipids to leaflets in a bilayer.",
+    "$id": "http://bioexcel.eu/biobb_mem/json_schemas/1.0/lpp_flip_flop",
+    "name": "biobb_mem LPPFlipFlop",
+    "title": "Wrapper of the LiPyphilic FlipFlop module for finding flip-flop events in a lipid bilayer.",
     "description": "LiPyphilic is a Python package for analyzing MD simulations of lipid bilayers. The parameter names and defaults are the same as the ones in the official Lipyphilic documentation.",
     "type": "object",
     "info": {
@@ -19,7 +19,8 @@
     "required": [
         "input_top_path",
         "input_traj_path",
-        "output_leaflets_path"
+        "input_leaflets_path",
+        "output_flip_flop_path"
     ],
     "properties": {
         "input_top_path": {
@@ -210,10 +211,10 @@
                 }
             ]
         },
-        "output_leaflets_path": {
+        "input_leaflets_path": {
             "type": "string",
-            "description": "Path to the output leaflet assignments",
-            "filetype": "output",
+            "description": "Path to the input leaflet assignments",
+            "filetype": "input",
             "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/lipyphilic_biobb/leaflets_data.csv",
             "enum": [
                 ".*\\.csv$",
@@ -222,13 +223,29 @@
             "file_formats": [
                 {
                     "extension": ".*\\.csv$",
-                    "description": "Path to the output leaflet assignments",
+                    "description": "Path to the input leaflet assignments",
                     "edam": "format_3752"
                 },
                 {
                     "extension": ".*\\.npy$",
-                    "description": "Path to the output leaflet assignments",
+                    "description": "Path to the input leaflet assignments",
                     "edam": "format_4003"
+                }
+            ]
+        },
+        "output_flip_flop_path": {
+            "type": "string",
+            "description": "Path to the output flip-flop data",
+            "filetype": "output",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/lipyphilic_biobb/flip_flop.csv",
+            "enum": [
+                ".*\\.csv$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.csv$",
+                    "description": "Path to the output flip-flop data",
+                    "edam": "format_3752"
                 }
             ]
         },
@@ -259,23 +276,11 @@
                     "wf_prop": false,
                     "description": "Selection string for the lipids in a membrane. The selection should cover **all** residues in the membrane, including cholesterol."
                 },
-                "midplane_sel": {
-                    "type": "string",
-                    "default": null,
-                    "wf_prop": false,
-                    "description": "Selection string for residues that may be midplane. Any residues not in this selection will be assigned to a leaflet regardless of its proximity to the midplane. The default is `None`, in which case all lipids will be assigned to either the upper or lower leaflet."
-                },
-                "midplane_cutoff": {
+                "frame_cutoff": {
                     "type": "number",
-                    "default": 0.0,
+                    "default": 1.0,
                     "wf_prop": false,
-                    "description": "Minimum distance in *z* an atom must be from the midplane to be assigned to a leaflet rather than the midplane. The default is `0`, in which case all lipids will be assigned to either the upper or lower leaflet. Must be non-negative."
-                },
-                "n_bins": {
-                    "type": "integer",
-                    "default": 1,
-                    "wf_prop": false,
-                    "description": "Number of bins in *x* and *y* to use to create a grid of membrane patches. Local membrane midpoints are computed for each patch, and lipids assigned a leaflet based on the distance to their local membrane midpoint. The default is `1`, which is equivalent to computing a single global midpoint."
+                    "description": "To be counted as a successful flip-flop, a molecule must reside in its new leaflet for at least \u2018frame_cutoff\u2019 consecutive frames. The default is 1, in which case the molecule only needs to move to the opposing leaflet for a single frame for the flip-flop to be successful."
                 },
                 "ignore_no_box": {
                     "type": "boolean",

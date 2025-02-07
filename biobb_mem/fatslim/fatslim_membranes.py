@@ -60,7 +60,7 @@ class FatslimMembranes(BiobbObject):
 
     """
 
-    def __init__(self, input_top_path, output_ndx_path, input_traj_path=None, 
+    def __init__(self, input_top_path, output_ndx_path, input_traj_path=None,
                  input_ndx_path=None, properties=None, **kwargs) -> None:
         properties = properties or {}
 
