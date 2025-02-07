@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Module containing the FATSLiM Membranes class and the command line interface."""
+"""Module containing the FATSLiM Area per Lipid class and the command line interface."""
 import argparse
 from pathlib import PurePath
 from biobb_common.generic.biobb_object import BiobbObject
@@ -15,7 +15,7 @@ import shutil
 class FatslimAPL(BiobbObject):
     """
     | biobb_mem FatslimAPL
-    | Wrapper of the `FATSLiM membranes <https://pythonhosted.org/fatslim/documentation/apl.html>`_ module for area per lipid calculation.
+    | Wrapper of the `FATSLiM area per lipid <https://pythonhosted.org/fatslim/documentation/apl.html>`_ module for area per lipid calculation.
     | FATSLiM is designed to provide efficient and robust analysis of physical parameters from MD trajectories, with a focus on processing large trajectory files quickly.
 
     Args:
