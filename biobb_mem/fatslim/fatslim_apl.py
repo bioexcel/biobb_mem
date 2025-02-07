@@ -102,14 +102,15 @@ class FatslimAPL(BiobbObject):
         u = mda.Universe(topology=self.stage_io_dict["in"]["input_top_path"],
                          coordinates=self.stage_io_dict["in"].get("input_traj_path"))
         if u.dimensions is None:
+            # FATSLiM ValueError: Box does not correspond to PBC=xyz
             if self.ignore_no_box:
-                print('Warning: trajectory probably has no box variable. Setting dimensions ussing the minimum and maximum positions of the atoms.')
+                print('Setting box dimensions using the minimum and maximum positions of the atoms.')
                 # Calculate the dimensions of the box
                 positions = u.atoms.positions
                 box_dimensions = positions.max(axis=0) - positions.min(axis=0)
                 u.trajectory.add_transformations(set_dimensions([*box_dimensions, 90, 90, 90]))
             else:
-                raise ValueError('The trajectory does not contain box information. Please set the ignore_no_box property to True to ignore this error.')
+                print('The trajectory does not contain box information. Please set the ignore_no_box property to True to ignore this error.')
 
         # Build the index to select the atoms from the membrane
         self.tmp_ndx = str(PurePath(fu.create_unique_dir()).joinpath('index.ndx'))

@@ -100,7 +100,7 @@ class LPPZPositions(BiobbObject):
         u = mda.Universe(self.stage_io_dict["in"]["input_top_path"], self.stage_io_dict["in"]["input_traj_path"])
         if u.dimensions is None:
             if self.ignore_no_box:
-                print('Warning: trajectory probably has no box variable. Setting dimensions ussing the minimum and maximum positions of the atoms.')
+                print('Warning: trajectory probably has no box variable. Setting dimensions using the minimum and maximum positions of the atoms.')
                 calculate_box(u)
             else:
                 raise ValueError('The trajectory does not contain box information. Please set the ignore_no_box property to True to ignore this error.')
