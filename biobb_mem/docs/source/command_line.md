@@ -364,6 +364,67 @@ lpp_flip_flop --config config_lpp_flip_flop.yml --input_top_path A01JD.pdb --inp
 lpp_flip_flop --config config_lpp_flip_flop.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --input_leaflets_path leaflets_data.csv --output_flip_flop_path flip_flop.csv
 ```
 
+## Fatslim_apl
+Wrapper of the FATSLiM area per lipid module for area per lipid calculation.
+### Get help
+Command:
+```python
+fatslim_apl -h
+```
+    /bin/sh: 1: fatslim_apl: not found
+### I / O Arguments
+Syntax: input_argument (datatype) : Definition
+
+Config input / output arguments for this building block:
+* **input_top_path** (*string*): Path to the input topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.pdb). Accepted formats: TPR, GRO, G96, PDB, BRK, ENT
+* **input_traj_path** (*string*): Path to the GROMACS trajectory file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc). Accepted formats: XTC, TRR, CPT, GRO, G96, PDB, TNG
+* **input_ndx_path** (*string*): Path to the input index NDX file for lipid headgroups and the interacting group. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/headgroups.ndx). Accepted formats: NDX
+* **output_csv_path** (*string*): Path to the output CSV file. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/fatslim/apl.ndx). Accepted formats: CSV
+### Config
+Syntax: input_parameter (datatype) - (default_value) Definition
+
+Config parameters for this building block:
+* **lipid_selection** (*string*): (not protein and element P) Headgroups MDAnalysis selection..
+* **protein_selection** (*string*): (protein and not element H) Protein selection interacting with the membrane..
+* **cutoff** (*number*): (3.0) This option allows user to specify the cutoff distance (in nm) to be used when performing the neighbor search needed by the APL calculation algorithm.
+* **limit** (*number*): (10.0) This option allows user to specify the upper limit (in nm2) for a valid area per lipid value..
+* **begin_frame** (*integer*): (-1) First frame index to be used for analysis..
+* **end_frame** (*integer*): (-1) Last frame index to be used for analysis..
+* **ignore_no_box** (*boolean*): (False) Ignore the absence of box information in the topology. If the topology does not contain box information, the box will be set to the minimum and maximum positions of the atoms..
+* **return_hydrogen** (*boolean*): (False) Include hydrogen atoms in the output index file..
+* **binary_path** (*string*): (fatslim) Path to the fatslim executable binary..
+* **remove_tmp** (*boolean*): (True) Remove temporal files..
+* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
+### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_apl.yml)
+```python
+properties:
+  disable_logs: true
+  ignore_no_box: true
+  lipid_selection: (resname DPPC and name P8)
+
+```
+#### Command line
+```python
+fatslim_apl --config config_fatslim_apl.yml --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --input_ndx_path headgroups.ndx --output_csv_path apl.ndx
+```
+### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_apl.json)
+```python
+{
+  "properties": {
+    "disable_logs": true,
+    "ignore_no_box": true,
+    "lipid_selection": "(resname DPPC and name P8)"
+  }
+}
+```
+#### Command line
+```python
+fatslim_apl --config config_fatslim_apl.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --input_ndx_path headgroups.ndx --output_csv_path apl.ndx
+```
+
 ## Fatslim_membranes
 Wrapper of the FATSLiM membranes module for leaflet and membrane identification.
 ### Get help
