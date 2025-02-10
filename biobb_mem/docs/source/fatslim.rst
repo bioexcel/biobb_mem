@@ -4,18 +4,18 @@ fatslim package
 Submodules
 ------------
 
-fatslim.fatslim_membranes module
+fatslim.fatslim_apl module
 -----------------------------------
 
-.. automodule:: fatslim.fatslim_membranes
+.. automodule:: fatslim.fatslim_apl
     :members:
     :undoc-members:
     :show-inheritance:
 
-fatslim.apl module
+fatslim.fatslim_membranes module
 -----------------------------------
 
-.. automodule:: fatslim.apl
+.. automodule:: fatslim.fatslim_membranes
     :members:
     :undoc-members:
     :show-inheritance:

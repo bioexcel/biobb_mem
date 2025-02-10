@@ -6,6 +6,6 @@ biobb_mem
 
    ambertools
    fatslim
-   lipyphilic_biobb
    gromacs
+   lipyphilic_biobb
    mdanalysis_biobb
