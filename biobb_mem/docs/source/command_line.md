@@ -313,7 +313,23 @@ Command:
 ```python
 lpp_flip_flop -h
 ```
-    /bin/sh: 1: lpp_flip_flop: not found
+    usage: lpp_flip_flop [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH --input_leaflets_path INPUT_LEAFLETS_PATH --output_flip_flop_path OUTPUT_FLIP_FLOP_PATH
+    
+    Find flip-flop events in a lipid bilayer.
+    
+    options:
+      -h, --help            show this help message and exit
+      --config CONFIG       Configuration file
+    
+    required arguments:
+      --input_top_path INPUT_TOP_PATH
+                            Path to the input structure or topology file. Accepted formats: crd, gro, mdcrd, mol2, pdb, pdbqt, prmtop, psf, top, tpr, xml, xyz.
+      --input_traj_path INPUT_TRAJ_PATH
+                            Path to the input trajectory to be processed. Accepted formats: arc, crd, dcd, ent, gro, inpcrd, mdcrd, mol2, nc, pdb, pdbqt, restrt, tng, trr, xtc, xyz.
+      --input_leaflets_path INPUT_LEAFLETS_PATH
+                            Path to the input leaflet assignments. Accepted formats: csv, npy.
+      --output_flip_flop_path OUTPUT_FLIP_FLOP_PATH
+                            Path to the output processed analysis.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
@@ -371,7 +387,21 @@ Command:
 ```python
 fatslim_apl -h
 ```
-    /bin/sh: 1: fatslim_apl: not found
+    usage: fatslim_apl [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --output_csv_path OUTPUT_CSV_PATH [--input_traj_path INPUT_TRAJ_PATH]
+    
+    Calculate the area per lipid.
+    
+    options:
+      -h, --help            show this help message and exit
+      --config CONFIG       Configuration file
+      --input_traj_path INPUT_TRAJ_PATH
+                            Path to the input trajectory to be processed. Accepted formats: gro, pdb, tng, trr, xtc.
+    
+    required arguments:
+      --input_top_path INPUT_TOP_PATH
+                            Path to the input structure or topology file. Accepted formats: ent, gro, pdb, tpr.
+      --output_csv_path OUTPUT_CSV_PATH
+                            Path to the GROMACS index file. Accepted formats: ndx
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
@@ -509,7 +539,25 @@ Command:
 ```python
 gmx_order -h
 ```
-    /bin/sh: 1: gmx_order: not found
+    usage: gmx_order [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH [--input_index_path INPUT_INDEX_PATH] [--output_deuter_path OUTPUT_DEUTER_PATH] [--output_order_path OUTPUT_ORDER_PATH]
+    
+    Compute lipid order parameters using GROMACS order tool.
+    
+    options:
+      -h, --help            show this help message and exit
+      --config CONFIG       Configuration file
+      --input_index_path INPUT_INDEX_PATH
+                            Path to the GROMACS index file.
+      --output_deuter_path OUTPUT_DEUTER_PATH
+                            Path to deuterium order parameters output file.
+      --output_order_path OUTPUT_ORDER_PATH
+                            Path to order tensor diagonal elements output file.
+    
+    required arguments:
+      --input_top_path INPUT_TOP_PATH
+                            Path to the input structure or topology file.
+      --input_traj_path INPUT_TRAJ_PATH
+                            Path to the input trajectory to be processed.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
