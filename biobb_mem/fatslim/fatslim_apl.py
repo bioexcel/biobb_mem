@@ -25,7 +25,7 @@ class FatslimAPL(BiobbObject):
         output_csv_path (str): Path to the output CSV file. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/fatslim/apl.ndx>`_. Accepted formats: csv (edam:format_3752).
         properties (dic - Python dictionary object containing the tool parameters, not input/output files):
             * **lipid_selection** (*str*) - ("not protein and element P") Headgroups MDAnalysis `selection <https://docs.mdanalysis.org/stable/documentation_pages/selections.html>`_.
-            * **protein_selection** (*str*) - ("protein") Protein selection interacting with the membrane.
+            * **protein_selection** (*str*) - ("protein and not element H") Protein selection interacting with the membrane.
             * **cutoff** (*float*) - (3) This option allows user to specify the cutoff distance (in nm) to be used when performing the neighbor search needed by the APL calculation algorithm
             * **limit** (*float*) - (10) This option allows user to specify the upper limit (in nm2) for a valid area per lipid value.
             * **begin_frame** (*int*) - (-1) First frame index to be used for analysis.
