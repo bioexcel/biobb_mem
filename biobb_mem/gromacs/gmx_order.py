@@ -21,7 +21,7 @@ class GMXOrder(BiobbObject):
         output_deuter_path (str): Path to deuterium order parameters xvgr/xmgr file. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/gromacs/deuter.xvg>`_. Accepted formats: xvg (edam:format_2330).
         output_order_path (str) (Optional): Path to order tensor diagonal elements xvgr/xmgr file. File type: output. `Sample file <https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/gromacs/order.xvg>`_. Accepted formats: xvg (edam:format_2330).
         properties (dic - Python dictionary object containing the tool parameters, not input/output files):
-            * **d** (*int*) - ("z") Direction of the normal on the membrane: z, x, y.
+            * **d** (*str*) - ("z") Direction of the normal on the membrane: z, x, y.
             * **binary_path** (*str*) - ("cpptraj") Path to the cpptraj executable binary.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.

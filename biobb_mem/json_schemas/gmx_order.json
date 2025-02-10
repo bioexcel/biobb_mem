@@ -1,0 +1,179 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://bioexcel.eu/biobb_mem/json_schemas/1.0/gmx_order",
+    "name": "biobb_mem GMXOrder",
+    "title": "Wrapper of the GROMACS order module for computing lipid order parameters per atom for carbon tails.",
+    "description": "GROMCAS order only works for saturated carbons and united atom force fields.",
+    "type": "object",
+    "info": {
+        "wrapped_software": {
+            "name": "GROMACS order",
+            "version": "2024.2",
+            "license": "LGPL 2.1"
+        },
+        "ontology": {
+            "name": "EDAM",
+            "schema": "http://edamontology.org/EDAM.owl"
+        }
+    },
+    "required": [
+        "input_top_path",
+        "input_traj_path",
+        "input_index_path",
+        "output_deuter_path"
+    ],
+    "properties": {
+        "input_top_path": {
+            "type": "string",
+            "description": "Path to the input structure or topology file",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/ambertools/topology.tpr",
+            "enum": [
+                ".*\\.tpr$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.tpr$",
+                    "description": "Path to the input structure or topology file",
+                    "edam": "format_2333"
+                }
+            ]
+        },
+        "input_traj_path": {
+            "type": "string",
+            "description": "Path to the input trajectory to be processed",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/ambertools/trajectory.xtc",
+            "enum": [
+                ".*\\.xtc$",
+                ".*\\.trr$",
+                ".*\\.cpt$",
+                ".*\\.gro$",
+                ".*\\.g96$",
+                ".*\\.pdb$",
+                ".*\\.tng$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.xtc$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "format_3875"
+                },
+                {
+                    "extension": ".*\\.trr$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "format_3910"
+                },
+                {
+                    "extension": ".*\\.cpt$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "format_2333"
+                },
+                {
+                    "extension": ".*\\.gro$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "format_2033"
+                },
+                {
+                    "extension": ".*\\.g96$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "format_2033"
+                },
+                {
+                    "extension": ".*\\.pdb$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "format_1476"
+                },
+                {
+                    "extension": ".*\\.tng$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "format_3876"
+                }
+            ]
+        },
+        "input_index_path": {
+            "type": "string",
+            "description": "Path to the GROMACS index file",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/       ",
+            "enum": [
+                ".*\\.ndx$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.ndx$",
+                    "description": "Path to the GROMACS index file",
+                    "edam": "format_2033"
+                }
+            ]
+        },
+        "output_deuter_path": {
+            "type": "string",
+            "description": "Path to deuterium order parameters xvgr/xmgr file",
+            "filetype": "output",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/gromacs/deuter.xvg",
+            "enum": [
+                ".*\\.xvg$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.xvg$",
+                    "description": "Path to deuterium order parameters xvgr/xmgr file",
+                    "edam": "format_2330"
+                }
+            ]
+        },
+        "output_order_path": {
+            "type": "string",
+            "description": "Path to order tensor diagonal elements xvgr/xmgr file",
+            "filetype": "output",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/gromacs/order.xvg",
+            "enum": [
+                ".*\\.xvg$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.xvg$",
+                    "description": "Path to order tensor diagonal elements xvgr/xmgr file",
+                    "edam": "format_2330"
+                }
+            ]
+        },
+        "properties": {
+            "type": "object",
+            "properties": {
+                "d": {
+                    "type": "string",
+                    "default": "z",
+                    "wf_prop": false,
+                    "description": "Direction of the normal on the membrane: z, x, y."
+                },
+                "binary_path": {
+                    "type": "string",
+                    "default": "cpptraj",
+                    "wf_prop": false,
+                    "description": "Path to the cpptraj executable binary."
+                },
+                "remove_tmp": {
+                    "type": "boolean",
+                    "default": true,
+                    "wf_prop": true,
+                    "description": "Remove temporal files."
+                },
+                "restart": {
+                    "type": "boolean",
+                    "default": false,
+                    "wf_prop": true,
+                    "description": "Do not execute if output files exist."
+                },
+                "sandbox_path": {
+                    "type": "string",
+                    "default": "./",
+                    "wf_prop": true,
+                    "description": "Parent path to the sandbox directory."
+                }
+            }
+        }
+    },
+    "additionalProperties": false
+}

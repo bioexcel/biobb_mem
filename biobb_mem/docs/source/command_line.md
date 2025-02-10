@@ -440,3 +440,54 @@ fatslim_membranes --config config_fatslim_membranes.yml --input_top_path A01JD.p
 ```python
 fatslim_membranes --config config_fatslim_membranes.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --input_ndx_path A01JD.ndx --output_ndx_path leaflets.ndx
 ```
+
+## Gmx_order
+Wrapper of the GROMACS order module for computing lipid order parameters per atom for carbon tails.
+### Get help
+Command:
+```python
+gmx_order -h
+```
+    /bin/sh: 1: gmx_order: not found
+### I / O Arguments
+Syntax: input_argument (datatype) : Definition
+
+Config input / output arguments for this building block:
+* **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/ambertools/topology.tpr). Accepted formats: TPR
+* **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/ambertools/trajectory.xtc). Accepted formats: XTC, TRR, CPT, GRO, G96, PDB, TNG
+* **input_index_path** (*string*): Path to the GROMACS index file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/       ). Accepted formats: NDX
+* **output_deuter_path** (*string*): Path to deuterium order parameters xvgr/xmgr file. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/gromacs/deuter.xvg). Accepted formats: XVG
+* **output_order_path** (*string*): Path to order tensor diagonal elements xvgr/xmgr file. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/gromacs/order.xvg). Accepted formats: XVG
+### Config
+Syntax: input_parameter (datatype) - (default_value) Definition
+
+Config parameters for this building block:
+* **d** (*string*): (z) Direction of the normal on the membrane: z, x, y..
+* **binary_path** (*string*): (cpptraj) Path to the cpptraj executable binary..
+* **remove_tmp** (*boolean*): (True) Remove temporal files..
+* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
+### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_gmx_order.yml)
+```python
+properties:
+  disable_logs: true
+
+```
+#### Command line
+```python
+gmx_order --config config_gmx_order.yml --input_top_path topology.tpr --input_traj_path trajectory.xtc --input_index_path         --output_deuter_path deuter.xvg --output_order_path order.xvg
+```
+### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_gmx_order.json)
+```python
+{
+  "properties": {
+    "disable_logs": true
+  }
+}
+```
+#### Command line
+```python
+gmx_order --config config_gmx_order.json --input_top_path topology.tpr --input_traj_path trajectory.xtc --input_index_path         --output_deuter_path deuter.xvg --output_order_path order.xvg
+```
