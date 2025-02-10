@@ -174,7 +174,7 @@ def fatslim_apl(input_top_path: str, output_csv_path: str, input_traj_path: str 
 
 def main():
     """Command line execution of this building block. Please check the command line documentation."""
-    parser = argparse.ArgumentParser(description="Calculates the density along an axis of a given cpptraj compatible trajectory.", formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999))
+    parser = argparse.ArgumentParser(description="Calculate the area per lipid.", formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999))
     parser.add_argument('--config', required=False, help='Configuration file')
 
     # Specific args of each building block

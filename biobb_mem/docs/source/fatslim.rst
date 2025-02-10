@@ -11,3 +11,11 @@ fatslim.fatslim_membranes module
     :members:
     :undoc-members:
     :show-inheritance:
+
+fatslim.apl module
+-----------------------------------
+
+.. automodule:: fatslim.apl
+    :members:
+    :undoc-members:
+    :show-inheritance:

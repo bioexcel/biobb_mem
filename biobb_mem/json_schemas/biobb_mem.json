@@ -16,6 +16,13 @@
             "docs": "https://biobb-mem.readthedocs.io/en/latest/ambertools.html#module-ambertools.cpptraj_density"
         },
         {
+            "block" : "FatslimAPL", 
+            "tool" : "fatslim_apl", 
+            "desc" : "Calculate the area per lipid.",
+            "exec" : "fatslim_apl",
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/fatslim.html#module-fatslim.fatslim_apl"
+        },
+        {
             "block" : "FatslimMembranes", 
             "tool" : "fatslim_membranes", 
             "desc" : "Identify membrane types and leaflets.",
@@ -23,12 +30,27 @@
             "docs": "https://biobb-mem.readthedocs.io/en/latest/fatslim.html#module-fatslim.fatslim_membranes"
         },
         {
+            "block" : "GMXOrder", 
+            "tool" : "gmx_order", 
+            "desc" : "Compute lipid order parameters using GROMACS order tool.",
+            "exec" : "gmx_order",
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/gromacs.html#module-gromacs.gmx_order"
+        },
+        {
             "block" : "LPPAssignLeaflets", 
             "tool" : "lpp_assign_leaflets", 
             "desc" : "Assign lipids to leaflets in a bilayer.",
             "exec" : "lpp_assign_leaflets",
             "docs": "https://biobb-mem.readthedocs.io/en/latest/lipyphilic_biobb.html#module-lipyphilic_biobb.lpp_assign_leaflets"
-        },{
+        },
+        {
+            "block" : "LPPFlipFlop", 
+            "tool" : "lpp_flip_flop", 
+            "desc" : "Find flip-flop events in a lipid bilayer.",
+            "exec" : "lpp_flip_flop",
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/lipyphilic_biobb.html#module-lipyphilic_biobb.lpp_flip_flop"
+        },
+        {
             "block" : "LPPZPositions", 
             "tool" : "lpp_zpositions", 
             "desc" : "Calculate the z distance in of lipids to the bilayer center.",
