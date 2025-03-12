@@ -1,0 +1,313 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://bioexcel.eu/biobb_mem/json_schemas/1.0/lpp_flip_flop",
+    "name": "biobb_mem LPPFlipFlop",
+    "title": "Wrapper of the LiPyphilic FlipFlop module for finding flip-flop events in a lipid bilayer.",
+    "description": "LiPyphilic is a Python package for analyzing MD simulations of lipid bilayers. The parameter names and defaults are the same as the ones in the official Lipyphilic documentation.",
+    "type": "object",
+    "info": {
+        "wrapped_software": {
+            "name": "LiPyphilic",
+            "version": "0.10.0",
+            "license": "GPL-2.0"
+        },
+        "ontology": {
+            "name": "EDAM",
+            "schema": "http://edamontology.org/EDAM.owl"
+        }
+    },
+    "required": [
+        "input_top_path",
+        "input_traj_path",
+        "input_leaflets_path",
+        "output_flip_flop_path"
+    ],
+    "properties": {
+        "input_top_path": {
+            "type": "string",
+            "description": "Path to the input structure or topology file",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.pdb",
+            "enum": [
+                ".*\\.crd$",
+                ".*\\.gro$",
+                ".*\\.mdcrd$",
+                ".*\\.mol2$",
+                ".*\\.pdb$",
+                ".*\\.pdbqt$",
+                ".*\\.prmtop$",
+                ".*\\.psf$",
+                ".*\\.top$",
+                ".*\\.tpr$",
+                ".*\\.xml$",
+                ".*\\.xyz$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.crd$",
+                    "description": "Path to the input structure or topology file",
+                    "edam": "3878"
+                },
+                {
+                    "extension": ".*\\.gro$",
+                    "description": "Path to the input structure or topology file",
+                    "edam": "2033"
+                },
+                {
+                    "extension": ".*\\.mdcrd$",
+                    "description": "Path to the input structure or topology file",
+                    "edam": "3878"
+                },
+                {
+                    "extension": ".*\\.mol2$",
+                    "description": "Path to the input structure or topology file",
+                    "edam": "3816"
+                },
+                {
+                    "extension": ".*\\.pdb$",
+                    "description": "Path to the input structure or topology file",
+                    "edam": "1476"
+                },
+                {
+                    "extension": ".*\\.pdbqt$",
+                    "description": "Path to the input structure or topology file",
+                    "edam": "1476"
+                },
+                {
+                    "extension": ".*\\.prmtop$",
+                    "description": "Path to the input structure or topology file",
+                    "edam": "3881"
+                },
+                {
+                    "extension": ".*\\.psf$",
+                    "description": "Path to the input structure or topology file",
+                    "edam": "3882"
+                },
+                {
+                    "extension": ".*\\.top$",
+                    "description": "Path to the input structure or topology file",
+                    "edam": "3881"
+                },
+                {
+                    "extension": ".*\\.tpr$",
+                    "description": "Path to the input structure or topology file",
+                    "edam": "2333"
+                },
+                {
+                    "extension": ".*\\.xml$",
+                    "description": "Path to the input structure or topology file",
+                    "edam": "2332"
+                },
+                {
+                    "extension": ".*\\.xyz$",
+                    "description": "Path to the input structure or topology file",
+                    "edam": "3887"
+                }
+            ]
+        },
+        "input_traj_path": {
+            "type": "string",
+            "description": "Path to the input trajectory to be processed",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc",
+            "enum": [
+                ".*\\.arc$",
+                ".*\\.crd$",
+                ".*\\.dcd$",
+                ".*\\.ent$",
+                ".*\\.gro$",
+                ".*\\.inpcrd$",
+                ".*\\.mdcrd$",
+                ".*\\.mol2$",
+                ".*\\.nc$",
+                ".*\\.pdb$",
+                ".*\\.pdbqt$",
+                ".*\\.restrt$",
+                ".*\\.tng$",
+                ".*\\.trr$",
+                ".*\\.xtc$",
+                ".*\\.xyz$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.arc$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "2333"
+                },
+                {
+                    "extension": ".*\\.crd$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "3878"
+                },
+                {
+                    "extension": ".*\\.dcd$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "3878"
+                },
+                {
+                    "extension": ".*\\.ent$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "1476"
+                },
+                {
+                    "extension": ".*\\.gro$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "2033"
+                },
+                {
+                    "extension": ".*\\.inpcrd$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "3878"
+                },
+                {
+                    "extension": ".*\\.mdcrd$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "3878"
+                },
+                {
+                    "extension": ".*\\.mol2$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "3816"
+                },
+                {
+                    "extension": ".*\\.nc$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "3650"
+                },
+                {
+                    "extension": ".*\\.pdb$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "1476"
+                },
+                {
+                    "extension": ".*\\.pdbqt$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "1476"
+                },
+                {
+                    "extension": ".*\\.restrt$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "3886"
+                },
+                {
+                    "extension": ".*\\.tng$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "3876"
+                },
+                {
+                    "extension": ".*\\.trr$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "3910"
+                },
+                {
+                    "extension": ".*\\.xtc$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "3875"
+                },
+                {
+                    "extension": ".*\\.xyz$",
+                    "description": "Path to the input trajectory to be processed",
+                    "edam": "3887"
+                }
+            ]
+        },
+        "input_leaflets_path": {
+            "type": "string",
+            "description": "Path to the input leaflet assignments",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/lipyphilic_biobb/leaflets_data.csv",
+            "enum": [
+                ".*\\.csv$",
+                ".*\\.npy$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.csv$",
+                    "description": "Path to the input leaflet assignments",
+                    "edam": "format_3752"
+                },
+                {
+                    "extension": ".*\\.npy$",
+                    "description": "Path to the input leaflet assignments",
+                    "edam": "format_4003"
+                }
+            ]
+        },
+        "output_flip_flop_path": {
+            "type": "string",
+            "description": "Path to the output flip-flop data",
+            "filetype": "output",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/lipyphilic_biobb/flip_flop.csv",
+            "enum": [
+                ".*\\.csv$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.csv$",
+                    "description": "Path to the output flip-flop data",
+                    "edam": "format_3752"
+                }
+            ]
+        },
+        "properties": {
+            "type": "object",
+            "properties": {
+                "start": {
+                    "type": "integer",
+                    "default": null,
+                    "wf_prop": false,
+                    "description": "Starting frame for slicing."
+                },
+                "stop": {
+                    "type": "integer",
+                    "default": null,
+                    "wf_prop": false,
+                    "description": "Ending frame for slicing."
+                },
+                "steps": {
+                    "type": "integer",
+                    "default": null,
+                    "wf_prop": false,
+                    "description": "Step for slicing."
+                },
+                "lipid_sel": {
+                    "type": "string",
+                    "default": "all",
+                    "wf_prop": false,
+                    "description": "Selection string for the lipids in a membrane. The selection should cover **all** residues in the membrane, including cholesterol."
+                },
+                "frame_cutoff": {
+                    "type": "number",
+                    "default": 1.0,
+                    "wf_prop": false,
+                    "description": "To be counted as a successful flip-flop, a molecule must reside in its new leaflet for at least \u2018frame_cutoff\u2019 consecutive frames. The default is 1, in which case the molecule only needs to move to the opposing leaflet for a single frame for the flip-flop to be successful."
+                },
+                "ignore_no_box": {
+                    "type": "boolean",
+                    "default": false,
+                    "wf_prop": false,
+                    "description": "Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory."
+                },
+                "remove_tmp": {
+                    "type": "boolean",
+                    "default": true,
+                    "wf_prop": true,
+                    "description": "Remove temporal files."
+                },
+                "restart": {
+                    "type": "boolean",
+                    "default": false,
+                    "wf_prop": true,
+                    "description": "Do not execute if output files exist."
+                },
+                "sandbox_path": {
+                    "type": "string",
+                    "default": "./",
+                    "wf_prop": true,
+                    "description": "Parent path to the sandbox directory."
+                }
+            }
+        }
+    },
+    "additionalProperties": false
+}

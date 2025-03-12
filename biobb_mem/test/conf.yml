@@ -48,6 +48,17 @@ fatslim_membranes:
     ignore_no_box: true
     selection: '(resname DPPC and name P8)'
     cutoff: 2.2
+
+fatslim_apl:
+  paths:
+    input_top_path: file:test_data_dir/A01JD/A01JD.pdb
+    input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
+    output_csv_path: apl.csv
+    ref_output_csv_path: file:test_reference_dir/fatslim/apl.csv
+  properties:
+    disable_logs: true
+    ignore_no_box: true
+    lipid_selection: '(resname DPPC and name P8)'
     
 lpp_assign_leaflets:
   paths:
@@ -55,6 +66,18 @@ lpp_assign_leaflets:
     input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
     output_leaflets_path: leaflets_data.csv
     ref_output_leaflets_path: file:test_reference_dir/lipyphilic_biobb/leaflets_data.csv
+  properties:
+    disable_logs: true
+    ignore_no_box: true
+    lipid_sel: '(resname DPPC and name P8)'
+
+lpp_flip_flop:
+  paths:
+    input_top_path: file:test_data_dir/A01JD/A01JD.pdb
+    input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
+    input_leaflets_path: file:test_reference_dir/lipyphilic_biobb/leaflets_data.csv
+    output_flip_flop_path: flip_flop.csv
+    ref_output_flip_flop_path: file:test_reference_dir/lipyphilic_biobb/flip_flop.csv
   properties:
     disable_logs: true
     ignore_no_box: true
@@ -71,6 +94,16 @@ lpp_zpositions:
     ignore_no_box: true
     lipid_sel: '(resname DPPC and name P8)'
     height_sel: '(resname DPPC and name P8)'
+
+gmx_order:
+  paths:
+    input_top_path: file:test_data_dir/A01JD/A01JD.tpr
+    input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
+    input_index_path: file:test_data_dir/A01JD/sn1.ndx
+    output_deuter_path: deuter.xvg
+    ref_output_deuter_path: file:test_reference_dir/gromacas/deuter.xvg
+  properties:
+    disable_logs: true
 
 mda_hole:
   paths:

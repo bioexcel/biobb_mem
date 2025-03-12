@@ -1,0 +1,233 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "http://bioexcel.eu/biobb_mem/json_schemas/1.0/fatslim_apl",
+    "name": "biobb_mem FatslimAPL",
+    "title": "Wrapper of the FATSLiM area per lipid module for area per lipid calculation.",
+    "description": "FATSLiM is designed to provide efficient and robust analysis of physical parameters from MD trajectories, with a focus on processing large trajectory files quickly.",
+    "type": "object",
+    "info": {
+        "wrapped_software": {
+            "name": "FATSLiM",
+            "version": "0.2.2",
+            "license": "GNU"
+        },
+        "ontology": {
+            "name": "EDAM",
+            "schema": "http://edamontology.org/EDAM.owl"
+        }
+    },
+    "required": [
+        "input_top_path",
+        "output_csv_path"
+    ],
+    "properties": {
+        "input_top_path": {
+            "type": "string",
+            "description": "Path to the input topology file",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.pdb",
+            "enum": [
+                ".*\\.tpr$",
+                ".*\\.gro$",
+                ".*\\.g96$",
+                ".*\\.pdb$",
+                ".*\\.brk$",
+                ".*\\.ent$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.tpr$",
+                    "description": "Path to the input topology file",
+                    "edam": "format_2333"
+                },
+                {
+                    "extension": ".*\\.gro$",
+                    "description": "Path to the input topology file",
+                    "edam": "format_2033"
+                },
+                {
+                    "extension": ".*\\.g96$",
+                    "description": "Path to the input topology file",
+                    "edam": "format_2033"
+                },
+                {
+                    "extension": ".*\\.pdb$",
+                    "description": "Path to the input topology file",
+                    "edam": "format_1476"
+                },
+                {
+                    "extension": ".*\\.brk$",
+                    "description": "Path to the input topology file",
+                    "edam": "format_2033"
+                },
+                {
+                    "extension": ".*\\.ent$",
+                    "description": "Path to the input topology file",
+                    "edam": "format_1476"
+                }
+            ]
+        },
+        "input_traj_path": {
+            "type": "string",
+            "description": "Path to the GROMACS trajectory file",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc",
+            "enum": [
+                ".*\\.xtc$",
+                ".*\\.trr$",
+                ".*\\.cpt$",
+                ".*\\.gro$",
+                ".*\\.g96$",
+                ".*\\.pdb$",
+                ".*\\.tng$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.xtc$",
+                    "description": "Path to the GROMACS trajectory file",
+                    "edam": "format_3875"
+                },
+                {
+                    "extension": ".*\\.trr$",
+                    "description": "Path to the GROMACS trajectory file",
+                    "edam": "format_3910"
+                },
+                {
+                    "extension": ".*\\.cpt$",
+                    "description": "Path to the GROMACS trajectory file",
+                    "edam": "format_2333"
+                },
+                {
+                    "extension": ".*\\.gro$",
+                    "description": "Path to the GROMACS trajectory file",
+                    "edam": "format_2033"
+                },
+                {
+                    "extension": ".*\\.g96$",
+                    "description": "Path to the GROMACS trajectory file",
+                    "edam": "format_2033"
+                },
+                {
+                    "extension": ".*\\.pdb$",
+                    "description": "Path to the GROMACS trajectory file",
+                    "edam": "format_1476"
+                },
+                {
+                    "extension": ".*\\.tng$",
+                    "description": "Path to the GROMACS trajectory file",
+                    "edam": "format_3876"
+                }
+            ]
+        },
+        "input_ndx_path": {
+            "type": "string",
+            "description": "Path to the input index NDX file for lipid headgroups and the interacting group",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/headgroups.ndx",
+            "enum": [
+                ".*\\.ndx$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.ndx$",
+                    "description": "Path to the input index NDX file for lipid headgroups and the interacting group",
+                    "edam": "format_2033"
+                }
+            ]
+        },
+        "output_csv_path": {
+            "type": "string",
+            "description": "Path to the output CSV file",
+            "filetype": "output",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/fatslim/apl.ndx",
+            "enum": [
+                ".*\\.csv$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.csv$",
+                    "description": "Path to the output CSV file",
+                    "edam": "format_3752"
+                }
+            ]
+        },
+        "properties": {
+            "type": "object",
+            "properties": {
+                "lipid_selection": {
+                    "type": "string",
+                    "default": "not protein and element P",
+                    "wf_prop": false,
+                    "description": "Headgroups MDAnalysis selection."
+                },
+                "protein_selection": {
+                    "type": "string",
+                    "default": "protein and not element H",
+                    "wf_prop": false,
+                    "description": "Protein selection interacting with the membrane."
+                },
+                "cutoff": {
+                    "type": "number",
+                    "default": 3.0,
+                    "wf_prop": false,
+                    "description": "This option allows user to specify the cutoff distance (in nm) to be used when performing the neighbor search needed by the APL calculation algorithm"
+                },
+                "limit": {
+                    "type": "number",
+                    "default": 10.0,
+                    "wf_prop": false,
+                    "description": "This option allows user to specify the upper limit (in nm2) for a valid area per lipid value."
+                },
+                "begin_frame": {
+                    "type": "integer",
+                    "default": -1,
+                    "wf_prop": false,
+                    "description": "First frame index to be used for analysis."
+                },
+                "end_frame": {
+                    "type": "integer",
+                    "default": -1,
+                    "wf_prop": false,
+                    "description": "Last frame index to be used for analysis."
+                },
+                "ignore_no_box": {
+                    "type": "boolean",
+                    "default": false,
+                    "wf_prop": false,
+                    "description": "Ignore the absence of box information in the topology. If the topology does not contain box information, the box will be set to the minimum and maximum positions of the atoms."
+                },
+                "return_hydrogen": {
+                    "type": "boolean",
+                    "default": false,
+                    "wf_prop": false,
+                    "description": "Include hydrogen atoms in the output index file."
+                },
+                "binary_path": {
+                    "type": "string",
+                    "default": "fatslim",
+                    "wf_prop": false,
+                    "description": "Path to the fatslim executable binary."
+                },
+                "remove_tmp": {
+                    "type": "boolean",
+                    "default": true,
+                    "wf_prop": true,
+                    "description": "Remove temporal files."
+                },
+                "restart": {
+                    "type": "boolean",
+                    "default": false,
+                    "wf_prop": true,
+                    "description": "Do not execute if output files exist."
+                },
+                "sandbox_path": {
+                    "type": "string",
+                    "default": "./",
+                    "wf_prop": true,
+                    "description": "Parent path to the sandbox directory."
+                }
+            }
+        }
+    },
+    "additionalProperties": false
+}

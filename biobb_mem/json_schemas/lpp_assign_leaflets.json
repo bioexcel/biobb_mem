@@ -216,13 +216,19 @@
             "filetype": "output",
             "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/lipyphilic_biobb/leaflets_data.csv",
             "enum": [
-                ".*\\.csv$"
+                ".*\\.csv$",
+                ".*\\.npy$"
             ],
             "file_formats": [
                 {
                     "extension": ".*\\.csv$",
                     "description": "Path to the output leaflet assignments",
                     "edam": "format_3752"
+                },
+                {
+                    "extension": ".*\\.npy$",
+                    "description": "Path to the output leaflet assignments",
+                    "edam": "format_4003"
                 }
             ]
         },

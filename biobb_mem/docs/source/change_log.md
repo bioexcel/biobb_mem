@@ -1,10 +1,17 @@
 
 # Biobb Membrane changelog
 
+## What's new in version [5.0.6](https://github.com/bioexcel/biobb_mem/releases/tag/v5.0.6)?
+### New features
+
+* [FEATURE] Add FATSLiM area per lipid analysis.
+* [FEATURE] Add GROMACS acyl chain order analysis.
+* [FEATURE] Add Lipyphilic flip-flop analysis.
+
 ## What's new in version [5.0.5](https://github.com/bioexcel/biobb_mem/releases/tag/v5.0.5)?
 ### New features
 
-* [UPDATE] Add return_hydrogen to fatslim.
+* [UPDATE] Add return_hydrogen to FATSLiM.
 
 ## What's new in version [5.0.4](https://github.com/bioexcel/biobb_mem/releases/tag/v5.0.4)?
 ### New features

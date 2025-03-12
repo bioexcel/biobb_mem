@@ -12,6 +12,14 @@ lipyphilic_biobb.lpp_assign_leaflets module
     :undoc-members:
     :show-inheritance:
 
+lipyphilic_biobb.flip_flop module
+---------------------------------------------
+
+.. automodule:: lipyphilic_biobb.flip_flop
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 lipyphilic_biobb.lpp_zpositions module
 ---------------------------------------------
 

@@ -88,15 +88,6 @@ Command:
 ```python
 lpp_assign_leaflets -h
 ```
-    /home/rchaves/miniforge3/envs/biobb_mem/lib/python3.11/site-packages/Bio/Application/__init__.py:39: BiopythonDeprecationWarning: The Bio.Application modules and modules relying on it have been deprecated.
-    
-    Due to the on going maintenance burden of keeping command line application
-    wrappers up to date, we have decided to deprecate and eventually remove these
-    modules.
-    
-    We instead now recommend building your command line and invoking it directly
-    with the subprocess module.
-      warnings.warn(
     usage: lpp_assign_leaflets [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH --output_leaflets_path OUTPUT_LEAFLETS_PATH
     
     Assign lipids to leaflets in a bilayer.
@@ -118,7 +109,7 @@ Syntax: input_argument (datatype) : Definition
 Config input / output arguments for this building block:
 * **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.pdb). Accepted formats: CRD, GRO, MDCRD, MOL2, PDB, PDBQT, PRMTOP, PSF, TOP, TPR, XML, XYZ
 * **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc). Accepted formats: ARC, CRD, DCD, ENT, GRO, INPCRD, MDCRD, MOL2, NC, PDB, PDBQT, RESTRT, TNG, TRR, XTC, XYZ
-* **output_leaflets_path** (*string*): Path to the output leaflet assignments. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/lipyphilic_biobb/leaflets_data.csv). Accepted formats: CSV
+* **output_leaflets_path** (*string*): Path to the output leaflet assignments. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/lipyphilic_biobb/leaflets_data.csv). Accepted formats: CSV, NPY
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
 
@@ -170,15 +161,6 @@ Command:
 ```python
 lpp_zpositions -h
 ```
-    /home/rchaves/miniforge3/envs/biobb_mem/lib/python3.11/site-packages/Bio/Application/__init__.py:39: BiopythonDeprecationWarning: The Bio.Application modules and modules relying on it have been deprecated.
-    
-    Due to the on going maintenance burden of keeping command line application
-    wrappers up to date, we have decided to deprecate and eventually remove these
-    modules.
-    
-    We instead now recommend building your command line and invoking it directly
-    with the subprocess module.
-      warnings.warn(
     usage: lpp_zpositions [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH --output_positions_path OUTPUT_POSITIONS_PATH
     
     Calculate the z distance in of lipids to the bilayer center.
@@ -324,6 +306,155 @@ mda_hole --config config_mda_hole.yml --input_top_path A01JD.pdb --input_traj_pa
 mda_hole --config config_mda_hole.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_hole_path hole.vmd --output_csv_path hole_profile.csv
 ```
 
+## Lpp_flip_flop
+Wrapper of the LiPyphilic FlipFlop module for finding flip-flop events in a lipid bilayer.
+### Get help
+Command:
+```python
+lpp_flip_flop -h
+```
+    usage: lpp_flip_flop [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH --input_leaflets_path INPUT_LEAFLETS_PATH --output_flip_flop_path OUTPUT_FLIP_FLOP_PATH
+    
+    Find flip-flop events in a lipid bilayer.
+    
+    options:
+      -h, --help            show this help message and exit
+      --config CONFIG       Configuration file
+    
+    required arguments:
+      --input_top_path INPUT_TOP_PATH
+                            Path to the input structure or topology file. Accepted formats: crd, gro, mdcrd, mol2, pdb, pdbqt, prmtop, psf, top, tpr, xml, xyz.
+      --input_traj_path INPUT_TRAJ_PATH
+                            Path to the input trajectory to be processed. Accepted formats: arc, crd, dcd, ent, gro, inpcrd, mdcrd, mol2, nc, pdb, pdbqt, restrt, tng, trr, xtc, xyz.
+      --input_leaflets_path INPUT_LEAFLETS_PATH
+                            Path to the input leaflet assignments. Accepted formats: csv, npy.
+      --output_flip_flop_path OUTPUT_FLIP_FLOP_PATH
+                            Path to the output processed analysis.
+### I / O Arguments
+Syntax: input_argument (datatype) : Definition
+
+Config input / output arguments for this building block:
+* **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.pdb). Accepted formats: CRD, GRO, MDCRD, MOL2, PDB, PDBQT, PRMTOP, PSF, TOP, TPR, XML, XYZ
+* **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc). Accepted formats: ARC, CRD, DCD, ENT, GRO, INPCRD, MDCRD, MOL2, NC, PDB, PDBQT, RESTRT, TNG, TRR, XTC, XYZ
+* **input_leaflets_path** (*string*): Path to the input leaflet assignments. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/lipyphilic_biobb/leaflets_data.csv). Accepted formats: CSV, NPY
+* **output_flip_flop_path** (*string*): Path to the output flip-flop data. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/lipyphilic_biobb/flip_flop.csv). Accepted formats: CSV
+### Config
+Syntax: input_parameter (datatype) - (default_value) Definition
+
+Config parameters for this building block:
+* **start** (*integer*): (None) Starting frame for slicing..
+* **stop** (*integer*): (None) Ending frame for slicing..
+* **steps** (*integer*): (None) Step for slicing..
+* **lipid_sel** (*string*): (all) Selection string for the lipids in a membrane. The selection should cover **all** residues in the membrane, including cholesterol..
+* **frame_cutoff** (*number*): (1.0) To be counted as a successful flip-flop, a molecule must reside in its new leaflet for at least ‘frame_cutoff’ consecutive frames. The default is 1, in which case the molecule only needs to move to the opposing leaflet for a single frame for the flip-flop to be successful..
+* **ignore_no_box** (*boolean*): (False) Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory..
+* **remove_tmp** (*boolean*): (True) Remove temporal files..
+* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
+### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_lpp_flip_flop.yml)
+```python
+properties:
+  disable_logs: true
+  ignore_no_box: true
+  lipid_sel: (resname DPPC and name P8)
+
+```
+#### Command line
+```python
+lpp_flip_flop --config config_lpp_flip_flop.yml --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --input_leaflets_path leaflets_data.csv --output_flip_flop_path flip_flop.csv
+```
+### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_lpp_flip_flop.json)
+```python
+{
+  "properties": {
+    "disable_logs": true,
+    "ignore_no_box": true,
+    "lipid_sel": "(resname DPPC and name P8)"
+  }
+}
+```
+#### Command line
+```python
+lpp_flip_flop --config config_lpp_flip_flop.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --input_leaflets_path leaflets_data.csv --output_flip_flop_path flip_flop.csv
+```
+
+## Fatslim_apl
+Wrapper of the FATSLiM area per lipid module for area per lipid calculation.
+### Get help
+Command:
+```python
+fatslim_apl -h
+```
+    usage: fatslim_apl [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --output_csv_path OUTPUT_CSV_PATH [--input_traj_path INPUT_TRAJ_PATH]
+    
+    Calculate the area per lipid.
+    
+    options:
+      -h, --help            show this help message and exit
+      --config CONFIG       Configuration file
+      --input_traj_path INPUT_TRAJ_PATH
+                            Path to the input trajectory to be processed. Accepted formats: gro, pdb, tng, trr, xtc.
+    
+    required arguments:
+      --input_top_path INPUT_TOP_PATH
+                            Path to the input structure or topology file. Accepted formats: ent, gro, pdb, tpr.
+      --output_csv_path OUTPUT_CSV_PATH
+                            Path to the GROMACS index file. Accepted formats: ndx
+### I / O Arguments
+Syntax: input_argument (datatype) : Definition
+
+Config input / output arguments for this building block:
+* **input_top_path** (*string*): Path to the input topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.pdb). Accepted formats: TPR, GRO, G96, PDB, BRK, ENT
+* **input_traj_path** (*string*): Path to the GROMACS trajectory file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc). Accepted formats: XTC, TRR, CPT, GRO, G96, PDB, TNG
+* **input_ndx_path** (*string*): Path to the input index NDX file for lipid headgroups and the interacting group. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/headgroups.ndx). Accepted formats: NDX
+* **output_csv_path** (*string*): Path to the output CSV file. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/fatslim/apl.ndx). Accepted formats: CSV
+### Config
+Syntax: input_parameter (datatype) - (default_value) Definition
+
+Config parameters for this building block:
+* **lipid_selection** (*string*): (not protein and element P) Headgroups MDAnalysis selection..
+* **protein_selection** (*string*): (protein and not element H) Protein selection interacting with the membrane..
+* **cutoff** (*number*): (3.0) This option allows user to specify the cutoff distance (in nm) to be used when performing the neighbor search needed by the APL calculation algorithm.
+* **limit** (*number*): (10.0) This option allows user to specify the upper limit (in nm2) for a valid area per lipid value..
+* **begin_frame** (*integer*): (-1) First frame index to be used for analysis..
+* **end_frame** (*integer*): (-1) Last frame index to be used for analysis..
+* **ignore_no_box** (*boolean*): (False) Ignore the absence of box information in the topology. If the topology does not contain box information, the box will be set to the minimum and maximum positions of the atoms..
+* **return_hydrogen** (*boolean*): (False) Include hydrogen atoms in the output index file..
+* **binary_path** (*string*): (fatslim) Path to the fatslim executable binary..
+* **remove_tmp** (*boolean*): (True) Remove temporal files..
+* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
+### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_apl.yml)
+```python
+properties:
+  disable_logs: true
+  ignore_no_box: true
+  lipid_selection: (resname DPPC and name P8)
+
+```
+#### Command line
+```python
+fatslim_apl --config config_fatslim_apl.yml --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --input_ndx_path headgroups.ndx --output_csv_path apl.ndx
+```
+### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_apl.json)
+```python
+{
+  "properties": {
+    "disable_logs": true,
+    "ignore_no_box": true,
+    "lipid_selection": "(resname DPPC and name P8)"
+  }
+}
+```
+#### Command line
+```python
+fatslim_apl --config config_fatslim_apl.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --input_ndx_path headgroups.ndx --output_csv_path apl.ndx
+```
+
 ## Fatslim_membranes
 Wrapper of the FATSLiM membranes module for leaflet and membrane identification.
 ### Get help
@@ -331,16 +462,7 @@ Command:
 ```python
 fatslim_membranes -h
 ```
-    /home/rchaves/miniforge3/envs/biobb_mem/lib/python3.11/site-packages/Bio/Application/__init__.py:39: BiopythonDeprecationWarning: The Bio.Application modules and modules relying on it have been deprecated.
-    
-    Due to the on going maintenance burden of keeping command line application
-    wrappers up to date, we have decided to deprecate and eventually remove these
-    modules.
-    
-    We instead now recommend building your command line and invoking it directly
-    with the subprocess module.
-      warnings.warn(
-    usage: fatslim_membranes [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --output_ndx_path OUTPUT_NDX_PATH [--input_traj_path INPUT_TRAJ_PATH]
+    usage: fatslim_membranes [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --output_ndx_path OUTPUT_NDX_PATH [--input_traj_path INPUT_TRAJ_PATH] [--input_ndx_path INPUT_NDX_PATH]
     
     Calculates the density along an axis of a given cpptraj compatible trajectory.
     
@@ -349,6 +471,8 @@ fatslim_membranes -h
       --config CONFIG       Configuration file
       --input_traj_path INPUT_TRAJ_PATH
                             Path to the input trajectory to be processed. Accepted formats: gro, pdb, tng, trr, xtc.
+      --input_ndx_path INPUT_NDX_PATH
+                            Path to the input lipid headgroups index NDX file. Accepted formats: ndx.
     
     required arguments:
       --input_top_path INPUT_TOP_PATH
@@ -361,12 +485,13 @@ Syntax: input_argument (datatype) : Definition
 Config input / output arguments for this building block:
 * **input_top_path** (*string*): Path to the input topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.pdb). Accepted formats: TPR, GRO, G96, PDB, BRK, ENT
 * **input_traj_path** (*string*): Path to the GROMACS trajectory file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc). Accepted formats: XTC, TRR, CPT, GRO, G96, PDB, TNG
-* **output_ndx_path** (*string*): Path to the output index NDX file. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.ndx). Accepted formats: NDX
+* **input_ndx_path** (*string*): Path to the input lipid headgroups index NDX file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.ndx). Accepted formats: NDX
+* **output_ndx_path** (*string*): Path to the output index NDX file. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/fatslim/leaflets.ndx). Accepted formats: NDX
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **selection** (*string*): (resname DPPC and element P) Molecules used in the identification using MDAnalysis selection language..
+* **selection** (*string*): (not protein and element P) Alternative ot the NDX file for choosing the Headgroups used in the identification using MDAnalysis selection language..
 * **cutoff** (*number*): (2.0) Cutoff distance (in nm) to be used when leaflet identification is performed..
 * **begin_frame** (*integer*): (-1) First frame index to be used for analysis..
 * **end_frame** (*integer*): (-1) Last frame index to be used for analysis..
@@ -388,7 +513,7 @@ properties:
 ```
 #### Command line
 ```python
-fatslim_membranes --config config_fatslim_membranes.yml --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_ndx_path A01JD.ndx
+fatslim_membranes --config config_fatslim_membranes.yml --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --input_ndx_path A01JD.ndx --output_ndx_path leaflets.ndx
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_membranes.json)
@@ -404,5 +529,74 @@ fatslim_membranes --config config_fatslim_membranes.yml --input_top_path A01JD.p
 ```
 #### Command line
 ```python
-fatslim_membranes --config config_fatslim_membranes.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --output_ndx_path A01JD.ndx
+fatslim_membranes --config config_fatslim_membranes.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --input_ndx_path A01JD.ndx --output_ndx_path leaflets.ndx
+```
+
+## Gmx_order
+Wrapper of the GROMACS order module for computing lipid order parameters per atom for carbon tails.
+### Get help
+Command:
+```python
+gmx_order -h
+```
+    usage: gmx_order [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH [--input_index_path INPUT_INDEX_PATH] [--output_deuter_path OUTPUT_DEUTER_PATH] [--output_order_path OUTPUT_ORDER_PATH]
+    
+    Compute lipid order parameters using GROMACS order tool.
+    
+    options:
+      -h, --help            show this help message and exit
+      --config CONFIG       Configuration file
+      --input_index_path INPUT_INDEX_PATH
+                            Path to the GROMACS index file.
+      --output_deuter_path OUTPUT_DEUTER_PATH
+                            Path to deuterium order parameters output file.
+      --output_order_path OUTPUT_ORDER_PATH
+                            Path to order tensor diagonal elements output file.
+    
+    required arguments:
+      --input_top_path INPUT_TOP_PATH
+                            Path to the input structure or topology file.
+      --input_traj_path INPUT_TRAJ_PATH
+                            Path to the input trajectory to be processed.
+### I / O Arguments
+Syntax: input_argument (datatype) : Definition
+
+Config input / output arguments for this building block:
+* **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/ambertools/topology.tpr). Accepted formats: TPR
+* **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/ambertools/trajectory.xtc). Accepted formats: XTC, TRR, CPT, GRO, G96, PDB, TNG
+* **input_index_path** (*string*): Path to the GROMACS index file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/       ). Accepted formats: NDX
+* **output_deuter_path** (*string*): Path to deuterium order parameters xvgr/xmgr file. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/gromacs/deuter.xvg). Accepted formats: XVG
+* **output_order_path** (*string*): Path to order tensor diagonal elements xvgr/xmgr file. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/gromacs/order.xvg). Accepted formats: XVG
+### Config
+Syntax: input_parameter (datatype) - (default_value) Definition
+
+Config parameters for this building block:
+* **d** (*string*): (z) Direction of the normal on the membrane: z, x, y..
+* **binary_path** (*string*): (cpptraj) Path to the cpptraj executable binary..
+* **remove_tmp** (*boolean*): (True) Remove temporal files..
+* **restart** (*boolean*): (False) Do not execute if output files exist..
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
+### YAML
+#### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_gmx_order.yml)
+```python
+properties:
+  disable_logs: true
+
+```
+#### Command line
+```python
+gmx_order --config config_gmx_order.yml --input_top_path topology.tpr --input_traj_path trajectory.xtc --input_index_path         --output_deuter_path deuter.xvg --output_order_path order.xvg
+```
+### JSON
+#### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_gmx_order.json)
+```python
+{
+  "properties": {
+    "disable_logs": true
+  }
+}
+```
+#### Command line
+```python
+gmx_order --config config_gmx_order.json --input_top_path topology.tpr --input_traj_path trajectory.xtc --input_index_path         --output_deuter_path deuter.xvg --output_order_path order.xvg
 ```

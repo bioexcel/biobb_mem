@@ -119,11 +119,27 @@
                 }
             ]
         },
+        "input_ndx_path": {
+            "type": "string",
+            "description": "Path to the input lipid headgroups index NDX file",
+            "filetype": "input",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.ndx",
+            "enum": [
+                ".*\\.ndx$"
+            ],
+            "file_formats": [
+                {
+                    "extension": ".*\\.ndx$",
+                    "description": "Path to the input lipid headgroups index NDX file",
+                    "edam": "format_2033"
+                }
+            ]
+        },
         "output_ndx_path": {
             "type": "string",
             "description": "Path to the output index NDX file",
             "filetype": "output",
-            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.ndx",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/fatslim/leaflets.ndx",
             "enum": [
                 ".*\\.ndx$"
             ],
@@ -140,9 +156,9 @@
             "properties": {
                 "selection": {
                     "type": "string",
-                    "default": "resname DPPC and element P",
+                    "default": "not protein and element P",
                     "wf_prop": false,
-                    "description": "Molecules used in the identification using MDAnalysis selection language."
+                    "description": "Alternative ot the NDX file for choosing the Headgroups used in the identification using MDAnalysis selection language."
                 },
                 "cutoff": {
                     "type": "number",
