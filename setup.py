@@ -29,8 +29,8 @@ setuptools.setup(
             "fatslim_membranes = biobb_mem.fatslim.fatslim_membranes:main",
             "gmx_order = biobb_mem.gromacs.gmx_order:main",
             "lpp_assign_leaflets = biobb_mem.lipyphilic_biobb.lpp_assign_leaflets:main",
-            "lpp_assign_flip_flop = biobb_mem.lipyphilic_biobb.lpp_assign_flip_flop:main",
-            "lpp_lpp_zpositions = biobb_mem.lipyphilic_biobb.lpp_zpositions:main",
+            "lpp_flip_flop = biobb_mem.lipyphilic_biobb.lpp_flip_flop:main",
+            "lpp_zpositions = biobb_mem.lipyphilic_biobb.lpp_zpositions:main",
             "mda_hole = biobb_mem.mdanalysis_biobb.mda_hole:main",
         ]
     },
