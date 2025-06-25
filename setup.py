@@ -21,7 +21,7 @@ setuptools.setup(
     package_data={'biobb_mem': ['py.typed']},
     install_requires=['biobb_common==5.0.0',
                       'fatslim==0.2.2'],
-    python_requires='>=3.9',
+    python_requires='>=3.9,<3.12',
     entry_points={
         "console_scripts": [
             "cpptraj_density = biobb_mem.ambertools.cpptraj_density:main",
