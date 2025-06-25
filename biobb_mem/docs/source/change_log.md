@@ -1,6 +1,11 @@
 
 # Biobb Membrane changelog
 
+## What's new in version [5.1.0](https://github.com/bioexcel/biobb_mem/releases/tag/v5.1.0)?
+### New features
+* [FIX](https://github.com/bioexcel/biobb_mem/commit/4b4e03c6268f180060a3e7d82fadd74ce30e9988) Fix entry points
+* [UPDATE]: Update to biobb_common 5.1.0
+
 ## What's new in version [5.0.6](https://github.com/bioexcel/biobb_mem/releases/tag/v5.0.6)?
 ### New features
 

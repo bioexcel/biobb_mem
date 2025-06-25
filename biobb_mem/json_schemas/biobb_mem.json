@@ -4,9 +4,9 @@
     "github": "https://github.com/bioexcel/biobb_mem",
     "readthedocs": "https://biobb-mem.readthedocs.io/en/latest/",
     "conda": "https://anaconda.org/bioconda/biobb_mem",
-    "docker": "https://quay.io/biocontainers/biobb_mem:5.0.6--pyhdfd78af_0",
-    "singularity": "https://depot.galaxyproject.org/singularity/biobb_mem:5.0.6--pyhdfd78af_0",
-    "version": "5.0.6",
+    "docker": "https://quay.io/biocontainers/biobb_mem:5.1.0--pyhdfd78af_0",
+    "singularity": "https://depot.galaxyproject.org/singularity/biobb_mem:5.1.0--pyhdfd78af_0",
+    "version": "5.1.0",
     "tools" : [
         {
             "block" : "CpptrajDensity", 
@@ -66,12 +66,12 @@
         }
     ],
     "dep_pypi" : [
-        "install_requires=['biobb_common==5.0.0','fatslim==0.2.2']", 
+        "install_requires=['biobb_common==5.1.0','fatslim==0.2.2']", 
         "python_requires='>=3.9'"
     ], 
     "dep_conda" : [
         "python >=3.9", 
-        "biobb_common ==5.0.0",
+        "biobb_common ==5.1.0",
         "ambertools >=22.5",
         "gromacs",
         "lipyphilic ==0.10.0",

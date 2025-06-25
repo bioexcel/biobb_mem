@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="biobb_mem",
-    version="5.0.6",
+    version="5.1.0",
     author="Biobb developers",
     author_email="ruben.chaves@irbbarcelona.org",
     description="Biobb_mem is a complete code template to promote and facilitate the creation of new Biobbs by the community.",
@@ -19,7 +19,7 @@ setuptools.setup(
     },
     packages=setuptools.find_packages(exclude=['adapters', 'docs', 'test']),
     package_data={'biobb_mem': ['py.typed']},
-    install_requires=['biobb_common==5.0.0',
+    install_requires=['biobb_common==5.1.0',
                       'fatslim==0.2.2'],
     python_requires='>=3.9,<3.12',
     entry_points={
