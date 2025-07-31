@@ -107,13 +107,13 @@ class FatslimMembranes(BiobbObject):
             # FATSLiM ValueError: Box does not correspond to PBC=xyz
             if self.ignore_no_box:
                 fu.log('Setting box dimensions using the minimum and maximum positions of the atoms.', 
-                self.out_log, self.global_log)
+                       self.out_log, self.global_log)
                 calculate_box(u)
             else:
                 fu.log('The trajectory does not contain box information. '
                        'Please set the ignore_no_box property to True to ignore this error.', 
                        self.out_log, self.global_log)
-                
+
         # Build the index to select the atoms from the membrane
         tmp_folder = PurePath(fu.create_unique_dir())
         if self.stage_io_dict["in"].get('input_ndx_path', None):
