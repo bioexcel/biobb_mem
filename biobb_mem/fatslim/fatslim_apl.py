@@ -155,7 +155,6 @@ class FatslimAPL(BiobbObject):
         self.copy_to_host()
         # Remove temporary files
         self.tmp_files.extend([
-            self.stage_io_dict.get("unique_dir"),
             PurePath(self.tmp_ndx).parent
         ])
         self.remove_tmp_files()

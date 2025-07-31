@@ -113,12 +113,13 @@ class FatslimMembranes(BiobbObject):
                 fu.log('The trajectory does not contain box information. '
                        'Please set the ignore_no_box property to True to ignore this error.', 
                        self.out_log, self.global_log)
-
+                
         # Build the index to select the atoms from the membrane
+        tmp_folder = PurePath(fu.create_unique_dir())
         if self.stage_io_dict["in"].get('input_ndx_path', None):
             self.tmp_ndx = self.stage_io_dict["in"]["input_ndx_path"]
         else:
-            self.tmp_ndx = str(PurePath(fu.create_unique_dir()).joinpath('headgroups.ndx'))
+            self.tmp_ndx = str(tmp_folder.joinpath('headgroups.ndx'))
             with mda.selections.gromacs.SelectionWriter(self.tmp_ndx, mode='w') as ndx:
                 ndx.write(u.select_atoms(self.selection), name='headgroups')
 
@@ -127,14 +128,14 @@ class FatslimMembranes(BiobbObject):
             self.cmd = []
         else:
             # Convert topology .gro and add box dimensions if not available in the topology
-            self.cfg = str(PurePath(fu.create_unique_dir()).joinpath('output.gro'))
+            self.cfg = str(tmp_folder.joinpath('output.gro'))
             self.tmp_files.extend([PurePath(self.cfg).parent])
             self.cmd = ['gmx', 'editconf',
                         '-f', self.stage_io_dict["in"]["input_top_path"],
                         '-o', self.cfg,
                         '-box', ' '.join(map(str, u.dimensions[:3])), ';',
                         ]
-        self.tmp_out = str(PurePath(fu.create_unique_dir()).joinpath('output.ndx'))
+        self.tmp_out = str(tmp_folder.joinpath('output.ndx'))
 
         # Build command
         self.cmd.extend([
@@ -166,13 +167,8 @@ class FatslimMembranes(BiobbObject):
         self.copy_to_host()
 
         # Remove temporary files
-        self.tmp_files.extend([
-            self.stage_io_dict.get("unique_dir"),
-            PurePath(self.tmp_ndx).parent,
-            PurePath(self.tmp_out).parent
-        ])
+        self.tmp_files.extend([tmp_folder])
         self.remove_tmp_files()
-
         self.check_arguments(output_files_created=True, raise_exception=False)
 
         return self.return_code

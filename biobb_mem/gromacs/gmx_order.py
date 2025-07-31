@@ -110,10 +110,6 @@ class GMXOrder(BiobbObject):
 
         # Copy files to host
         self.copy_to_host()
-
-        # Remove temporary folder(s)
-        self.tmp_files.append(self.stage_io_dict.get("unique_dir"))
-
         self.remove_tmp_files()
 
         return self.return_code
