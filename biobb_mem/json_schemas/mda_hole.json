@@ -238,7 +238,8 @@
             "file_formats": [
                 {
                     "extension": ".*\\.csv$",
-                    "description": "Path to the output CSV file containing the radius and coordinates of the pore"
+                    "description": "Path to the output CSV file containing the radius and coordinates of the pore",
+                    "edam": "format_3752"
                 }
             ]
         },

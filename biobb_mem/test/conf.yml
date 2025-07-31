@@ -101,7 +101,7 @@ gmx_order:
     input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
     input_index_path: file:test_data_dir/A01JD/sn1.ndx
     output_deuter_path: deuter.xvg
-    ref_output_deuter_path: file:test_reference_dir/gromacas/deuter.xvg
+    ref_output_deuter_path: file:test_reference_dir/gromacs/deuter.xvg
   properties:
     disable_logs: true
 
