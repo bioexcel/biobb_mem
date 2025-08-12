@@ -6,10 +6,8 @@ from pathlib import PurePath
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
-from biobb_common.tools import file_utils as fu
+from biobb_mem.fatslim.common import ignore_no_box, move_output_file
 import MDAnalysis as mda
-from biobb_mem.fatslim.common import calculate_box
-import shutil
 import numpy as np
 
 
@@ -103,16 +101,7 @@ class FatslimMembranes(BiobbObject):
         # Create index file using MDAnalysis
         u = mda.Universe(topology=self.stage_io_dict["in"]["input_top_path"],
                          coordinates=self.stage_io_dict["in"].get("input_traj_path"))
-        if u.dimensions is None:
-            # FATSLiM ValueError: Box does not correspond to PBC=xyz
-            if self.ignore_no_box:
-                fu.log('Setting box dimensions using the minimum and maximum positions of the atoms.', 
-                       self.out_log, self.global_log)
-                calculate_box(u)
-            else:
-                fu.log('The trajectory does not contain box information. '
-                       'Please set the ignore_no_box property to True to ignore this error.', 
-                       self.out_log, self.global_log)
+        ignore_no_box(u, self.ignore_no_box, self.out_log, self.global_log)
 
         # Build the index to select the atoms from the membrane
         tmp_folder = PurePath(fu.create_unique_dir())
@@ -162,7 +151,7 @@ class FatslimMembranes(BiobbObject):
                     sele = f"resindex {' '.join(map(str, res_sele))}"
                     ndx.write(u.select_atoms(sele), name=key)
         else:
-            shutil.move(self.tmp_out[:-4]+'_0000.ndx', self.stage_io_dict["out"]["output_ndx_path"])
+            move_output_file(tmp_out, self.stage_io_dict["out"]["output_ndx_path"], self.out_log, self.global_log)
         # Copy files to host
         self.copy_to_host()
 
