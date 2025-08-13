@@ -7,6 +7,7 @@ from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
 from biobb_mem.fatslim.common import ignore_no_box, move_output_file
+from biobb_common.tools import file_utils as fu
 import MDAnalysis as mda
 
 
@@ -101,36 +102,36 @@ class FatslimAPL(BiobbObject):
         # Create index file using MDAnalysis
         u = mda.Universe(topology=self.stage_io_dict["in"]["input_top_path"],
                          coordinates=self.stage_io_dict["in"].get("input_traj_path"))
-        ignore_no_box(u, ignore_no_box, self.out_log, self.global_log)
+        ignore_no_box(u, self.ignore_no_box, self.out_log, self.global_log)
 
         # Build the index to select the atoms from the membrane
         if self.stage_io_dict["in"].get('input_ndx_path', None):
-            self.tmp_ndx = self.stage_io_dict["in"]["input_ndx_path"]
+            tmp_ndx = self.stage_io_dict["in"]["input_ndx_path"]
         else:
-            self.tmp_ndx = str(PurePath(fu.create_unique_dir()).joinpath('apl_inp.ndx'))
-            with mda.selections.gromacs.SelectionWriter(self.tmp_ndx, mode='w') as ndx:
+            tmp_ndx = str(PurePath(fu.create_unique_dir()).joinpath('apl_inp.ndx'))
+            with mda.selections.gromacs.SelectionWriter(tmp_ndx, mode='w') as ndx:
                 ndx.write(u.select_atoms(self.lipid_selection), name='headgroups')
                 ndx.write(u.select_atoms(self.protein_selection), name='protein')
 
         if self.stage_io_dict["in"]["input_top_path"].endswith('gro'):
-            self.cfg = self.stage_io_dict["in"]["input_top_path"]
+            cfg = self.stage_io_dict["in"]["input_top_path"]
             self.cmd = []
         else:
             # Convert topology .gro and add box dimensions if not available in the topology
-            self.cfg = str(PurePath(fu.create_unique_dir()).joinpath('output.gro'))
-            self.tmp_files.extend([PurePath(self.cfg).parent])
+            cfg = str(PurePath(fu.create_unique_dir()).joinpath('output.gro'))
+            self.tmp_files.extend([PurePath(cfg).parent])
             self.cmd = ['gmx', 'editconf',
                         '-f', self.stage_io_dict["in"]["input_top_path"],
-                        '-o', self.cfg,
+                        '-o', cfg,
                         '-box', ' '.join(map(str, u.dimensions[:3])), ';',
                         ]
-        self.tmp_csv = str(PurePath(self.stage_io_dict["unique_dir"]).joinpath('out.csv'))
+        tmp_csv = str(PurePath(self.stage_io_dict["unique_dir"]).joinpath('out.csv'))
         # Build command
         self.cmd.extend([
             self.binary_path, "apl",
-            "-n", self.tmp_ndx,
-            "-c", self.cfg,
-            "--export-apl-raw", self.tmp_csv,
+            "-n", tmp_ndx,
+            "-c", cfg,
+            "--export-apl-raw", tmp_csv,
             "--apl-cutoff", str(self.cutoff),
             "--apl-limit", str(self.limit),
             "--begin-frame", str(self.begin_frame),
@@ -144,7 +145,7 @@ class FatslimAPL(BiobbObject):
         self.copy_to_host()
         # Remove temporary files
         self.tmp_files.extend([
-            PurePath(self.tmp_ndx).parent
+            PurePath(tmp_ndx).parent
         ])
         self.remove_tmp_files()
 

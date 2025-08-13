@@ -7,6 +7,7 @@ from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
 from biobb_mem.fatslim.common import ignore_no_box, move_output_file
+from biobb_common.tools import file_utils as fu
 import MDAnalysis as mda
 import numpy as np
 
@@ -106,32 +107,32 @@ class FatslimMembranes(BiobbObject):
         # Build the index to select the atoms from the membrane
         tmp_folder = PurePath(fu.create_unique_dir())
         if self.stage_io_dict["in"].get('input_ndx_path', None):
-            self.tmp_ndx = self.stage_io_dict["in"]["input_ndx_path"]
+            tmp_ndx = self.stage_io_dict["in"]["input_ndx_path"]
         else:
-            self.tmp_ndx = str(tmp_folder.joinpath('headgroups.ndx'))
-            with mda.selections.gromacs.SelectionWriter(self.tmp_ndx, mode='w') as ndx:
+            tmp_ndx = str(tmp_folder.joinpath('headgroups.ndx'))
+            with mda.selections.gromacs.SelectionWriter(tmp_ndx, mode='w') as ndx:
                 ndx.write(u.select_atoms(self.selection), name='headgroups')
 
         if self.stage_io_dict["in"]["input_top_path"].endswith('gro'):
-            self.cfg = self.stage_io_dict["in"]["input_top_path"]
+            cfg = self.stage_io_dict["in"]["input_top_path"]
             self.cmd = []
         else:
             # Convert topology .gro and add box dimensions if not available in the topology
-            self.cfg = str(tmp_folder.joinpath('output.gro'))
-            self.tmp_files.extend([PurePath(self.cfg).parent])
+            cfg = str(tmp_folder.joinpath('output.gro'))
+            self.tmp_files.extend([PurePath(cfg).parent])
             self.cmd = ['gmx', 'editconf',
                         '-f', self.stage_io_dict["in"]["input_top_path"],
-                        '-o', self.cfg,
+                        '-o', cfg,
                         '-box', ' '.join(map(str, u.dimensions[:3])), ';',
                         ]
-        self.tmp_out = str(tmp_folder.joinpath('output.ndx'))
+        tmp_out = str(tmp_folder.joinpath('output.ndx'))
 
         # Build command
         self.cmd.extend([
             self.binary_path, "membranes",
-            "-n", self.tmp_ndx,
-            "-c", self.cfg,
-            "--output-index", self.tmp_out,
+            "-n", tmp_ndx,
+            "-c", cfg,
+            "--output-index", tmp_out,
             "--cutoff", str(self.cutoff),
             "--begin-frame", str(self.begin_frame),
             "--end-frame", str(self.end_frame)
@@ -142,7 +143,7 @@ class FatslimMembranes(BiobbObject):
         # Fatslim ignore H atoms so we add them manually
         if self.return_hydrogen:
             # Parse the atoms indices of the membrane without Hs
-            leaflet_groups = parse_index(self.tmp_out[:-4]+'_0000.ndx')
+            leaflet_groups = parse_index(tmp_out[:-4]+'_0000.ndx')
             with mda.selections.gromacs.SelectionWriter(self.stage_io_dict["out"]["output_ndx_path"], mode='w') as ndx:
                 for key, value in leaflet_groups.items():
                     # Select the residues using atom indexes

@@ -1,14 +1,15 @@
 global_properties:
   working_dir_path: /tmp/biobb/unitests
 
+# Add remove_tmp: False to the properties so the teardown functions do
+# not remove the created test.
+
 cpptraj_density:
   paths:
     input_top_path: file:test_data_dir/ambertools/topology.pdb
     input_traj_path: file:test_data_dir/ambertools/trajectory.xtc
     output_cpptraj_path: output.dat
     ref_output_cpptraj_path: file:test_reference_dir/ambertools/density_default.dat
-  properties:
-    disable_logs: true
 
 cpptraj_density_mask:
   paths:
@@ -17,7 +18,6 @@ cpptraj_density_mask:
     output_cpptraj_path: output.dat
     ref_output_cpptraj_path: file:test_reference_dir/ambertools/density_mask.dat
   properties:
-    disable_logs: true
     mask: "::M ::A,B"
 
 cpptraj_density_complex:
@@ -44,8 +44,8 @@ fatslim_membranes:
     output_ndx_path: leaflets.ndx
     ref_output_ndx_path: file:test_reference_dir/fatslim/leaflets.ndx
   properties:
-    disable_logs: true
     ignore_no_box: true
+    remove_tmp: False
     selection: '(resname DPPC and name P8)'
     cutoff: 2.2
 
@@ -56,7 +56,7 @@ fatslim_apl:
     output_csv_path: apl.csv
     ref_output_csv_path: file:test_reference_dir/fatslim/apl.csv
   properties:
-    disable_logs: true
+    remove_tmp: False
     ignore_no_box: true
     lipid_selection: '(resname DPPC and name P8)'
     
@@ -67,7 +67,6 @@ lpp_assign_leaflets:
     output_leaflets_path: leaflets_data.csv
     ref_output_leaflets_path: file:test_reference_dir/lipyphilic_biobb/leaflets_data.csv
   properties:
-    disable_logs: true
     ignore_no_box: true
     lipid_sel: '(resname DPPC and name P8)'
 
@@ -79,7 +78,6 @@ lpp_flip_flop:
     output_flip_flop_path: flip_flop.csv
     ref_output_flip_flop_path: file:test_reference_dir/lipyphilic_biobb/flip_flop.csv
   properties:
-    disable_logs: true
     ignore_no_box: true
     lipid_sel: '(resname DPPC and name P8)'
 
@@ -90,7 +88,6 @@ lpp_zpositions:
     output_positions_path: zpositions.csv
     ref_output_positions_path: file:test_reference_dir/lipyphilic_biobb/zpositions.csv
   properties:
-    disable_logs: true
     ignore_no_box: true
     lipid_sel: '(resname DPPC and name P8)'
     height_sel: '(resname DPPC and name P8)'
@@ -102,8 +99,6 @@ gmx_order:
     input_index_path: file:test_data_dir/A01JD/sn1.ndx
     output_deuter_path: deuter.xvg
     ref_output_deuter_path: file:test_reference_dir/gromacs/deuter.xvg
-  properties:
-    disable_logs: true
 
 mda_hole:
   paths:
@@ -114,6 +109,5 @@ mda_hole:
     ref_output_hole_path: file:test_reference_dir/mdanalysis_biobb/hole.vmd
     ref_output_csv_path: file:test_reference_dir/mdanalysis_biobb/hole_profile.csv
   properties:
-    disable_logs: true
     select: 'protein'
     steps: 5

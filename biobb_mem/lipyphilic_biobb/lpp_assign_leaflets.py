@@ -6,7 +6,7 @@ from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
 import MDAnalysis as mda
-from biobb_mem.lipyphilic_biobb.common import calculate_box
+from biobb_mem.lipyphilic_biobb.common import ignore_no_box
 from lipyphilic.lib.assign_leaflets import AssignLeaflets
 import pandas as pd
 import numpy as np
@@ -97,12 +97,7 @@ class LPPAssignLeaflets(BiobbObject):
 
         # Load the trajectory
         u = mda.Universe(self.stage_io_dict["in"]["input_top_path"], self.stage_io_dict["in"]["input_traj_path"])
-        if u.dimensions is None:
-            if self.ignore_no_box:
-                calculate_box(u)
-            else:
-                raise ValueError('The trajectory does not contain box information. Please set the ignore_no_box property to True to ignore this error.')
-
+        ignore_no_box(u, self.ignore_no_box, self.out_log, self.global_log)
         # Create AssignLeaflets object
         leaflets = AssignLeaflets(
             universe=u,
@@ -112,11 +107,7 @@ class LPPAssignLeaflets(BiobbObject):
             n_bins=self.n_bins
         )
         # Run the analysis
-        leaflets.run(
-            start=self.start,
-            stop=self.stop,
-            step=self.steps
-        )
+        leaflets.run(start=self.start, stop=self.stop, step=self.steps)
 
         out_format = self.stage_io_dict["out"]["output_leaflets_path"].split('.')[-1]
         if out_format == 'csv':
