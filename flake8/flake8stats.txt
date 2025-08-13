@@ -1,2 +1,0 @@
-1     E128 continuation line under-indented for visual indent
-4     W291 trailing whitespace
