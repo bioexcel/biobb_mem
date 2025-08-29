@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 
 """Module containing the FATSLiM Membranes class and the command line interface."""
-import argparse
-from pathlib import PurePath
 from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
 from biobb_mem.fatslim.common import ignore_no_box, move_output_file
-from biobb_common.tools import file_utils as fu
 import MDAnalysis as mda
 import numpy as np
 
@@ -105,11 +101,10 @@ class FatslimMembranes(BiobbObject):
         ignore_no_box(u, self.ignore_no_box, self.out_log, self.global_log)
 
         # Build the index to select the atoms from the membrane
-        tmp_folder = PurePath(fu.create_unique_dir())
         if self.stage_io_dict["in"].get('input_ndx_path', None):
             tmp_ndx = self.stage_io_dict["in"]["input_ndx_path"]
         else:
-            tmp_ndx = str(tmp_folder.joinpath('headgroups.ndx'))
+            tmp_ndx = self.create_tmp_file('_headgroups.ndx')
             with mda.selections.gromacs.SelectionWriter(tmp_ndx, mode='w') as ndx:
                 ndx.write(u.select_atoms(self.selection), name='headgroups')
 
@@ -118,14 +113,13 @@ class FatslimMembranes(BiobbObject):
             self.cmd = []
         else:
             # Convert topology .gro and add box dimensions if not available in the topology
-            cfg = str(tmp_folder.joinpath('output.gro'))
-            self.tmp_files.extend([PurePath(cfg).parent])
+            cfg = self.create_tmp_file('_output.gro')
             self.cmd = ['gmx', 'editconf',
                         '-f', self.stage_io_dict["in"]["input_top_path"],
                         '-o', cfg,
                         '-box', ' '.join(map(str, u.dimensions[:3])), ';',
                         ]
-        tmp_out = str(tmp_folder.joinpath('output.ndx'))
+        tmp_out = self.create_tmp_file('_output.ndx')
 
         # Build command
         self.cmd.extend([
@@ -157,7 +151,6 @@ class FatslimMembranes(BiobbObject):
         self.copy_to_host()
 
         # Remove temporary files
-        self.tmp_files.extend([tmp_folder])
         self.remove_tmp_files()
         self.check_arguments(output_files_created=True, raise_exception=False)
 
@@ -167,36 +160,11 @@ class FatslimMembranes(BiobbObject):
 def fatslim_membranes(input_top_path: str, output_ndx_path: str, input_traj_path: str = None, input_ndx_path: str = None, properties: dict = None, **kwargs) -> int:
     """Execute the :class:`FatslimMembranes <fatslim.fatslim_membranes.FatslimMembranes>` class and
     execute the :meth:`launch() <fatslim.fatslim_membranes.FatslimMembranes.launch>` method."""
-
-    return FatslimMembranes(input_top_path=input_top_path,
-                            input_traj_path=input_traj_path,
-                            input_ndx_path=input_ndx_path,
-                            output_ndx_path=output_ndx_path,
-                            properties=properties, **kwargs).launch()
+    return FatslimMembranes(**dict(locals())).launch()
 
 
-def main():
-    """Command line execution of this building block. Please check the command line documentation."""
-    parser = argparse.ArgumentParser(description="Calculates the density along an axis of a given cpptraj compatible trajectory.", formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999))
-    parser.add_argument('--config', required=False, help='Configuration file')
-
-    # Specific args of each building block
-    required_args = parser.add_argument_group('required arguments')
-    required_args.add_argument('--input_top_path', required=True, help='Path to the input structure or topology file. Accepted formats: ent, gro, pdb, tpr.')
-    required_args.add_argument('--output_ndx_path', required=True, help='Path to the GROMACS index file. Accepted formats: ndx')
-    parser.add_argument('--input_traj_path', required=False, help='Path to the input trajectory to be processed. Accepted formats: gro, pdb, tng, trr, xtc.')
-    parser.add_argument('--input_ndx_path', required=False, help='Path to the input lipid headgroups index NDX file. Accepted formats: ndx.')
-
-    args = parser.parse_args()
-    args.config = args.config or "{}"
-    properties = settings.ConfReader(config=args.config).get_prop_dic()
-
-    # Specific call of each building block
-    fatslim_membranes(input_top_path=args.input_top_path,
-                      output_ndx_path=args.output_ndx_path,
-                      input_traj_path=args.input_traj_path,
-                      input_ndx_path=args.input_ndx_path,
-                      properties=properties)
+fatslim_membranes.__doc__ = FatslimMembranes.__doc__
+main = FatslimMembranes.get_main(fatslim_membranes, "Calculates the density along an axis of a given cpptraj compatible trajectory.")
 
 
 def parse_index(ndx):

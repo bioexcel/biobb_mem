@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 
 """Module containing the Lipyphilic AssignLeaflets class and the command line interface."""
-import argparse
 from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
 import MDAnalysis as mda
 from biobb_mem.lipyphilic_biobb.common import ignore_no_box
@@ -58,8 +56,12 @@ class LPPAssignLeaflets(BiobbObject):
 
     """
 
-    def __init__(self, input_top_path, input_traj_path, output_leaflets_path,
-                 properties=None, **kwargs) -> None:
+    def __init__(self,
+                 input_top_path,
+                 input_traj_path,
+                 output_leaflets_path,
+                 properties=None,
+                 **kwargs) -> None:
         properties = properties or {}
 
         # Call parent class constructor
@@ -136,36 +138,18 @@ class LPPAssignLeaflets(BiobbObject):
         return self.return_code
 
 
-def lpp_assign_leaflets(input_top_path: str, input_traj_path: str, output_leaflets_path: str = None, properties: dict = None, **kwargs) -> int:
+def lpp_assign_leaflets(input_top_path: str,
+                        input_traj_path: str,
+                        output_leaflets_path: str = None,
+                        properties: dict = None,
+                        **kwargs) -> int:
     """Execute the :class:`LPPAssignLeaflets <lipyphilic_biobb.lpp_assign_leaflets.LPPAssignLeaflets>` class and
     execute the :meth:`launch() <lipyphilic_biobb.lpp_assign_leaflets.LPPAssignLeaflets.launch>` method."""
-
-    return LPPAssignLeaflets(input_top_path=input_top_path,
-                             input_traj_path=input_traj_path,
-                             output_leaflets_path=output_leaflets_path,
-                             properties=properties, **kwargs).launch()
+    return LPPAssignLeaflets(**dict(locals())).launch()
 
 
-def main():
-    """Command line execution of this building block. Please check the command line documentation."""
-    parser = argparse.ArgumentParser(description="Assign lipids to leaflets in a bilayer.", formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999))
-    parser.add_argument('--config', required=False, help='Configuration file')
-
-    # Specific args of each building block
-    required_args = parser.add_argument_group('required arguments')
-    required_args.add_argument('--input_top_path', required=True, help='Path to the input structure or topology file. Accepted formats: crd, gro, mdcrd, mol2, pdb, pdbqt, prmtop, psf, top, tpr, xml, xyz.')
-    required_args.add_argument('--input_traj_path', required=True, help='Path to the input trajectory to be processed. Accepted formats: arc, crd, dcd, ent, gro, inpcrd, mdcrd, mol2, nc, pdb, pdbqt, restrt, tng, trr, xtc, xyz.')
-    required_args.add_argument('--output_leaflets_path', required=True, help='Path to the output processed analysis.')
-
-    args = parser.parse_args()
-    args.config = args.config or "{}"
-    properties = settings.ConfReader(config=args.config).get_prop_dic()
-
-    # Specific call of each building block
-    lpp_assign_leaflets(input_top_path=args.input_top_path,
-                        input_traj_path=args.input_traj_path,
-                        output_leaflets_path=args.output_leaflets_path,
-                        properties=properties)
+lpp_assign_leaflets.__doc__ = LPPAssignLeaflets.__doc__
+main = LPPAssignLeaflets.get_main(lpp_assign_leaflets, "Assign lipids to leaflets in a bilayer.")
 
 
 def display_nglview(input_top_path: str, output_leaflets_path: str, frame: int = 0):

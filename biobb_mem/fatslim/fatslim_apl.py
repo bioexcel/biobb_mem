@@ -1,13 +1,9 @@
 #!/usr/bin/env python3
 
 """Module containing the FATSLiM Area per Lipid class and the command line interface."""
-import argparse
-from pathlib import PurePath
 from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
 from biobb_mem.fatslim.common import ignore_no_box, move_output_file
-from biobb_common.tools import file_utils as fu
 import MDAnalysis as mda
 
 
@@ -108,7 +104,7 @@ class FatslimAPL(BiobbObject):
         if self.stage_io_dict["in"].get('input_ndx_path', None):
             tmp_ndx = self.stage_io_dict["in"]["input_ndx_path"]
         else:
-            tmp_ndx = str(PurePath(fu.create_unique_dir()).joinpath('apl_inp.ndx'))
+            tmp_ndx = self.create_tmp_file('_apl_inp.ndx')
             with mda.selections.gromacs.SelectionWriter(tmp_ndx, mode='w') as ndx:
                 ndx.write(u.select_atoms(self.lipid_selection), name='headgroups')
                 ndx.write(u.select_atoms(self.protein_selection), name='protein')
@@ -118,14 +114,13 @@ class FatslimAPL(BiobbObject):
             self.cmd = []
         else:
             # Convert topology .gro and add box dimensions if not available in the topology
-            cfg = str(PurePath(fu.create_unique_dir()).joinpath('output.gro'))
-            self.tmp_files.extend([PurePath(cfg).parent])
+            cfg = self.create_tmp_file('_output.gro')
             self.cmd = ['gmx', 'editconf',
                         '-f', self.stage_io_dict["in"]["input_top_path"],
                         '-o', cfg,
                         '-box', ' '.join(map(str, u.dimensions[:3])), ';',
                         ]
-        tmp_csv = str(PurePath(self.stage_io_dict["unique_dir"]).joinpath('out.csv'))
+        tmp_csv = self.create_tmp_file('_out.csv')
         # Build command
         self.cmd.extend([
             self.binary_path, "apl",
@@ -140,51 +135,30 @@ class FatslimAPL(BiobbObject):
 
         # Run Biobb block
         self.run_biobb()
-        move_output_file(tmp_csv, self.stage_io_dict["out"]["output_csv_path"], self.out_log, self.global_log)
+        move_output_file(tmp_csv, self.stage_io_dict["out"]["output_csv_path"],
+                         self.out_log, self.global_log)
         # Copy files to host
         self.copy_to_host()
         # Remove temporary files
-        self.tmp_files.extend([
-            PurePath(tmp_ndx).parent
-        ])
         self.remove_tmp_files()
-
         self.check_arguments(output_files_created=True, raise_exception=False)
 
         return self.return_code
 
 
-def fatslim_apl(input_top_path: str, output_csv_path: str, input_traj_path: str = None, input_ndx_path: str = None, properties: dict = None, **kwargs) -> int:
+def fatslim_apl(input_top_path: str,
+                output_csv_path: str,
+                input_traj_path: str = None,
+                input_ndx_path: str = None,
+                properties: dict = None,
+                **kwargs) -> int:
     """Execute the :class:`FatslimAPL <fatslim.fatslim_apl.FatslimAPL>` class and
     execute the :meth:`launch() <fatslim.fatslim_apl.FatslimAPL.launch>` method."""
-
-    return FatslimAPL(input_top_path=input_top_path,
-                      input_traj_path=input_traj_path,
-                      input_ndx_path=input_ndx_path,
-                      output_csv_path=output_csv_path,
-                      properties=properties, **kwargs).launch()
+    return FatslimAPL(**dict(locals())).launch()
 
 
-def main():
-    """Command line execution of this building block. Please check the command line documentation."""
-    parser = argparse.ArgumentParser(description="Calculate the area per lipid.", formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999))
-    parser.add_argument('--config', required=False, help='Configuration file')
-
-    # Specific args of each building block
-    required_args = parser.add_argument_group('required arguments')
-    required_args.add_argument('--input_top_path', required=True, help='Path to the input structure or topology file. Accepted formats: ent, gro, pdb, tpr.')
-    required_args.add_argument('--output_csv_path', required=True, help='Path to the GROMACS index file. Accepted formats: ndx')
-    parser.add_argument('--input_traj_path', required=False, help='Path to the input trajectory to be processed. Accepted formats: gro, pdb, tng, trr, xtc.')
-
-    args = parser.parse_args()
-    args.config = args.config or "{}"
-    properties = settings.ConfReader(config=args.config).get_prop_dic()
-
-    # Specific call of each building block
-    fatslim_apl(input_top_path=args.input_top_path,
-                output_csv_path=args.output_csv_path,
-                properties=properties)
-
+fatslim_apl.__doc__ = FatslimAPL.__doc__
+main = FatslimAPL.get_main(fatslim_apl, 'Calculate the area per lipid.')
 
 if __name__ == '__main__':
     main()

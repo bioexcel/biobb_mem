@@ -1,11 +1,7 @@
 #!/usr/bin/env python3
 
 """Module containing the Cpptraj Density class and the command line interface."""
-import argparse
-from pathlib import PurePath
 from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.configuration import settings
-from biobb_common.tools import file_utils as fu
 from biobb_common.tools.file_utils import launchlogger
 
 
@@ -97,7 +93,7 @@ class CpptrajDensity(BiobbObject):
         """Creates an input file using the properties file settings."""
         instructions_list = []
         # different path if container execution or not
-        self.instructions_file = str(PurePath(fu.create_unique_dir()).joinpath(self.instructions_file))
+        self.instructions_file = self.create_tmp_file(self.instructions_file)
         # fu.create_name(prefix=self.prefix, step=self.step, name=self.instructions_file)
         instructions_list.append('parm ' + stage_io_dict["in"]["input_top_path"])
         instructions_list.append('trajin ' + stage_io_dict["in"]["input_traj_path"] + self.slice)
@@ -138,47 +134,25 @@ class CpptrajDensity(BiobbObject):
         # Copy files to host
         self.copy_to_host()
         # remove temporary folder(s)
-        self.tmp_files.extend([PurePath(self.instructions_file).parent])
         self.remove_tmp_files()
         self.check_arguments(output_files_created=True, raise_exception=False)
 
         return self.return_code
 
 
-def cpptraj_density(input_top_path: str, input_traj_path: str, output_cpptraj_path: str, output_traj_path: str = None, properties: dict = None, **kwargs) -> int:
+def cpptraj_density(input_top_path: str,
+                    input_traj_path: str,
+                    output_cpptraj_path: str,
+                    output_traj_path: str = None,
+                    properties: dict = None,
+                    **kwargs) -> int:
     """Execute the :class:`CpptrajDensity <ambertools.cpptraj_density.CpptrajDensity>` class and
     execute the :meth:`launch() <ambertools.cpptraj_density.CpptrajDensity.launch>` method."""
-
-    return CpptrajDensity(input_top_path=input_top_path,
-                          input_traj_path=input_traj_path,
-                          output_cpptraj_path=output_cpptraj_path,
-                          output_traj_path=output_traj_path,
-                          properties=properties, **kwargs).launch()
+    return CpptrajDensity(**dict(locals())).launch()
 
 
-def main():
-    """Command line execution of this building block. Please check the command line documentation."""
-    parser = argparse.ArgumentParser(description="Calculates the density along an axis of a given cpptraj compatible trajectory.", formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999))
-    parser.add_argument('--config', required=False, help='Configuration file')
-
-    # Specific args of each building block
-    required_args = parser.add_argument_group('required arguments')
-    required_args.add_argument('--input_top_path', required=True, help='Path to the input structure or topology file. Accepted formats: top, pdb, prmtop, parmtop, zip.')
-    required_args.add_argument('--input_traj_path', required=True, help='Path to the input trajectory to be processed. Accepted formats: crd, cdf, netcdf, restart, ncrestart, restartnc, dcd, charmm, cor, pdb, mol2, trr, gro, binpos, xtc, cif, arc, sqm, sdf, conflib.')
-    required_args.add_argument('--output_cpptraj_path', required=True, help='Path to the output processed analysis.')
-    parser.add_argument('--output_traj_path', required=False, help='Path to the output processed trajectory.')
-
-    args = parser.parse_args()
-    args.config = args.config or "{}"
-    properties = settings.ConfReader(config=args.config).get_prop_dic()
-
-    # Specific call of each building block
-    cpptraj_density(input_top_path=args.input_top_path,
-                    input_traj_path=args.input_traj_path,
-                    output_cpptraj_path=args.output_cpptraj_path,
-                    output_traj_path=args.output_traj_path,
-                    properties=properties)
-
+cpptraj_density.__doc__ = CpptrajDensity.__doc__
+main = CpptrajDensity.get_main(cpptraj_density, "Calculates the density along an axis of a given cpptraj compatible trajectory.")
 
 if __name__ == '__main__':
     main()

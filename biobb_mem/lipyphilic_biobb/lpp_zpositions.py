@@ -136,11 +136,7 @@ class LPPZPositions(BiobbObject):
 def lpp_zpositions(input_top_path: str, input_traj_path: str, output_positions_path: str = None, properties: dict = None, **kwargs) -> int:
     """Execute the :class:`LPPZPositions <lipyphilic_biobb.lpp_zpositions.LPPZPositions>` class and
     execute the :meth:`launch() <lipyphilic_biobb.lpp_zpositions.LPPZPositions.launch>` method."""
-
-    return LPPZPositions(input_top_path=input_top_path,
-                         input_traj_path=input_traj_path,
-                         output_positions_path=output_positions_path,
-                         properties=properties, **kwargs).launch()
+    return LPPZPositions(**dict(locals())).launch()
 
 
 def main():

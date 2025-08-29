@@ -3,11 +3,9 @@
 """Module containing the MDAnalysis HOLE class and the command line interface."""
 import re
 import os
-import argparse
 import numpy as np
 import pandas as pd
 from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
 import MDAnalysis as mda
 from mdahole2.analysis import HoleAnalysis
@@ -146,9 +144,6 @@ class MDAHole(BiobbObject):
         # Copy files to host
         self.copy_to_host()
         # remove temporary folder(s)
-        self.tmp_files.extend([
-            self.stage_io_dict.get("unique_dir")
-        ])
         self.remove_tmp_files()
 
         self.check_arguments(output_files_created=True, raise_exception=False)
@@ -156,39 +151,19 @@ class MDAHole(BiobbObject):
         return self.return_code
 
 
-def mda_hole(input_top_path: str, input_traj_path: str, output_hole_path: str, output_csv_path: str, properties: dict = None, **kwargs) -> int:
+def mda_hole(input_top_path: str,
+             input_traj_path: str,
+             output_hole_path: str,
+             output_csv_path: str,
+             properties: dict = None,
+             **kwargs) -> int:
     """Execute the :class:`MDAHole <mdanalysis_biobb.mda_hole.MDAHole>` class and
     execute the :meth:`launch() <mdanalysis_biobb.mda_hole.MDAHole.launch>` method."""
-
-    return MDAHole(input_top_path=input_top_path,
-                   input_traj_path=input_traj_path,
-                   output_hole_path=output_hole_path,
-                   output_csv_path=output_csv_path,
-                   properties=properties, **kwargs).launch()
+    return MDAHole(**dict(locals())).launch()
 
 
-def main():
-    """Command line execution of this building block. Please check the command line documentation."""
-    parser = argparse.ArgumentParser(description="Analyze ion channel pores or transporter pathways.", formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999))
-    parser.add_argument('--config', required=False, help='Configuration file')
-
-    # Specific args of each building block
-    required_args = parser.add_argument_group('required arguments')
-    required_args.add_argument('--input_top_path', required=True, help='Path to the input structure or topology file. Accepted formats: crd, gro, mdcrd, mol2, pdb, pdbqt, prmtop, psf, top, tpr, xml, xyz.')
-    required_args.add_argument('--input_traj_path', required=True, help='Path to the input trajectory to be processed. Accepted formats: arc, crd, dcd, ent, gro, inpcrd, mdcrd, mol2, nc, pdb, pdbqt, restrt, tng, trr, xtc, xyz.')
-    required_args.add_argument('--output_hole_path', required=True, help='Path to the output HOLE analysis results. Accepted formats: vmd.')
-    required_args.add_argument('--output_csv_path', required=True, help='Path to the output CSV file containing the radius and coordinates of the pore. Accepted formats: csv.')
-
-    args = parser.parse_args()
-    args.config = args.config or "{}"
-    properties = settings.ConfReader(config=args.config).get_prop_dic()
-
-    # Specific call of each building block
-    mda_hole(input_top_path=args.input_top_path,
-             input_traj_path=args.input_traj_path,
-             output_hole_path=args.output_hole_path,
-             output_csv_path=args.output_csv_path,
-             properties=properties)
+mda_hole.__doc__ = MDAHole.__doc__
+main = MDAHole.get_main(mda_hole, "Analyze ion channel pores or transporter pathways.")
 
 
 def display_hole(input_top_path: str, input_traj_path: str,
