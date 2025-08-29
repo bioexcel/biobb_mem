@@ -92,13 +92,14 @@ lpp_zpositions:
     lipid_sel: '(resname DPPC and name P8)'
     height_sel: '(resname DPPC and name P8)'
 
-gmx_order:
+gorder_aa:
   paths:
-    input_top_path: file:test_data_dir/A01JD/A01JD.tpr
-    input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
-    input_index_path: file:test_data_dir/A01JD/sn1.ndx
-    output_deuter_path: deuter.xvg
-    ref_output_deuter_path: file:test_reference_dir/gromacs/deuter.xvg
+    input_top_path: file:test_data_dir/A01IP/A01IP.tpr
+    input_traj_path: file:test_data_dir/A01IP/A01IP.xtc
+    output_order_path: order.yaml
+    ref_output_order_path: file:test_reference_dir/gorder/order.yaml
+  properties:
+    remove_tmp: false
 
 mda_hole:
   paths:
