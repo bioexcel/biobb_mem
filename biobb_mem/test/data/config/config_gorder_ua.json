@@ -1,5 +1,5 @@
 {
   "properties": {
-    "disable_logs": true
+    "remove_tmp": false
   }
 }

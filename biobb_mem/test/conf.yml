@@ -88,7 +88,7 @@ lpp_zpositions:
     output_positions_path: zpositions.csv
     ref_output_positions_path: file:test_reference_dir/lipyphilic_biobb/zpositions.csv
   properties:
-    ignore_no_box: true
+    ignore_no_box: True
     lipid_sel: '(resname DPPC and name P8)'
     height_sel: '(resname DPPC and name P8)'
 
@@ -97,9 +97,29 @@ gorder_aa:
     input_top_path: file:test_data_dir/A01IP/A01IP.tpr
     input_traj_path: file:test_data_dir/A01IP/A01IP.xtc
     output_order_path: order.yaml
-    ref_output_order_path: file:test_reference_dir/gorder/order.yaml
+    ref_output_order_path: file:test_reference_dir/gorder/order_aa.yaml
   properties:
-    remove_tmp: false
+    handle_pbc: False
+    remove_tmp: False
+
+gorder_cg:
+  paths:
+    input_top_path: file:test_data_dir/A01JD/A01JD.tpr
+    input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
+    output_order_path: order.yaml
+    ref_output_order_path: file:test_reference_dir/gorder/order_cg.yaml
+  properties:
+    handle_pbc: False
+    remove_tmp: False
+
+gorder_ua:
+  paths:
+    input_top_path: file:test_data_dir/CG/cg_test.tpr
+    input_traj_path: file:test_data_dir/CG/cg_test.xtc
+    output_order_path: order.yaml
+    ref_output_order_path: file:test_reference_dir/gorder/order_ua.yaml
+  properties:
+    remove_tmp: False
 
 mda_hole:
   paths:

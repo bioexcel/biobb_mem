@@ -1,0 +1,69 @@
+# Order parameters calculated with 'gorder v1.1.0' using a structure file '/tmp/biobb/unitests_11/gorder_ua/sandbox_408e2e2a-1365-494a-bbc6-c6a2de20fd67/cg_test.tpr' and a trajectory file '/tmp/biobb/unitests_11/gorder_ua/sandbox_408e2e2a-1365-494a-bbc6-c6a2de20fd67/cg_test.xtc'.
+average order:
+  total: 0.1634
+DPPC:
+  average order:
+    total: 0.1634
+  order parameters:
+    DPPC NC3 (0):
+      total: -0.0198
+      bonds:
+      - total: -0.4543
+      - total: 0.1942
+      - total: 0.2008
+    DPPC PO4 (1):
+      total: 0.2294
+      bonds:
+      - total: 0.2253
+      - total: 0.2334
+    DPPC GL1 (2):
+      total: 0.1061
+      bonds:
+      - total: 0.1061
+    DPPC GL2 (3):
+      total: 0.1369
+      bonds:
+      - total: 0.1444
+      - total: 0.1293
+    DPPC C1A (4):
+      total: 0.3082
+      bonds:
+      - total: 0.3142
+      - total: 0.3023
+    DPPC C2A (5):
+      total: 0.2662
+      bonds:
+      - total: 0.2652
+      - total: 0.2672
+    DPPC C3A (6):
+      total: 0.1923
+      bonds:
+      - total: 0.1962
+      - total: 0.1885
+    DPPC C4A (7):
+      total: 0.0827
+      bonds:
+      - total: -0.1221
+      - total: 0.1779
+      - total: 0.1924
+    DPPC C1B (8):
+      total: 0.2804
+      bonds:
+      - total: 0.28
+      - total: 0.2808
+    DPPC C2B (9):
+      total: 0.2516
+      bonds:
+      - total: 0.249
+      - total: 0.2542
+    DPPC C3B (10):
+      total: 0.1909
+      bonds:
+      - total: 0.1859
+      - total: 0.1959
+    DPPC C4B (11):
+      total: 0.0803
+      bonds:
+      - total: -0.1337
+      - total: 0.1958
+      - total: 0.1788

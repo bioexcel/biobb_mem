@@ -1,6 +1,5 @@
 {
   "properties": {
-    "disable_logs": true,
     "select": "protein",
     "steps": 5
   }

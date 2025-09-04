@@ -1,6 +1,5 @@
 {
   "properties": {
-    "disable_logs": true,
     "ignore_no_box": true,
     "lipid_sel": "(resname DPPC and name P8)"
   }

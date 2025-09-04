@@ -30,11 +30,25 @@
             "docs": "https://biobb-mem.readthedocs.io/en/latest/fatslim.html#module-fatslim.fatslim_membranes"
         },
         {
-            "block" : "GMXOrder", 
-            "tool" : "gmx_order", 
-            "desc" : "Compute lipid order parameters using GROMACS order tool.",
-            "exec" : "gmx_order",
-            "docs": "https://biobb-mem.readthedocs.io/en/latest/gromacs.html#module-gromacs.gmx_order"
+            "block" : "GorderAA", 
+            "tool" : "gorder_aa", 
+            "desc" : "Compute atomistic lipid order parameters using gorder order tool.",
+            "exec" : "gorder_aa",
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/gorder.html#module-gorder.gorder_aa"
+        },
+        {
+            "block" : "GorderCG", 
+            "tool" : "gorder_cg", 
+            "desc" : "Compute coarse-grained lipid order parameters using gorder order tool.",
+            "exec" : "gorder_cg",
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/gorder.html#module-gorder.gorder_cg"
+        },
+        {
+            "block" : "GorderUA", 
+            "tool" : "gorder_ua", 
+            "desc" : "Compute united atom lipid order parameters using gorder order tool.",
+            "exec" : "gorder_ua",
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/gorder.html#module-gorder.gorder_ua"
         },
         {
             "block" : "LPPAssignLeaflets", 
