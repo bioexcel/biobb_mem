@@ -110,19 +110,15 @@ class FatslimMembranes(BiobbObject):
 
         if self.stage_io_dict["in"]["input_top_path"].endswith('gro'):
             cfg = self.stage_io_dict["in"]["input_top_path"]
-            self.cmd = []
         else:
             # Convert topology .gro and add box dimensions if not available in the topology
             cfg = self.create_tmp_file('_output.gro')
-            self.cmd = ['gmx', 'editconf',
-                        '-f', self.stage_io_dict["in"]["input_top_path"],
-                        '-o', cfg,
-                        '-box', ' '.join(map(str, u.dimensions[:3])), ';',
-                        ]
-        tmp_out = self.create_tmp_file('_output.ndx')
+            # Save as GRO file with box information
+            u.atoms.write(cfg)
 
+        tmp_out = self.create_tmp_file('_output.ndx')
         # Build command
-        self.cmd.extend([
+        self.cmd = [
             self.binary_path, "membranes",
             "-n", tmp_ndx,
             "-c", cfg,
@@ -130,7 +126,7 @@ class FatslimMembranes(BiobbObject):
             "--cutoff", str(self.cutoff),
             "--begin-frame", str(self.begin_frame),
             "--end-frame", str(self.end_frame)
-        ])
+        ]
 
         # Run Biobb block
         self.run_biobb()
