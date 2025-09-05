@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="biobb_mem",
-    version="5.1.0",
+    version="5.1.1",
     author="Biobb developers",
     author_email="ruben.chaves@irbbarcelona.org",
     description="Biobb_mem is a complete code template to promote and facilitate the creation of new Biobbs by the community.",
@@ -21,7 +21,7 @@ setuptools.setup(
     package_data={'biobb_mem': ['py.typed']},
     install_requires=['biobb_common==5.1.1',
                       'fatslim==0.2.2'],
-    python_requires='>=3.9,<3.12',
+    python_requires='>=3.10,<3.12',
     entry_points={
         "console_scripts": [
             "cpptraj_density = biobb_mem.ambertools.cpptraj_density:main",
@@ -38,7 +38,6 @@ setuptools.setup(
     },
     classifiers=(
         "Development Status :: 5 - Production/Stable",
-        "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3.10",
         "Programming Language :: Python :: 3.11",
         "License :: OSI Approved :: Apache Software License",
