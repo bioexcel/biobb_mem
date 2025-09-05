@@ -236,16 +236,16 @@ gorder_aa -h
       --input_top_path INPUT_TOP_PATH
                             Path to the input structure or topology file. Accepted formats: tpr.
       --input_traj_path INPUT_TRAJ_PATH
-                            Path to the input trajectory to be processed. Accepted formats: xtc, trr, cpt, gro, g96, pdb, tng.
+                            Path to the input trajectory to be processed. Accepted formats: xtc, trr, gro.
       -o OUTPUT_ORDER_PATH, --output_order_path OUTPUT_ORDER_PATH
                             Path to results of the order analysis. Accepted formats: yaml, xvg, csv.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/ambertools/topology.tpr). Accepted formats: TPR
-* **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/ambertools/trajectory.xtc). Accepted formats: XTC, TRR, CPT, GRO, G96, PDB, TNG
-* **output_order_path** (*string*): Path to results of the order analysis. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/gromacs/order.xvg). Accepted formats: YAML, XVG, CSV
+* **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01IP/A01IP.tpr). Accepted formats: TPR
+* **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01IP/A01IP.xtc). Accepted formats: XTC, TRR, GRO
+* **output_order_path** (*string*): Path to results of the order analysis. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/gorder/order_aa.yaml). Accepted formats: YAML, XVG, CSV
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
 
@@ -266,7 +266,7 @@ properties:
 ```
 #### Command line
 ```python
-gorder_aa --config config_gorder_aa.yml --input_top_path topology.tpr --input_traj_path trajectory.xtc --output_order_path order.xvg
+gorder_aa --config config_gorder_aa.yml --input_top_path A01IP.tpr --input_traj_path A01IP.xtc --output_order_path order_aa.yaml
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_gorder_aa.json)
@@ -280,7 +280,7 @@ gorder_aa --config config_gorder_aa.yml --input_top_path topology.tpr --input_tr
 ```
 #### Command line
 ```python
-gorder_aa --config config_gorder_aa.json --input_top_path topology.tpr --input_traj_path trajectory.xtc --output_order_path order.xvg
+gorder_aa --config config_gorder_aa.json --input_top_path A01IP.tpr --input_traj_path A01IP.xtc --output_order_path order_aa.yaml
 ```
 
 ## Gorder_cg
@@ -303,16 +303,16 @@ gorder_cg -h
       --input_top_path INPUT_TOP_PATH
                             Path to the input structure or topology file. Accepted formats: tpr.
       --input_traj_path INPUT_TRAJ_PATH
-                            Path to the input trajectory to be processed. Accepted formats: xtc, trr, cpt, gro, g96, pdb, tng.
+                            Path to the input trajectory to be processed. Accepted formats: xtc, trr, gro.
       -o OUTPUT_ORDER_PATH, --output_order_path OUTPUT_ORDER_PATH
                             Path to results of the order analysis. Accepted formats: yaml, xvg, csv.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/ambertools/topology.tpr). Accepted formats: TPR
-* **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/ambertools/trajectory.xtc). Accepted formats: XTC, TRR, CPT, GRO, G96, PDB, TNG
-* **output_order_path** (*string*): Path to results of the order analysis. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/gromacs/order.xvg). Accepted formats: YAML, XVG, CSV
+* **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/CG/cg_test.tpr). Accepted formats: TPR
+* **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/CG/cg_test.xtc). Accepted formats: XTC, TRR, GRO
+* **output_order_path** (*string*): Path to results of the order analysis. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/gorder/order_cg.yaml). Accepted formats: YAML, XVG, CSV
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
 
@@ -332,7 +332,7 @@ properties:
 ```
 #### Command line
 ```python
-gorder_cg --config config_gorder_cg.yml --input_top_path topology.tpr --input_traj_path trajectory.xtc --output_order_path order.xvg
+gorder_cg --config config_gorder_cg.yml --input_top_path cg_test.tpr --input_traj_path cg_test.xtc --output_order_path order_cg.yaml
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_gorder_cg.json)
@@ -346,7 +346,7 @@ gorder_cg --config config_gorder_cg.yml --input_top_path topology.tpr --input_tr
 ```
 #### Command line
 ```python
-gorder_cg --config config_gorder_cg.json --input_top_path topology.tpr --input_traj_path trajectory.xtc --output_order_path order.xvg
+gorder_cg --config config_gorder_cg.json --input_top_path cg_test.tpr --input_traj_path cg_test.xtc --output_order_path order_cg.yaml
 ```
 
 ## Gorder_ua
@@ -369,16 +369,16 @@ gorder_ua -h
       --input_top_path INPUT_TOP_PATH
                             Path to the input structure or topology file. Accepted formats: tpr.
       --input_traj_path INPUT_TRAJ_PATH
-                            Path to the input trajectory to be processed. Accepted formats: xtc, trr, cpt, gro, g96, pdb, tng.
+                            Path to the input trajectory to be processed. Accepted formats: xtc, trr, gro.
       -o OUTPUT_ORDER_PATH, --output_order_path OUTPUT_ORDER_PATH
                             Path to results of the order analysis. Accepted formats: yaml, xvg, csv.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/ambertools/topology.tpr). Accepted formats: TPR
-* **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/ambertools/trajectory.xtc). Accepted formats: XTC, TRR, CPT, GRO, G96, PDB, TNG
-* **output_order_path** (*string*): Path to results of the order analysis. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/gromacs/order.xvg). Accepted formats: YAML, XVG, CSV
+* **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JP/A01JP.tpr). Accepted formats: TPR
+* **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JP/A01JP.xtc). Accepted formats: XTC, TRR, GRO
+* **output_order_path** (*string*): Path to results of the order analysis. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/gorder/order_ua.yaml). Accepted formats: YAML, XVG, CSV
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
 
@@ -398,7 +398,7 @@ properties:
 ```
 #### Command line
 ```python
-gorder_ua --config config_gorder_ua.yml --input_top_path topology.tpr --input_traj_path trajectory.xtc --output_order_path order.xvg
+gorder_ua --config config_gorder_ua.yml --input_top_path A01JP.tpr --input_traj_path A01JP.xtc --output_order_path order_ua.yaml
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_gorder_ua.json)
@@ -411,7 +411,7 @@ gorder_ua --config config_gorder_ua.yml --input_top_path topology.tpr --input_tr
 ```
 #### Command line
 ```python
-gorder_ua --config config_gorder_ua.json --input_top_path topology.tpr --input_traj_path trajectory.xtc --output_order_path order.xvg
+gorder_ua --config config_gorder_ua.json --input_top_path A01JP.tpr --input_traj_path A01JP.xtc --output_order_path order_ua.yaml
 ```
 
 ## Lpp_assign_leaflets

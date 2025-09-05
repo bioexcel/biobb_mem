@@ -26,7 +26,7 @@
             "type": "string",
             "description": "Path to the input structure or topology file",
             "filetype": "input",
-            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/ambertools/topology.tpr",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JP/A01JP.tpr",
             "enum": [
                 ".*\\.tpr$"
             ],
@@ -42,15 +42,11 @@
             "type": "string",
             "description": "Path to the input trajectory to be processed",
             "filetype": "input",
-            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/ambertools/trajectory.xtc",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JP/A01JP.xtc",
             "enum": [
                 ".*\\.xtc$",
                 ".*\\.trr$",
-                ".*\\.cpt$",
-                ".*\\.gro$",
-                ".*\\.g96$",
-                ".*\\.pdb$",
-                ".*\\.tng$"
+                ".*\\.gro$"
             ],
             "file_formats": [
                 {
@@ -64,29 +60,9 @@
                     "edam": "format_3910"
                 },
                 {
-                    "extension": ".*\\.cpt$",
-                    "description": "Path to the input trajectory to be processed",
-                    "edam": "format_2333"
-                },
-                {
                     "extension": ".*\\.gro$",
                     "description": "Path to the input trajectory to be processed",
                     "edam": "format_2033"
-                },
-                {
-                    "extension": ".*\\.g96$",
-                    "description": "Path to the input trajectory to be processed",
-                    "edam": "format_2033"
-                },
-                {
-                    "extension": ".*\\.pdb$",
-                    "description": "Path to the input trajectory to be processed",
-                    "edam": "format_1476"
-                },
-                {
-                    "extension": ".*\\.tng$",
-                    "description": "Path to the input trajectory to be processed",
-                    "edam": "format_3876"
                 }
             ]
         },
@@ -94,7 +70,7 @@
             "type": "string",
             "description": "Path to results of the order analysis",
             "filetype": "output",
-            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/gromacs/order.xvg",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/gorder/order_ua.yaml",
             "enum": [
                 ".*\\.yaml$",
                 ".*\\.xvg$",
