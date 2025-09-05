@@ -65,7 +65,7 @@
             <a id="nextFileLink" class="nav" href="z_ed63495d68c0b6ae_gorder_ua_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.10.6">coverage.py v7.10.6</a>,
-            created at 2025-09-05 09:10 +0000
+            created at 2025-09-05 09:39 +0000
         </p>
         <aside class="hidden">
             <button type="button" class="button_next_chunk" data-shortcut="j"></button>
@@ -82,7 +82,7 @@
 <main id="source">
     <p class="pln"><span class="n"><a id="t1" href="#t1">1</a></span><span class="t"><span class="com">#!/usr/bin/env python3</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t2" href="#t2">2</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t3" href="#t3">3</a></span><span class="t"><span class="str">"""Module containing the GROMACS order class and the command line interface."""</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t3" href="#t3">3</a></span><span class="t"><span class="str">"""Module containing the gorder coarse-grained class and the command line interface."""</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t4" href="#t4">4</a></span><span class="t"><span class="key">from</span> <span class="nam">biobb_common</span><span class="op">.</span><span class="nam">generic</span><span class="op">.</span><span class="nam">biobb_object</span> <span class="key">import</span> <span class="nam">BiobbObject</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t5" href="#t5">5</a></span><span class="t"><span class="key">from</span> <span class="nam">biobb_common</span><span class="op">.</span><span class="nam">tools</span><span class="op">.</span><span class="nam">file_utils</span> <span class="key">import</span> <span class="nam">launchlogger</span>&nbsp;</span><span class="r"></span></p>
     <p class="run"><span class="n"><a id="t6" href="#t6">6</a></span><span class="t"><span class="key">import</span> <span class="nam">gorder</span>&nbsp;</span><span class="r"></span></p>
@@ -95,9 +95,9 @@
     <p class="pln"><span class="n"><a id="t13" href="#t13">13</a></span><span class="t"><span class="str">    | `gorder &lt;https://ladme.github.io/gorder-manual/cgorder_basics.html>`_ uses `GSL &lt;https://ladme.github.io/gsl-guide/>`_ for all its selections.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t14" href="#t14">14</a></span><span class="t">&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t15" href="#t15">15</a></span><span class="t"><span class="str">    Args:</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t16" href="#t16">16</a></span><span class="t"><span class="str">        input_top_path (str): Path to the input structure or topology file. File type: input. `Sample file &lt;https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/ambertools/topology.tpr>`_. Accepted formats: tpr (edam:format_2333).</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t17" href="#t17">17</a></span><span class="t"><span class="str">        input_traj_path (str): Path to the input trajectory to be processed. File type: input. `Sample file &lt;https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/ambertools/trajectory.xtc>`_. Accepted formats: xtc (edam:format_3875), trr (edam:format_3910), cpt (edam:format_2333), gro (edam:format_2033), g96 (edam:format_2033), pdb (edam:format_1476), tng (edam:format_3876)..</span>&nbsp;</span><span class="r"></span></p>
-    <p class="pln"><span class="n"><a id="t18" href="#t18">18</a></span><span class="t"><span class="str">        output_order_path (str): Path to results of the order analysis. File type: output. `Sample file &lt;https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/gromacs/order.xvg>`_. Accepted formats: yaml (edam:format_3570), xvg (edam:format_2330), csv (edam:format_3752).</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t16" href="#t16">16</a></span><span class="t"><span class="str">        input_top_path (str): Path to the input structure or topology file. File type: input. `Sample file &lt;https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/CG/cg_test.tpr>`_. Accepted formats: tpr (edam:format_2333).</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t17" href="#t17">17</a></span><span class="t"><span class="str">        input_traj_path (str): Path to the input trajectory to be processed. File type: input. `Sample file &lt;https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/CG/cg_test.xtc>`_. Accepted formats: xtc (edam:format_3875), trr (edam:format_3910), gro (edam:format_2033).</span>&nbsp;</span><span class="r"></span></p>
+    <p class="pln"><span class="n"><a id="t18" href="#t18">18</a></span><span class="t"><span class="str">        output_order_path (str): Path to results of the order analysis. File type: output. `Sample file &lt;https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/gorder/order_cg.yaml>`_. Accepted formats: yaml (edam:format_3570), xvg (edam:format_2330), csv (edam:format_3752).</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t19" href="#t19">19</a></span><span class="t"><span class="str">        properties (dic - Python dictionary object containing the tool parameters, not input/output files):</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t20" href="#t20">20</a></span><span class="t"><span class="str">            * **beads** (*str*) - ("@membrane") Selection query specifying the beads to be used in the analysis.</span>&nbsp;</span><span class="r"></span></p>
     <p class="pln"><span class="n"><a id="t21" href="#t21">21</a></span><span class="t"><span class="str">            * **handle_pbc** (*bool*) - (True) If False, ignores periodic boundary conditions (PBC).</span>&nbsp;</span><span class="r"></span></p>
@@ -212,7 +212,7 @@
             <a class="nav" href="z_ed63495d68c0b6ae_gorder_ua_py.html">&#xbb; next</a>
             &nbsp; &nbsp; &nbsp;
             <a class="nav" href="https://coverage.readthedocs.io/en/7.10.6">coverage.py v7.10.6</a>,
-            created at 2025-09-05 09:10 +0000
+            created at 2025-09-05 09:39 +0000
         </p>
     </div>
 </footer>
