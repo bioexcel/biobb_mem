@@ -1,6 +1,13 @@
 
 # Biobb Membrane changelog
 
+## What's new in version [5.1.1](https://github.com/bioexcel/biobb_mem/releases/tag/v5.1.1)?
+### New features
+* [UPDATE]: Update to biobb_common 5.1.1
+* [FEATURE] Add gorder deuterium analyses for all atoms, coarse grained and united atom systems.
+* [REMOVE] Remove gmx order.
+* [REMOVE] Python 3.9 support.
+
 ## What's new in version [5.1.0](https://github.com/bioexcel/biobb_mem/releases/tag/v5.1.0)?
 ### New features
 * [FIX](https://github.com/bioexcel/biobb_mem/commit/4b4e03c6268f180060a3e7d82fadd74ce30e9988) Fix entry points
