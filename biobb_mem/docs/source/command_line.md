@@ -223,7 +223,22 @@ Command:
 ```python
 gorder_aa -h
 ```
-    /bin/sh: 1: gorder_aa: not found
+    usage: gorder_aa [-h] [-c CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH -o OUTPUT_ORDER_PATH
+    
+    Compute atomistic lipid order parameters using gorder order tool.
+    
+    options:
+      -h, --help            show this help message and exit
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
+    
+    required arguments:
+      --input_top_path INPUT_TOP_PATH
+                            Path to the input structure or topology file. Accepted formats: tpr.
+      --input_traj_path INPUT_TRAJ_PATH
+                            Path to the input trajectory to be processed. Accepted formats: xtc, trr, cpt, gro, g96, pdb, tng.
+      -o OUTPUT_ORDER_PATH, --output_order_path OUTPUT_ORDER_PATH
+                            Path to results of the order analysis. Accepted formats: yaml, xvg, csv.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
@@ -275,7 +290,22 @@ Command:
 ```python
 gorder_cg -h
 ```
-    /bin/sh: 1: gorder_cg: not found
+    usage: gorder_cg [-h] [-c CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH -o OUTPUT_ORDER_PATH
+    
+    Compute coarse-grained lipid order parameters using gorder order tool.
+    
+    options:
+      -h, --help            show this help message and exit
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
+    
+    required arguments:
+      --input_top_path INPUT_TOP_PATH
+                            Path to the input structure or topology file. Accepted formats: tpr.
+      --input_traj_path INPUT_TRAJ_PATH
+                            Path to the input trajectory to be processed. Accepted formats: xtc, trr, cpt, gro, g96, pdb, tng.
+      -o OUTPUT_ORDER_PATH, --output_order_path OUTPUT_ORDER_PATH
+                            Path to results of the order analysis. Accepted formats: yaml, xvg, csv.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
@@ -326,7 +356,22 @@ Command:
 ```python
 gorder_ua -h
 ```
-    /bin/sh: 1: gorder_ua: not found
+    usage: gorder_ua [-h] [-c CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH -o OUTPUT_ORDER_PATH
+    
+    Compute united atom lipid order parameters using gorder order tool.
+    
+    options:
+      -h, --help            show this help message and exit
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
+    
+    required arguments:
+      --input_top_path INPUT_TOP_PATH
+                            Path to the input structure or topology file. Accepted formats: tpr.
+      --input_traj_path INPUT_TRAJ_PATH
+                            Path to the input trajectory to be processed. Accepted formats: xtc, trr, cpt, gro, g96, pdb, tng.
+      -o OUTPUT_ORDER_PATH, --output_order_path OUTPUT_ORDER_PATH
+                            Path to results of the order analysis. Accepted formats: yaml, xvg, csv.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
