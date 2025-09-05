@@ -87,7 +87,7 @@ class LPPFlipFlop(BiobbObject):
 
     @launchlogger
     def launch(self) -> int:
-        """Execute the :class:`LPPFlipFlop <lipyphilic_biobb.lpp_flip_flop.LPPFlipFlop>` lipyphilic_biobb.lpp_flip_flop.LPPFlipFlop object."""
+        """Execute the :class:`LPPFlipFlop <lipyphilic_biobb.lpp_flip_flop.LPPFlipFlop>` object."""
 
         # Setup Biobb
         if self.check_restart():

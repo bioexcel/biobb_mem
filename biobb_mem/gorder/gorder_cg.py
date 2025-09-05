@@ -80,7 +80,7 @@ class GorderCG(BiobbObject):
 
     @launchlogger
     def launch(self) -> int:
-        """Execute the :class:`GorderCG <gorder.gorder_cg.GorderCG>` gorder.gorder_cg.GorderCG object."""
+        """Execute the :class:`GorderCG <gorder.gorder_cg.GorderCG>` object."""
 
         # Setup Biobb
         if self.check_restart():

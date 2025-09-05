@@ -90,7 +90,7 @@ class LPPAssignLeaflets(BiobbObject):
 
     @launchlogger
     def launch(self) -> int:
-        """Execute the :class:`LPPAssignLeaflets <lipyphilic_biobb.lpp_assign_leaflets.LPPAssignLeaflets>` lipyphilic_biobb.lpp_assign_leaflets.LPPAssignLeaflets object."""
+        """Execute the :class:`LPPAssignLeaflets <lipyphilic_biobb.lpp_assign_leaflets.LPPAssignLeaflets>` object."""
 
         # Setup Biobb
         if self.check_restart():

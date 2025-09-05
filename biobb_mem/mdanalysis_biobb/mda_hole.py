@@ -94,7 +94,7 @@ class MDAHole(BiobbObject):
 
     @launchlogger
     def launch(self) -> int:
-        """Execute the :class:`MDAHole <mdanalysis_biobb.mda_hole.MDAHole>` class."""
+        """Execute the :class:`MDAHole <mdanalysis_biobb.mda_hole.MDAHole>` object."""
 
         # Setup Biobb
         if self.check_restart():

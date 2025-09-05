@@ -88,7 +88,7 @@ class FatslimMembranes(BiobbObject):
 
     @launchlogger
     def launch(self) -> int:
-        """Execute the :class:`FatslimMembranes <fatslim.fatslim_membranes.FatslimMembranes>` fatslim.fatslim_membranes.FatslimMembranes object."""
+        """Execute the :class:`FatslimMembranes <fatslim.fatslim_membranes.FatslimMembranes>` object."""
 
         # Setup Biobb
         if self.check_restart():

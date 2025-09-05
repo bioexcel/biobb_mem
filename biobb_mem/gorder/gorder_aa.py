@@ -82,7 +82,7 @@ class GorderAA(BiobbObject):
 
     @launchlogger
     def launch(self) -> int:
-        """Execute the :class:`GorderAA <gorder.gorder_aa.GorderAA>` gorder.gorder_aa.GorderAA object."""
+        """Execute the :class:`GorderAA <gorder.gorder_aa.GorderAA>` object."""
 
         # Setup Biobb
         if self.check_restart():

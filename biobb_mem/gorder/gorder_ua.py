@@ -82,7 +82,7 @@ class GorderUA(BiobbObject):
 
     @launchlogger
     def launch(self) -> int:
-        """Execute the :class:`GorderUA <gorder.gorder_ua.GorderUA>` gorder.gorder_ua.GorderUA object."""
+        """Execute the :class:`GorderUA <gorder.gorder_ua.GorderUA>` object."""
 
         # Setup Biobb
         if self.check_restart():

@@ -89,7 +89,7 @@ class LPPZPositions(BiobbObject):
 
     @launchlogger
     def launch(self) -> int:
-        """Execute the :class:`LPPZPositions <lipyphilic_biobb.lpp_zpositions.LPPZPositions>` lipyphilic_biobb.lpp_zpositions.LPPZPositions object."""
+        """Execute the :class:`LPPZPositions <lipyphilic_biobb.lpp_zpositions.LPPZPositions>` object."""
 
         # Setup Biobb
         if self.check_restart():

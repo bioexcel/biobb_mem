@@ -117,7 +117,7 @@ class CpptrajDensity(BiobbObject):
 
     @launchlogger
     def launch(self) -> int:
-        """Execute the :class:`CpptrajDensity <ambertools.cpptraj_density.CpptrajDensity>` ambertools.cpptraj_density.CpptrajDensity object."""
+        """Execute the :class:`CpptrajDensity <ambertools.cpptraj_density.CpptrajDensity>` object."""
 
         # Setup Biobb
         if self.check_restart():
