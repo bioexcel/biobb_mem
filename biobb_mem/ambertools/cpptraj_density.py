@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 """Module containing the Cpptraj Density class and the command line interface."""
+from pathlib import PurePath
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.tools.file_utils import launchlogger
 
@@ -92,9 +93,11 @@ class CpptrajDensity(BiobbObject):
     def create_instructions_file(self, stage_io_dict, out_log, err_log):
         """Creates an input file using the properties file settings."""
         instructions_list = []
-        # different path if container execution or not
-        self.instructions_file = self.create_tmp_file(self.instructions_file)
-        # fu.create_name(prefix=self.prefix, step=self.step, name=self.instructions_file)
+        # Different path if container execution or not
+        if self.container_path:
+            self.instructions_file = str(PurePath(self.container_volume_path).joinpath(self.instructions_file))
+        else:
+            self.instructions_file = self.create_tmp_file(self.instructions_file)
         instructions_list.append('parm ' + stage_io_dict["in"]["input_top_path"])
         instructions_list.append('trajin ' + stage_io_dict["in"]["input_traj_path"] + self.slice)
         density_command = f'density {self.density_type} out {stage_io_dict["out"]["output_cpptraj_path"]} {self.mask} delta {self.delta} {self.axis} {self.bintype}'
@@ -108,7 +111,7 @@ class CpptrajDensity(BiobbObject):
         if ("output_traj_path" in stage_io_dict["out"]):
             instructions_list.append('trajout ' + stage_io_dict["out"]["output_traj_path"])
 
-        # create .in file
+        # Create .in file
         with open(self.instructions_file, 'w') as mdp:
             for line in instructions_list:
                 mdp.write(line.strip() + '\n')
@@ -128,7 +131,6 @@ class CpptrajDensity(BiobbObject):
         self.create_instructions_file(self.stage_io_dict, self.out_log, self.err_log)
         # create cmd and launch execution
         self.cmd = [self.binary_path, '-i', self.instructions_file]
-
         # Run Biobb block
         self.run_biobb()
         # Copy files to host
@@ -136,7 +138,6 @@ class CpptrajDensity(BiobbObject):
         # remove temporary folder(s)
         self.remove_tmp_files()
         self.check_arguments(output_files_created=True, raise_exception=False)
-
         return self.return_code
 
 
