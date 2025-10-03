@@ -47,8 +47,8 @@ class MDAHole(BiobbObject):
             }
             mda_hole(input_top_path='/path/to/myTopology.pdb',
                     input_traj_path='/path/to/myTrajectory.xtc',
-                    output_hole_path='/path/to/hole_analysis.csv',
-                    output_hole_path='/path/to/hole_profile.csv',
+                    output_hole_path='/path/to/hole_analysis.vmd',
+                    output_csv_path='/path/to/hole_profile.csv',
                     properties=prop)
 
     Info:

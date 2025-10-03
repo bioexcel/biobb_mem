@@ -37,4 +37,4 @@ def move_output_file(file, out_file_path, out_log, global_log):
         # Move the file to the output path
         shutil.move(files_to_move[0], out_file_path)
     else:
-        fu.log(f"Warning: File {file} not found, APL calculation might have failed.", out_log, global_log)
+        fu.log(f"Warning: File {file} not found, FATSLiM calculation might have failed.", out_log, global_log)

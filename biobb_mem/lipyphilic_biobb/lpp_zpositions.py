@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
 
 """Module containing the Lipyphilic ZPositions class and the command line interface."""
-import argparse
+
 from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.configuration import settings
 from biobb_common.tools.file_utils import launchlogger
 import MDAnalysis as mda
 from biobb_mem.lipyphilic_biobb.common import ignore_no_box
@@ -139,26 +138,8 @@ def lpp_zpositions(input_top_path: str, input_traj_path: str, output_positions_p
     return LPPZPositions(**dict(locals())).launch()
 
 
-def main():
-    """Command line execution of this building block. Please check the command line documentation."""
-    parser = argparse.ArgumentParser(description="Calculate the z distance in of lipids to the bilayer center.", formatter_class=lambda prog: argparse.RawTextHelpFormatter(prog, width=99999))
-    parser.add_argument('--config', required=False, help='Configuration file')
-
-    # Specific args of each building block
-    required_args = parser.add_argument_group('required arguments')
-    required_args.add_argument('--input_top_path', required=True, help='Path to the input structure or topology file. Accepted formats: crd, gro, mdcrd, mol2, pdb, pdbqt, prmtop, psf, top, tpr, xml, xyz.')
-    required_args.add_argument('--input_traj_path', required=True, help='Path to the input trajectory to be processed. Accepted formats: arc, crd, dcd, ent, gro, inpcrd, mdcrd, mol2, nc, pdb, pdbqt, restrt, tng, trr, xtc, xyz.')
-    required_args.add_argument('--output_positions_path', required=True, help=' Path to the output z positions.')
-
-    args = parser.parse_args()
-    args.config = args.config or "{}"
-    properties = settings.ConfReader(config=args.config).get_prop_dic()
-
-    # Specific call of each building block
-    lpp_zpositions(input_top_path=args.input_top_path,
-                   input_traj_path=args.input_traj_path,
-                   output_positions_path=args.output_positions_path,
-                   properties=properties)
+lpp_zpositions.__doc__ = LPPZPositions.__doc__
+main = LPPZPositions.get_main(lpp_zpositions, "Calculate the z distance in of lipids to the bilayer center.")
 
 
 def frame_df(output_positions_path):

@@ -130,10 +130,11 @@ class FatslimMembranes(BiobbObject):
 
         # Run Biobb block
         self.run_biobb()
+        move_output_file(tmp_out, self.stage_io_dict["out"]["output_ndx_path"], self.out_log, self.global_log)
         # Fatslim ignore H atoms so we add them manually
         if self.return_hydrogen:
             # Parse the atoms indices of the membrane without Hs
-            leaflet_groups = parse_index(tmp_out[:-4]+'_0000.ndx')
+            leaflet_groups = parse_index(self.stage_io_dict["out"]["output_ndx_path"])
             with mda.selections.gromacs.SelectionWriter(self.stage_io_dict["out"]["output_ndx_path"], mode='w') as ndx:
                 for key, value in leaflet_groups.items():
                     # Select the residues using atom indexes
@@ -141,8 +142,6 @@ class FatslimMembranes(BiobbObject):
                     # Use the rexindex to select all the atoms of the residue
                     sele = f"resindex {' '.join(map(str, res_sele))}"
                     ndx.write(u.select_atoms(sele), name=key)
-        else:
-            move_output_file(tmp_out, self.stage_io_dict["out"]["output_ndx_path"], self.out_log, self.global_log)
         # Copy files to host
         self.copy_to_host()
 
