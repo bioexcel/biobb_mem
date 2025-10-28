@@ -5,7 +5,7 @@ from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.tools.file_utils import launchlogger
 import MDAnalysis as mda
 from biobb_mem.lipyphilic_biobb.common import ignore_no_box
-from lipyphilic.lib.assign_leaflets import AssignLeaflets
+from lipyphilic.leaflets.assign_leaflets import AssignLeaflets
 import pandas as pd
 import numpy as np
 
@@ -48,7 +48,7 @@ class LPPAssignLeaflets(BiobbObject):
     Info:
         * wrapped_software:
             * name: LiPyphilic
-            * version: 0.10.0
+            * version: 0.11.0
             * license: GPL-2.0
         * ontology:
             * name: EDAM
