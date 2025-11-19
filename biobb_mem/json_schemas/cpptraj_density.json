@@ -26,7 +26,7 @@
             "type": "string",
             "description": "Path to the input structure or topology file",
             "filetype": "input",
-            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/ambertools/topology.top",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/ambertools/topology.pdb",
             "enum": [
                 ".*\\.top$",
                 ".*\\.pdb$",
@@ -208,7 +208,7 @@
             "type": "string",
             "description": "Path to the output processed density analysis",
             "filetype": "output",
-            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/ambertools/reference/density_default.dat",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/ambertools/density_default.dat",
             "enum": [
                 ".*\\.dat$",
                 ".*\\.agr$",

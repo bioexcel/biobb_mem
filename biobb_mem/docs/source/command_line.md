@@ -35,9 +35,9 @@ cpptraj_density -h
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/ambertools/topology.top). Accepted formats: TOP, PDB, PRMTOP, PARMTOP, ZIP
+* **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/ambertools/topology.pdb). Accepted formats: TOP, PDB, PRMTOP, PARMTOP, ZIP
 * **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/ambertools/trajectory.xtc). Accepted formats: MDCRD, CRD, CDF, NETCDF, NC, RESTART, NCRESTART, RESTARTNC, DCD, CHARMM, COR, PDB, MOL2, TRR, GRO, BINPOS, XTC, CIF, ARC, SQM, SDF, CONFLIB
-* **output_cpptraj_path** (*string*): Path to the output processed density analysis. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/ambertools/reference/density_default.dat). Accepted formats: DAT, AGR, XMGR, GNU
+* **output_cpptraj_path** (*string*): Path to the output processed density analysis. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/ambertools/density_default.dat). Accepted formats: DAT, AGR, XMGR, GNU
 * **output_traj_path** (*string*): Path to the output processed trajectory. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/ambertools/trajectory_out.dcd). Accepted formats: MDCRD, CRD, CDF, NETCDF, NC, RESTART, NCRESTART, RESTARTNC, DCD, CHARMM, COR, PDB, MOL2, TRR, GRO, BINPOS, XTC, CIF, ARC, SQM, SDF, CONFLIB
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -92,7 +92,7 @@ Config input / output arguments for this building block:
 * **input_top_path** (*string*): Path to the input topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.pdb). Accepted formats: TPR, GRO, G96, PDB, BRK, ENT
 * **input_traj_path** (*string*): Path to the GROMACS trajectory file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc). Accepted formats: XTC, TRR, CPT, GRO, G96, PDB, TNG
 * **input_ndx_path** (*string*): Path to the input index NDX file for lipid headgroups and the interacting group. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/headgroups.ndx). Accepted formats: NDX
-* **output_csv_path** (*string*): Path to the output CSV file. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/fatslim/apl.ndx). Accepted formats: CSV
+* **output_csv_path** (*string*): Path to the output CSV file. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/fatslim/apl.csv). Accepted formats: CSV
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
 
@@ -120,7 +120,7 @@ properties:
 ```
 #### Command line
 ```python
-fatslim_apl --config config_fatslim_apl.yml --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --input_ndx_path headgroups.ndx --output_csv_path apl.ndx
+fatslim_apl --config config_fatslim_apl.yml --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --input_ndx_path headgroups.ndx --output_csv_path apl.csv
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_apl.json)
@@ -135,7 +135,7 @@ fatslim_apl --config config_fatslim_apl.yml --input_top_path A01JD.pdb --input_t
 ```
 #### Command line
 ```python
-fatslim_apl --config config_fatslim_apl.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --input_ndx_path headgroups.ndx --output_csv_path apl.ndx
+fatslim_apl --config config_fatslim_apl.json --input_top_path A01JD.pdb --input_traj_path A01JD.xtc --input_ndx_path headgroups.ndx --output_csv_path apl.csv
 ```
 
 ## Fatslim_membranes
@@ -376,8 +376,8 @@ gorder_ua -h
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JP/A01JP.tpr). Accepted formats: TPR
-* **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JP/A01JP.xtc). Accepted formats: XTC, TRR, GRO
+* **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/CG/cg_test.tpr). Accepted formats: TPR
+* **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/CG/cg_test.xtc). Accepted formats: XTC, TRR, GRO
 * **output_order_path** (*string*): Path to results of the order analysis. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/gorder/order_ua.yaml). Accepted formats: YAML, XVG, CSV
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition

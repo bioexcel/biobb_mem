@@ -139,7 +139,7 @@
             "type": "string",
             "description": "Path to the output CSV file",
             "filetype": "output",
-            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/fatslim/apl.ndx",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/fatslim/apl.csv",
             "enum": [
                 ".*\\.csv$"
             ],
