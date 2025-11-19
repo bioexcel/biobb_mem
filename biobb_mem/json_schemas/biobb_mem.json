@@ -7,76 +7,87 @@
     "docker": "https://quay.io/biocontainers/biobb_mem:5.1.1--pyhdfd78af_0",
     "singularity": "https://depot.galaxyproject.org/singularity/biobb_mem:5.1.1--pyhdfd78af_0",
     "version": "5.1.1",
+    "rest": true,
     "tools" : [
         {
             "block" : "CpptrajDensity", 
             "tool" : "cpptraj_density",
             "desc" : "Calculates the density along an axis of a given cpptraj compatible trajectory.",
             "exec" : "cpptraj_density",
-            "docs": "https://biobb-mem.readthedocs.io/en/latest/ambertools.html#module-ambertools.cpptraj_density"
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/ambertools.html#module-ambertools.cpptraj_density",
+            "rest": true
         },
         {
             "block" : "FatslimAPL", 
             "tool" : "fatslim_apl", 
             "desc" : "Calculate the area per lipid.",
             "exec" : "fatslim_apl",
-            "docs": "https://biobb-mem.readthedocs.io/en/latest/fatslim.html#module-fatslim.fatslim_apl"
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/fatslim.html#module-fatslim.fatslim_apl",
+            "rest": true
         },
         {
             "block" : "FatslimMembranes", 
             "tool" : "fatslim_membranes", 
             "desc" : "Identify membrane types and leaflets.",
             "exec" : "fatslim_membranes",
-            "docs": "https://biobb-mem.readthedocs.io/en/latest/fatslim.html#module-fatslim.fatslim_membranes"
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/fatslim.html#module-fatslim.fatslim_membranes",
+            "rest": true
         },
         {
             "block" : "GorderAA", 
             "tool" : "gorder_aa", 
             "desc" : "Compute atomistic lipid order parameters using gorder order tool.",
             "exec" : "gorder_aa",
-            "docs": "https://biobb-mem.readthedocs.io/en/latest/gorder.html#module-gorder.gorder_aa"
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/gorder.html#module-gorder.gorder_aa",
+            "rest": true
         },
         {
             "block" : "GorderCG", 
             "tool" : "gorder_cg", 
             "desc" : "Compute coarse-grained lipid order parameters using gorder order tool.",
             "exec" : "gorder_cg",
-            "docs": "https://biobb-mem.readthedocs.io/en/latest/gorder.html#module-gorder.gorder_cg"
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/gorder.html#module-gorder.gorder_cg",
+            "rest": true
         },
         {
             "block" : "GorderUA", 
             "tool" : "gorder_ua", 
             "desc" : "Compute united atom lipid order parameters using gorder order tool.",
             "exec" : "gorder_ua",
-            "docs": "https://biobb-mem.readthedocs.io/en/latest/gorder.html#module-gorder.gorder_ua"
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/gorder.html#module-gorder.gorder_ua",
+            "rest": true
         },
         {
             "block" : "LPPAssignLeaflets", 
             "tool" : "lpp_assign_leaflets", 
             "desc" : "Assign lipids to leaflets in a bilayer.",
             "exec" : "lpp_assign_leaflets",
-            "docs": "https://biobb-mem.readthedocs.io/en/latest/lipyphilic_biobb.html#module-lipyphilic_biobb.lpp_assign_leaflets"
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/lipyphilic_biobb.html#module-lipyphilic_biobb.lpp_assign_leaflets",
+            "rest": true
         },
         {
             "block" : "LPPFlipFlop", 
             "tool" : "lpp_flip_flop", 
             "desc" : "Find flip-flop events in a lipid bilayer.",
             "exec" : "lpp_flip_flop",
-            "docs": "https://biobb-mem.readthedocs.io/en/latest/lipyphilic_biobb.html#module-lipyphilic_biobb.lpp_flip_flop"
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/lipyphilic_biobb.html#module-lipyphilic_biobb.lpp_flip_flop",
+            "rest": true
         },
         {
             "block" : "LPPZPositions", 
             "tool" : "lpp_zpositions", 
             "desc" : "Calculate the z distance in of lipids to the bilayer center.",
             "exec" : "lpp_zpositions",
-            "docs": "https://biobb-mem.readthedocs.io/en/latest/lipyphilic_biobb.html#module-lipyphilic_biobb.lpp_zpositions"
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/lipyphilic_biobb.html#module-lipyphilic_biobb.lpp_zpositions",
+            "rest": true
         },
         {
             "block" : "MDAHole", 
             "tool" : "mda_hole", 
             "desc" : "Wrapper of the MDAnalysis Hole module for analyzing hole geometry in protein channels and other macromolecular structures.",
             "exec" : "mda_hole",
-            "docs": "https://biobb-mem.readthedocs.io/en/latest/mdanalysis_biobb.html#module-mdanalysis_biobb.mda_hole"
+            "docs": "https://biobb-mem.readthedocs.io/en/latest/mdanalysis_biobb.html#module-mdanalysis_biobb.mda_hole",
+            "rest": true
         }
     ],
     "dep_pypi" : [
