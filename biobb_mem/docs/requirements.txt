@@ -1,5 +1,6 @@
 #docutils==0.17.1
 lipyphilic==0.11.0
+numpy==1.23.5
 fatslim==0.2.2
 cython==3.0.11
 mdahole2
