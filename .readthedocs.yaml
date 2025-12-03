@@ -6,7 +6,7 @@
 version: 2
 
 build:
-  os: "ubuntu-22.04"
+  os: ubuntu-24.04
   tools:
     python: "mambaforge-4.10"
 
@@ -19,5 +19,6 @@ sphinx:
 
 python:
   install:
+    - requirements: biobb_mem/docs/requirements.txt
     - method: pip
       path: .
