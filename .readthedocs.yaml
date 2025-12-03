@@ -9,6 +9,9 @@ build:
   os: "ubuntu-22.04"
   tools:
     python: "3.10"
+commands:
+    # Install numpy and cython first to handle fatslim build dependencies
+    - pip install numpy==1.23.5
 
 # Build documentation in the docs/ directory with Sphinx
 sphinx:
