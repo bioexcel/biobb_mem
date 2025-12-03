@@ -19,8 +19,7 @@ setuptools.setup(
     },
     packages=setuptools.find_packages(exclude=['adapters', 'docs', 'test']),
     package_data={'biobb_mem': ['py.typed']},
-    install_requires=['biobb_common==5.1.1',
-                      'fatslim==0.2.2'],
+    install_requires=['biobb_common==5.1.1'],
     python_requires='>=3.10,<3.12',
     entry_points={
         "console_scripts": [
