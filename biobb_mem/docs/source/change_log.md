@@ -1,6 +1,13 @@
 
 # Biobb Membrane changelog
 
+## What's new in version [5.1.2](https://github.com/bioexcel/biobb_mem/releases/tag/v5.1.2)?
+### New features
+* [UPDATE] Enable Python 3.12 support.
+* [UPDATE] Update lipyphilic dependency.
+* [UPDATE] fatslim installation is done via conda.
+* [FIX] Remove tmp file from FatslimMembranes.
+
 ## What's new in version [5.1.1](https://github.com/bioexcel/biobb_mem/releases/tag/v5.1.1)?
 ### New features
 * [UPDATE]: Update to biobb_common 5.1.1
