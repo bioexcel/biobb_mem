@@ -326,7 +326,6 @@ Config parameters for this building block:
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_gorder_cg.yml)
 ```python
 properties:
-  handle_pbc: false
   remove_tmp: false
 
 ```
@@ -339,7 +338,6 @@ gorder_cg --config config_gorder_cg.yml --input_top_path cg_test.tpr --input_tra
 ```python
 {
   "properties": {
-    "handle_pbc": false,
     "remove_tmp": false
   }
 }
@@ -376,8 +374,8 @@ gorder_ua -h
 Syntax: input_argument (datatype) : Definition
 
 Config input / output arguments for this building block:
-* **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/CG/cg_test.tpr). Accepted formats: TPR
-* **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/CG/cg_test.xtc). Accepted formats: XTC, TRR, GRO
+* **input_top_path** (*string*): Path to the input structure or topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/CG/A01JD.tpr). Accepted formats: TPR
+* **input_traj_path** (*string*): Path to the input trajectory to be processed. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/CG/A01JD.xtc). Accepted formats: XTC, TRR, GRO
 * **output_order_path** (*string*): Path to results of the order analysis. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/gorder/order_ua.yaml). Accepted formats: YAML, XVG, CSV
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
@@ -393,25 +391,27 @@ Config parameters for this building block:
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_gorder_ua.yml)
 ```python
 properties:
+  handle_pbc: false
   remove_tmp: false
 
 ```
 #### Command line
 ```python
-gorder_ua --config config_gorder_ua.yml --input_top_path A01JP.tpr --input_traj_path A01JP.xtc --output_order_path order_ua.yaml
+gorder_ua --config config_gorder_ua.yml --input_top_path A01JD.tpr --input_traj_path A01JD.xtc --output_order_path order_ua.yaml
 ```
 ### JSON
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_gorder_ua.json)
 ```python
 {
   "properties": {
+    "handle_pbc": false,
     "remove_tmp": false
   }
 }
 ```
 #### Command line
 ```python
-gorder_ua --config config_gorder_ua.json --input_top_path A01JP.tpr --input_traj_path A01JP.xtc --output_order_path order_ua.yaml
+gorder_ua --config config_gorder_ua.json --input_top_path A01JD.tpr --input_traj_path A01JD.xtc --output_order_path order_ua.yaml
 ```
 
 ## Lpp_assign_leaflets
@@ -566,21 +566,22 @@ Command:
 ```python
 lpp_zpositions -h
 ```
-    usage: lpp_zpositions [-h] [--config CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH --output_positions_path OUTPUT_POSITIONS_PATH
+    usage: lpp_zpositions [-h] [-c CONFIG] --input_top_path INPUT_TOP_PATH --input_traj_path INPUT_TRAJ_PATH -o OUTPUT_POSITIONS_PATH
     
     Calculate the z distance in of lipids to the bilayer center.
     
     options:
       -h, --help            show this help message and exit
-      --config CONFIG       Configuration file
+      -c CONFIG, --config CONFIG
+                            This file can be a YAML file, JSON file or JSON string
     
     required arguments:
       --input_top_path INPUT_TOP_PATH
                             Path to the input structure or topology file. Accepted formats: crd, gro, mdcrd, mol2, pdb, pdbqt, prmtop, psf, top, tpr, xml, xyz.
       --input_traj_path INPUT_TRAJ_PATH
                             Path to the input trajectory to be processed. Accepted formats: arc, crd, dcd, ent, gro, inpcrd, mdcrd, mol2, nc, pdb, pdbqt, restrt, tng, trr, xtc, xyz.
-      --output_positions_path OUTPUT_POSITIONS_PATH
-                             Path to the output z positions.
+      -o OUTPUT_POSITIONS_PATH, --output_positions_path OUTPUT_POSITIONS_PATH
+                            Path to the output z positions. Accepted formats: csv.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 

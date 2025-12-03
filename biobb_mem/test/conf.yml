@@ -104,21 +104,21 @@ gorder_aa:
 
 gorder_cg:
   paths:
-    input_top_path: file:test_data_dir/A01JD/A01JD.tpr
-    input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
+    input_top_path: file:test_data_dir/CG/cg_test.tpr
+    input_traj_path: file:test_data_dir/CG/cg_test.xtc
     output_order_path: order.yaml
     ref_output_order_path: file:test_reference_dir/gorder/order_cg.yaml
   properties:
-    handle_pbc: False
     remove_tmp: False
 
 gorder_ua:
   paths:
-    input_top_path: file:test_data_dir/CG/cg_test.tpr
-    input_traj_path: file:test_data_dir/CG/cg_test.xtc
+    input_top_path: file:test_data_dir/A01JD/A01JD.tpr
+    input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
     output_order_path: order.yaml
     ref_output_order_path: file:test_reference_dir/gorder/order_ua.yaml
   properties:
+    handle_pbc: False
     remove_tmp: False
 
 mda_hole:

@@ -1,105 +1,29 @@
-# Order parameters calculated with 'gorder v1.1.0' using a structure file '/tmp/biobb/unitests_10/gorder_cg/sandbox_586eace1-f640-4827-8150-2cdd8d90931f/A01JD.tpr' and a trajectory file '/tmp/biobb/unitests_10/gorder_cg/sandbox_586eace1-f640-4827-8150-2cdd8d90931f/A01JD.xtc'.
+# Order parameters calculated with 'gorder v1.2.0' using a structure file '/tmp/biobb/unitests_3/gorder_cg/sandbox_6da6cd81-fc42-49c8-86b3-36eed032d1c8/cg_test.tpr' and a trajectory file '/tmp/biobb/unitests_3/gorder_cg/sandbox_6da6cd81-fc42-49c8-86b3-36eed032d1c8/cg_test.xtc'.
 average order:
-  total: 0.102
+  total: 0.3285
 DPPC:
   average order:
-    total: 0.102
+    total: 0.3285
   order parameters:
-    DPPC C1 (0) - DPPC N4 (3):
-      total: -0.0529
-    DPPC C2 (1) - DPPC N4 (3):
-      total: 0.0093
-    DPPC C3 (2) - DPPC N4 (3):
-      total: -0.0299
-    DPPC N4 (3) - DPPC C5 (4):
-      total: 0.0962
-    DPPC C5 (4) - DPPC C6 (5):
-      total: -0.1664
-    DPPC C6 (5) - DPPC O7 (6):
-      total: -0.0966
-    DPPC O7 (6) - DPPC P8 (7):
-      total: -0.2187
-    DPPC P8 (7) - DPPC O9 (8):
-      total: -0.1631
-    DPPC P8 (7) - DPPC O10 (9):
-      total: -0.105
-    DPPC P8 (7) - DPPC O11 (10):
-      total: 0.432
-    DPPC O11 (10) - DPPC C12 (11):
-      total: 0.119
-    DPPC C12 (11) - DPPC C13 (12):
-      total: 0.4585
-    DPPC C13 (12) - DPPC O14 (13):
-      total: 0.0481
-    DPPC C13 (12) - DPPC C32 (31):
-      total: -0.2611
-    DPPC O14 (13) - DPPC C15 (14):
-      total: -0.2691
-    DPPC C15 (14) - DPPC O16 (15):
-      total: 0.0217
-    DPPC C15 (14) - DPPC C17 (16):
-      total: 0.1937
-    DPPC C17 (16) - DPPC C18 (17):
-      total: 0.2791
-    DPPC C18 (17) - DPPC C19 (18):
-      total: 0.1907
-    DPPC C19 (18) - DPPC C20 (19):
-      total: 0.2961
-    DPPC C20 (19) - DPPC C21 (20):
-      total: 0.1784
-    DPPC C21 (20) - DPPC C22 (21):
-      total: 0.2622
-    DPPC C22 (21) - DPPC C23 (22):
-      total: 0.1543
-    DPPC C23 (22) - DPPC C24 (23):
-      total: 0.2223
-    DPPC C24 (23) - DPPC C25 (24):
-      total: 0.1269
-    DPPC C25 (24) - DPPC C26 (25):
-      total: 0.1858
-    DPPC C26 (25) - DPPC C27 (26):
-      total: 0.1266
-    DPPC C27 (26) - DPPC C28 (27):
-      total: 0.1443
-    DPPC C28 (27) - DPPC C29 (28):
-      total: 0.0989
-    DPPC C29 (28) - DPPC C30 (29):
-      total: 0.0993
-    DPPC C30 (29) - DPPC C31 (30):
-      total: 0.0615
-    DPPC C32 (31) - DPPC O33 (32):
-      total: 0.1504
-    DPPC O33 (32) - DPPC C34 (33):
-      total: -0.2273
-    DPPC C34 (33) - DPPC O35 (34):
-      total: -0.014
-    DPPC C34 (33) - DPPC C36 (35):
-      total: 0.2932
-    DPPC C36 (35) - DPPC C37 (36):
-      total: 0.1584
-    DPPC C37 (36) - DPPC C38 (37):
-      total: 0.2744
-    DPPC C38 (37) - DPPC C39 (38):
-      total: 0.188
-    DPPC C39 (38) - DPPC C40 (39):
-      total: 0.259
-    DPPC C40 (39) - DPPC C41 (40):
-      total: 0.1818
-    DPPC C41 (40) - DPPC C42 (41):
-      total: 0.2426
-    DPPC C42 (41) - DPPC C43 (42):
-      total: 0.1582
-    DPPC C43 (42) - DPPC C44 (43):
-      total: 0.1978
-    DPPC C44 (43) - DPPC C45 (44):
-      total: 0.1343
-    DPPC C45 (44) - DPPC C46 (45):
-      total: 0.1684
-    DPPC C46 (45) - DPPC C47 (46):
-      total: 0.1084
-    DPPC C47 (46) - DPPC C48 (47):
-      total: 0.1242
-    DPPC C48 (47) - DPPC C49 (48):
-      total: 0.0849
-    DPPC C49 (48) - DPPC C50 (49):
-      total: 0.0727
+    DPPC NC3 (0) - DPPC PO4 (1):
+      total: -0.0593
+    DPPC PO4 (1) - DPPC GL1 (2):
+      total: 0.6199
+    DPPC GL1 (2) - DPPC GL2 (3):
+      total: -0.2047
+    DPPC GL1 (2) - DPPC C1A (4):
+      total: 0.5403
+    DPPC GL2 (3) - DPPC C1B (8):
+      total: 0.4768
+    DPPC C1A (4) - DPPC C2A (5):
+      total: 0.5086
+    DPPC C2A (5) - DPPC C3A (6):
+      total: 0.3924
+    DPPC C3A (6) - DPPC C4A (7):
+      total: 0.2482
+    DPPC C1B (8) - DPPC C2B (9):
+      total: 0.4746
+    DPPC C2B (9) - DPPC C3B (10):
+      total: 0.3751
+    DPPC C3B (10) - DPPC C4B (11):
+      total: 0.2409

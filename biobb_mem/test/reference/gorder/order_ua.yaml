@@ -1,69 +1,253 @@
-# Order parameters calculated with 'gorder v1.1.0' using a structure file '/tmp/biobb/unitests_11/gorder_ua/sandbox_408e2e2a-1365-494a-bbc6-c6a2de20fd67/cg_test.tpr' and a trajectory file '/tmp/biobb/unitests_11/gorder_ua/sandbox_408e2e2a-1365-494a-bbc6-c6a2de20fd67/cg_test.xtc'.
+# Order parameters calculated with 'gorder v1.2.0' using a structure file '/tmp/biobb/unitests_4/gorder_ua/sandbox_0ad85b84-c31e-4c94-89cd-1b3611c6420f/A01JD.tpr' and a trajectory file '/tmp/biobb/unitests_4/gorder_ua/sandbox_0ad85b84-c31e-4c94-89cd-1b3611c6420f/A01JD.xtc'.
 average order:
-  total: 0.1634
+  total: 0.0955
 DPPC:
   average order:
-    total: 0.1634
+    total: 0.0955
   order parameters:
-    DPPC NC3 (0):
-      total: -0.0198
+    DPPC C1 (0):
+      total: -0.0176
       bonds:
-      - total: -0.4543
-      - total: 0.1942
-      - total: 0.2008
-    DPPC PO4 (1):
-      total: 0.2294
+      - total: -0.0087
+      - total: -0.0736
+      - total: 0.0294
+    DPPC C2 (1):
+      total: 0.0031
       bonds:
-      - total: 0.2253
-      - total: 0.2334
-    DPPC GL1 (2):
-      total: 0.1061
+      - total: 0.0519
+      - total: 0.0299
+      - total: -0.0725
+    DPPC C3 (2):
+      total: -0.01
       bonds:
-      - total: 0.1061
-    DPPC GL2 (3):
-      total: 0.1369
+      - total: 0.0521
+      - total: -0.0763
+      - total: -0.0057
+    DPPC C5 (4):
+      total: -0.0149
+      bonds:
+      - total: 0.0014
+      - total: -0.0311
+    DPPC C6 (5):
+      total: -0.1254
+      bonds:
+      - total: -0.1215
+      - total: -0.1293
+    DPPC O7 (6):
+      total: -0.1564
+      bonds:
+      - total: -0.1598
+      - total: -0.1529
+    DPPC O9 (8):
+      total: -0.0544
+      bonds:
+      - total: 0.225
+      - total: -0.4198
+      - total: 0.0318
+    DPPC O10 (9):
+      total: -0.035
+      bonds:
+      - total: 0.2224
+      - total: 0.1002
+      - total: -0.4276
+    DPPC O11 (10):
+      total: 0.262
+      bonds:
+      - total: 0.2645
+      - total: 0.2596
+    DPPC C12 (11):
+      total: 0.2575
+      bonds:
+      - total: 0.2677
+      - total: 0.2474
+    DPPC C13 (12):
+      total: 0.2319
+      bonds:
+      - total: 0.2319
+    DPPC O14 (13):
+      total: -0.1012
+      bonds:
+      - total: -0.1762
+      - total: -0.0263
+    DPPC C15 (14):
+      total: 0.0686
+      bonds:
+      - total: 0.0686
+    DPPC O16 (15):
+      total: 0.0072
+      bonds:
+      - total: 0.205
+      - total: 0.0287
+      - total: -0.2121
+    DPPC C17 (16):
+      total: 0.2215
+      bonds:
+      - total: 0.223
+      - total: 0.22
+    DPPC C18 (17):
+      total: 0.2237
+      bonds:
+      - total: 0.2212
+      - total: 0.2262
+    DPPC C19 (18):
+      total: 0.2328
+      bonds:
+      - total: 0.2292
+      - total: 0.2364
+    DPPC C20 (19):
+      total: 0.2268
+      bonds:
+      - total: 0.2194
+      - total: 0.2341
+    DPPC C21 (20):
+      total: 0.2116
+      bonds:
+      - total: 0.2125
+      - total: 0.2108
+    DPPC C22 (21):
+      total: 0.1993
+      bonds:
+      - total: 0.1961
+      - total: 0.2025
+    DPPC C23 (22):
+      total: 0.181
+      bonds:
+      - total: 0.1818
+      - total: 0.1801
+    DPPC C24 (23):
+      total: 0.1673
+      bonds:
+      - total: 0.1613
+      - total: 0.1732
+    DPPC C25 (24):
+      total: 0.1502
       bonds:
       - total: 0.1444
-      - total: 0.1293
-    DPPC C1A (4):
-      total: 0.3082
+      - total: 0.156
+    DPPC C26 (25):
+      total: 0.1496
       bonds:
-      - total: 0.3142
-      - total: 0.3023
-    DPPC C2A (5):
-      total: 0.2662
+      - total: 0.147
+      - total: 0.1522
+    DPPC C27 (26):
+      total: 0.1301
       bonds:
-      - total: 0.2652
-      - total: 0.2672
-    DPPC C3A (6):
-      total: 0.1923
+      - total: 0.1361
+      - total: 0.1241
+    DPPC C28 (27):
+      total: 0.1165
       bonds:
-      - total: 0.1962
-      - total: 0.1885
-    DPPC C4A (7):
-      total: 0.0827
+      - total: 0.1203
+      - total: 0.1127
+    DPPC C29 (28):
+      total: 0.0948
       bonds:
-      - total: -0.1221
-      - total: 0.1779
-      - total: 0.1924
-    DPPC C1B (8):
-      total: 0.2804
+      - total: 0.1024
+      - total: 0.0871
+    DPPC C30 (29):
+      total: 0.0782
       bonds:
-      - total: 0.28
-      - total: 0.2808
-    DPPC C2B (9):
-      total: 0.2516
+      - total: 0.0835
+      - total: 0.0729
+    DPPC C31 (30):
+      total: 0.0205
       bonds:
-      - total: 0.249
-      - total: 0.2542
-    DPPC C3B (10):
-      total: 0.1909
+      - total: -0.0954
+      - total: 0.0732
+      - total: 0.0838
+    DPPC C32 (31):
+      total: -0.0538
       bonds:
-      - total: 0.1859
-      - total: 0.1959
-    DPPC C4B (11):
-      total: 0.0803
+      - total: -0.1262
+      - total: 0.0187
+    DPPC O33 (32):
+      total: -0.031
       bonds:
-      - total: -0.1337
-      - total: 0.1958
-      - total: 0.1788
+      - total: -0.0919
+      - total: 0.03
+    DPPC C34 (33):
+      total: 0.0786
+      bonds:
+      - total: 0.0786
+    DPPC O35 (34):
+      total: -0.0047
+      bonds:
+      - total: 0.14
+      - total: 0.0234
+      - total: -0.1774
+    DPPC C36 (35):
+      total: 0.2135
+      bonds:
+      - total: 0.2134
+      - total: 0.2136
+    DPPC C37 (36):
+      total: 0.2078
+      bonds:
+      - total: 0.2067
+      - total: 0.2089
+    DPPC C38 (37):
+      total: 0.2204
+      bonds:
+      - total: 0.218
+      - total: 0.2227
+    DPPC C39 (38):
+      total: 0.2144
+      bonds:
+      - total: 0.2084
+      - total: 0.2204
+    DPPC C40 (39):
+      total: 0.2111
+      bonds:
+      - total: 0.2052
+      - total: 0.217
+    DPPC C41 (40):
+      total: 0.204
+      bonds:
+      - total: 0.2015
+      - total: 0.2065
+    DPPC C42 (41):
+      total: 0.1927
+      bonds:
+      - total: 0.1942
+      - total: 0.1912
+    DPPC C43 (42):
+      total: 0.1711
+      bonds:
+      - total: 0.1749
+      - total: 0.1674
+    DPPC C44 (43):
+      total: 0.159
+      bonds:
+      - total: 0.1569
+      - total: 0.1611
+    DPPC C45 (44):
+      total: 0.1457
+      bonds:
+      - total: 0.143
+      - total: 0.1484
+    DPPC C46 (45):
+      total: 0.1327
+      bonds:
+      - total: 0.131
+      - total: 0.1343
+    DPPC C47 (46):
+      total: 0.112
+      bonds:
+      - total: 0.1104
+      - total: 0.1135
+    DPPC C48 (47):
+      total: 0.0994
+      bonds:
+      - total: 0.1002
+      - total: 0.0985
+    DPPC C49 (48):
+      total: 0.0761
+      bonds:
+      - total: 0.0763
+      - total: 0.076
+    DPPC C50 (49):
+      total: 0.0242
+      bonds:
+      - total: -0.0797
+      - total: 0.076
+      - total: 0.0764
