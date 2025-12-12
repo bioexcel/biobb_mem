@@ -26,7 +26,7 @@
             "type": "string",
             "description": "Path to the input structure or topology file",
             "filetype": "input",
-            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/CG/A01JD.tpr",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.tpr",
             "enum": [
                 ".*\\.tpr$"
             ],
@@ -42,7 +42,7 @@
             "type": "string",
             "description": "Path to the input trajectory to be processed",
             "filetype": "input",
-            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/CG/A01JD.xtc",
+            "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc",
             "enum": [
                 ".*\\.xtc$",
                 ".*\\.trr$",
