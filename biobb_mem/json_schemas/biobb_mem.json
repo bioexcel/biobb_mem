@@ -23,7 +23,7 @@
             "desc" : "Calculate the area per lipid.",
             "exec" : "fatslim_apl",
             "docs": "https://biobb-mem.readthedocs.io/en/latest/fatslim.html#module-fatslim.fatslim_apl",
-            "rest": true
+            "rest": false
         },
         {
             "block" : "FatslimMembranes", 
@@ -31,7 +31,7 @@
             "desc" : "Identify membrane types and leaflets.",
             "exec" : "fatslim_membranes",
             "docs": "https://biobb-mem.readthedocs.io/en/latest/fatslim.html#module-fatslim.fatslim_membranes",
-            "rest": true
+            "rest": false
         },
         {
             "block" : "GorderAA", 
