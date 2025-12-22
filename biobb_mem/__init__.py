@@ -5,4 +5,4 @@ warnings.simplefilter('ignore', BiopythonDeprecationWarning)
 
 name = "biobb_mem"
 __all__ = ["ambertools", "fatslim", "gorder", "lipyphilic_biobb", "mdanalysis_biobb"]
-__version__ = "5.1.2"
+__version__ = "5.2.0"

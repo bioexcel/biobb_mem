@@ -21,8 +21,6 @@ cpptraj_density -h
       -h, --help            show this help message and exit
       -c CONFIG, --config CONFIG
                             This file can be a YAML file, JSON file or JSON string
-      --output_traj_path OUTPUT_TRAJ_PATH
-                            Path to the output processed trajectory. Accepted formats: mdcrd, crd, cdf, netcdf, nc, restart, ncrestart, restartnc, dcd, charmm, cor, pdb, mol2, trr, gro, binpos, xtc, cif, arc, sqm, sdf, conflib.
     
     required arguments:
       --input_top_path INPUT_TOP_PATH
@@ -31,6 +29,10 @@ cpptraj_density -h
                             Path to the input trajectory to be processed. Accepted formats: mdcrd, crd, cdf, netcdf, nc, restart, ncrestart, restartnc, dcd, charmm, cor, pdb, mol2, trr, gro, binpos, xtc, cif, arc, sqm, sdf, conflib.
       --output_cpptraj_path OUTPUT_CPPTRAJ_PATH
                             Path to the output processed density analysis. Accepted formats: dat, agr, xmgr, gnu.
+    
+    optional arguments:
+      --output_traj_path OUTPUT_TRAJ_PATH
+                            Path to the output processed trajectory. Accepted formats: mdcrd, crd, cdf, netcdf, nc, restart, ncrestart, restartnc, dcd, charmm, cor, pdb, mol2, trr, gro, binpos, xtc, cif, arc, sqm, sdf, conflib.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
@@ -75,16 +77,18 @@ fatslim_apl -h
       -h, --help            show this help message and exit
       -c CONFIG, --config CONFIG
                             This file can be a YAML file, JSON file or JSON string
-      --input_traj_path INPUT_TRAJ_PATH
-                            Path to the GROMACS trajectory file. Accepted formats: xtc, trr, cpt, gro, g96, pdb, tng.
-      --input_ndx_path INPUT_NDX_PATH
-                            Path to the input index NDX file for lipid headgroups and the interacting group. Accepted formats: ndx.
     
     required arguments:
       --input_top_path INPUT_TOP_PATH
                             Path to the input topology file. Accepted formats: tpr, gro, g96, pdb, brk, ent.
       -o OUTPUT_CSV_PATH, --output_csv_path OUTPUT_CSV_PATH
                             Path to the output CSV file. Accepted formats: csv.
+    
+    optional arguments:
+      --input_traj_path INPUT_TRAJ_PATH
+                            Path to the GROMACS trajectory file. Accepted formats: xtc, trr, cpt, gro, g96, pdb, tng.
+      --input_ndx_path INPUT_NDX_PATH
+                            Path to the input index NDX file for lipid headgroups and the interacting group. Accepted formats: ndx.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
@@ -153,16 +157,18 @@ fatslim_membranes -h
       -h, --help            show this help message and exit
       -c CONFIG, --config CONFIG
                             This file can be a YAML file, JSON file or JSON string
-      --input_traj_path INPUT_TRAJ_PATH
-                            Path to the GROMACS trajectory file. Accepted formats: xtc, trr, cpt, gro, g96, pdb, tng.
-      --input_ndx_path INPUT_NDX_PATH
-                            Path to the input lipid headgroups index NDX file. Accepted formats: ndx.
     
     required arguments:
       --input_top_path INPUT_TOP_PATH
                             Path to the input topology file. Accepted formats: tpr, gro, g96, pdb, brk, ent.
       -o OUTPUT_NDX_PATH, --output_ndx_path OUTPUT_NDX_PATH
                             Path to the output index NDX file. Accepted formats: ndx.
+    
+    optional arguments:
+      --input_traj_path INPUT_TRAJ_PATH
+                            Path to the GROMACS trajectory file. Accepted formats: xtc, trr, cpt, gro, g96, pdb, tng.
+      --input_ndx_path INPUT_NDX_PATH
+                            Path to the input lipid headgroups index NDX file. Accepted formats: ndx.
 ### I / O Arguments
 Syntax: input_argument (datatype) : Definition
 
