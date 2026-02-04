@@ -104,8 +104,9 @@ class LPPFlipFlop(BiobbObject):
             n_frames = len(df['frame'].unique())
             n_residues = len(df['resindex'].unique())
             leaflets = df['leaflet_index'].values.reshape(n_frames, n_residues).T
+            leaflets = np.asarray(leaflets, dtype=np.int8)
         else:  # .npy file
-            leaflets = np.load(leaflets_path)
+            leaflets = np.load(leaflets_path).astype(np.int8)
         # Create FlipFlop object
         flip_flop = FlipFlop(
             universe=u,
