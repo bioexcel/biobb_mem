@@ -4,8 +4,8 @@
     "github": "https://github.com/bioexcel/biobb_mem",
     "readthedocs": "https://biobb-mem.readthedocs.io/en/latest/",
     "conda": "https://anaconda.org/bioconda/biobb_mem",
-    "docker": "https://quay.io/biocontainers/biobb_mem:5.2.0--pyhdfd78af_0",
-    "singularity": "https://depot.galaxyproject.org/singularity/biobb_mem:5.2.0--pyhdfd78af_0",
+    "docker": "https://quay.io/biocontainers/biobb_mem:5.2.1--pyhdfd78af_0",
+    "singularity": "https://depot.galaxyproject.org/singularity/biobb_mem:5.2.1--pyhdfd78af_0",
     "version": "5.2.0",
     "rest": true,
     "tools" : [
