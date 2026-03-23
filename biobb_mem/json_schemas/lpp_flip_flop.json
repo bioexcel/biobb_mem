@@ -46,62 +46,62 @@
                 {
                     "extension": ".*\\.crd$",
                     "description": "Path to the input structure or topology file",
-                    "edam": "3878"
+                    "edam": "format_3878"
                 },
                 {
                     "extension": ".*\\.gro$",
                     "description": "Path to the input structure or topology file",
-                    "edam": "2033"
+                    "edam": "format_2033"
                 },
                 {
                     "extension": ".*\\.mdcrd$",
                     "description": "Path to the input structure or topology file",
-                    "edam": "3878"
+                    "edam": "format_3878"
                 },
                 {
                     "extension": ".*\\.mol2$",
                     "description": "Path to the input structure or topology file",
-                    "edam": "3816"
+                    "edam": "format_3816"
                 },
                 {
                     "extension": ".*\\.pdb$",
                     "description": "Path to the input structure or topology file",
-                    "edam": "1476"
+                    "edam": "format_1476"
                 },
                 {
                     "extension": ".*\\.pdbqt$",
                     "description": "Path to the input structure or topology file",
-                    "edam": "1476"
+                    "edam": "format_1476"
                 },
                 {
                     "extension": ".*\\.prmtop$",
                     "description": "Path to the input structure or topology file",
-                    "edam": "3881"
+                    "edam": "format_3881"
                 },
                 {
                     "extension": ".*\\.psf$",
                     "description": "Path to the input structure or topology file",
-                    "edam": "3882"
+                    "edam": "format_3882"
                 },
                 {
                     "extension": ".*\\.top$",
                     "description": "Path to the input structure or topology file",
-                    "edam": "3881"
+                    "edam": "format_3881"
                 },
                 {
                     "extension": ".*\\.tpr$",
                     "description": "Path to the input structure or topology file",
-                    "edam": "2333"
+                    "edam": "format_2333"
                 },
                 {
                     "extension": ".*\\.xml$",
                     "description": "Path to the input structure or topology file",
-                    "edam": "2332"
+                    "edam": "format_2332"
                 },
                 {
                     "extension": ".*\\.xyz$",
                     "description": "Path to the input structure or topology file",
-                    "edam": "3887"
+                    "edam": "format_3887"
                 }
             ]
         },
@@ -132,82 +132,82 @@
                 {
                     "extension": ".*\\.arc$",
                     "description": "Path to the input trajectory to be processed",
-                    "edam": "2333"
+                    "edam": "format_2333"
                 },
                 {
                     "extension": ".*\\.crd$",
                     "description": "Path to the input trajectory to be processed",
-                    "edam": "3878"
+                    "edam": "format_3878"
                 },
                 {
                     "extension": ".*\\.dcd$",
                     "description": "Path to the input trajectory to be processed",
-                    "edam": "3878"
+                    "edam": "format_3878"
                 },
                 {
                     "extension": ".*\\.ent$",
                     "description": "Path to the input trajectory to be processed",
-                    "edam": "1476"
+                    "edam": "format_1476"
                 },
                 {
                     "extension": ".*\\.gro$",
                     "description": "Path to the input trajectory to be processed",
-                    "edam": "2033"
+                    "edam": "format_2033"
                 },
                 {
                     "extension": ".*\\.inpcrd$",
                     "description": "Path to the input trajectory to be processed",
-                    "edam": "3878"
+                    "edam": "format_3878"
                 },
                 {
                     "extension": ".*\\.mdcrd$",
                     "description": "Path to the input trajectory to be processed",
-                    "edam": "3878"
+                    "edam": "format_3878"
                 },
                 {
                     "extension": ".*\\.mol2$",
                     "description": "Path to the input trajectory to be processed",
-                    "edam": "3816"
+                    "edam": "format_3816"
                 },
                 {
                     "extension": ".*\\.nc$",
                     "description": "Path to the input trajectory to be processed",
-                    "edam": "3650"
+                    "edam": "format_3650"
                 },
                 {
                     "extension": ".*\\.pdb$",
                     "description": "Path to the input trajectory to be processed",
-                    "edam": "1476"
+                    "edam": "format_1476"
                 },
                 {
                     "extension": ".*\\.pdbqt$",
                     "description": "Path to the input trajectory to be processed",
-                    "edam": "1476"
+                    "edam": "format_1476"
                 },
                 {
                     "extension": ".*\\.restrt$",
                     "description": "Path to the input trajectory to be processed",
-                    "edam": "3886"
+                    "edam": "format_3886"
                 },
                 {
                     "extension": ".*\\.tng$",
                     "description": "Path to the input trajectory to be processed",
-                    "edam": "3876"
+                    "edam": "format_3876"
                 },
                 {
                     "extension": ".*\\.trr$",
                     "description": "Path to the input trajectory to be processed",
-                    "edam": "3910"
+                    "edam": "format_3910"
                 },
                 {
                     "extension": ".*\\.xtc$",
                     "description": "Path to the input trajectory to be processed",
-                    "edam": "3875"
+                    "edam": "format_3875"
                 },
                 {
                     "extension": ".*\\.xyz$",
                     "description": "Path to the input trajectory to be processed",
-                    "edam": "3887"
+                    "edam": "format_3887"
                 }
             ]
         },
