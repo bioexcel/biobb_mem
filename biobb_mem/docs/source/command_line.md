@@ -45,20 +45,20 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **start** (*integer*): (1) Starting frame for slicing.
-* **end** (*integer*): (-1) Ending frame for slicing.
-* **steps** (*integer*): (1) Step for slicing.
-* **density_type** (*string*): (number) Number, mass, partial charge (q) or electron (Ne - q) density. Electron density will be converted to e-/Å3 by dividing the average area spanned by the other two dimensions..
-* **mask** (*string*): (*) Arbitrary number of masks for atom selection; a dataset is created and the output will contain entries for each mask.. Default: all atoms..
-* **delta** (*number*): (0.25) Resolution, i.e. determines number of slices (i.e. histogram bins)..
-* **axis** (*string*): (z) Coordinate (axis) for density calculation. Vales: x, y, z..
-* **bintype** (*string*): (bincenter) Determine whether histogram bin coordinates will be based on bin center (default) or bin edges. .
-* **restrict** (*string*): (None) If specified, only calculate the density within a cylinder or square shape from the specified axis as defined by a distance cutoff. .
-* **cutoff** (*number*): (None) The distance cutoff for 'restrict'. Required if 'restrict' is specified..
-* **binary_path** (*string*): (cpptraj) Path to the cpptraj executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
-* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
+* **start** (*integer*): (1) Starting frame for slicing
+* **end** (*integer*): (-1) Ending frame for slicing
+* **steps** (*integer*): (1) Step for slicing
+* **density_type** (*string*): (number) Number, mass, partial charge (q) or electron (Ne - q) density. Electron density will be converted to e-/Å3 by dividing the average area spanned by the other two dimensions.
+* **mask** (*string*): (*) Arbitrary number of masks for atom selection; a dataset is created and the output will contain entries for each mask.. Default: all atoms.
+* **delta** (*number*): (0.25) Resolution, i.e. determines number of slices (i.e. histogram bins).
+* **axis** (*string*): (z) Coordinate (axis) for density calculation. Vales: x, y, z.
+* **bintype** (*string*): (bincenter) Determine whether histogram bin coordinates will be based on bin center (default) or bin edges. 
+* **restrict** (*string*): (None) If specified, only calculate the density within a cylinder or square shape from the specified axis as defined by a distance cutoff. 
+* **cutoff** (*number*): (None) The distance cutoff for 'restrict'. Required if 'restrict' is specified.
+* **binary_path** (*string*): (cpptraj) Path to the cpptraj executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory.
 ### YAML
 ### JSON
 
@@ -101,18 +101,18 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **lipid_selection** (*string*): (not protein and element P) Headgroups MDAnalysis selection..
-* **protein_selection** (*string*): (protein and not element H) Protein selection interacting with the membrane..
-* **cutoff** (*number*): (3.0) This option allows user to specify the cutoff distance (in nm) to be used when performing the neighbor search needed by the APL calculation algorithm.
-* **limit** (*number*): (10.0) This option allows user to specify the upper limit (in nm2) for a valid area per lipid value..
-* **begin_frame** (*integer*): (-1) First frame index to be used for analysis..
-* **end_frame** (*integer*): (-1) Last frame index to be used for analysis..
-* **ignore_no_box** (*boolean*): (False) Ignore the absence of box information in the topology. If the topology does not contain box information, the box will be set to the minimum and maximum positions of the atoms..
-* **return_hydrogen** (*boolean*): (False) Include hydrogen atoms in the output index file..
-* **binary_path** (*string*): (fatslim) Path to the fatslim executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
-* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
+* **lipid_selection** (*string*): (not protein and element P) Headgroups MDAnalysis selection.
+* **protein_selection** (*string*): (protein and not element H) Protein selection interacting with the membrane.
+* **cutoff** (*number*): (3.0) This option allows user to specify the cutoff distance (in nm) to be used when performing the neighbor search needed by the APL calculation algorithm
+* **limit** (*number*): (10.0) This option allows user to specify the upper limit (in nm2) for a valid area per lipid value.
+* **begin_frame** (*integer*): (-1) First frame index to be used for analysis.
+* **end_frame** (*integer*): (-1) Last frame index to be used for analysis.
+* **ignore_no_box** (*boolean*): (False) Ignore the absence of box information in the topology. If the topology does not contain box information, the box will be set to the minimum and maximum positions of the atoms.
+* **return_hydrogen** (*boolean*): (False) Include hydrogen atoms in the output index file.
+* **binary_path** (*string*): (fatslim) Path to the fatslim executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_apl.yml)
 ```python
@@ -181,16 +181,16 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **selection** (*string*): (not protein and element P) Alternative ot the NDX file for choosing the Headgroups used in the identification using MDAnalysis selection language..
-* **cutoff** (*number*): (2.0) Cutoff distance (in nm) to be used when leaflet identification is performed..
-* **begin_frame** (*integer*): (-1) First frame index to be used for analysis..
-* **end_frame** (*integer*): (-1) Last frame index to be used for analysis..
-* **ignore_no_box** (*boolean*): (False) Ignore the absence of box information in the topology. If the topology does not contain box information, the box will be set to the minimum and maximum positions of the atoms..
-* **return_hydrogen** (*boolean*): (False) Include hydrogen atoms in the output index file..
-* **binary_path** (*string*): (fatslim) Path to the fatslim executable binary..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
-* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
+* **selection** (*string*): (not protein and element P) Alternative ot the NDX file for choosing the Headgroups used in the identification using MDAnalysis selection language.
+* **cutoff** (*number*): (2.0) Cutoff distance (in nm) to be used when leaflet identification is performed.
+* **begin_frame** (*integer*): (-1) First frame index to be used for analysis.
+* **end_frame** (*integer*): (-1) Last frame index to be used for analysis.
+* **ignore_no_box** (*boolean*): (False) Ignore the absence of box information in the topology. If the topology does not contain box information, the box will be set to the minimum and maximum positions of the atoms.
+* **return_hydrogen** (*boolean*): (False) Include hydrogen atoms in the output index file.
+* **binary_path** (*string*): (fatslim) Path to the fatslim executable binary.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_membranes.yml)
 ```python
@@ -256,12 +256,12 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **heavy_atoms** (*string*): (@membrane and name rC3.+|C2.+) Selection query specifying the heavy atoms to be used in the analysis (typically carbon atoms in lipid tails)..
-* **hydrogens** (*string*): (@membrane and element name hydrogen) Selection query specifiying the hydrogen atoms to be used in the analysis (only those bonded to heavy atoms will be considered)..
-* **handle_pbc** (*boolean*): (True) If False, ignores periodic boundary conditions (PBC)..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
-* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
+* **heavy_atoms** (*string*): (@membrane and name rC3.+|C2.+) Selection query specifying the heavy atoms to be used in the analysis (typically carbon atoms in lipid tails).
+* **hydrogens** (*string*): (@membrane and element name hydrogen) Selection query specifiying the hydrogen atoms to be used in the analysis (only those bonded to heavy atoms will be considered).
+* **handle_pbc** (*boolean*): (True) If False, ignores periodic boundary conditions (PBC).
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_gorder_aa.yml)
 ```python
@@ -323,11 +323,11 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **beads** (*string*): (@membrane) Selection query specifying the beads to be used in the analysis..
-* **handle_pbc** (*boolean*): (True) If False, ignores periodic boundary conditions (PBC)..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
-* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
+* **beads** (*string*): (@membrane) Selection query specifying the beads to be used in the analysis.
+* **handle_pbc** (*boolean*): (True) If False, ignores periodic boundary conditions (PBC).
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_gorder_cg.yml)
 ```python
@@ -387,12 +387,12 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **saturated** (*string*): (@membrane) Selection query specifying the saturated carbons..
-* **unsaturated** (*string*): (None) Selection query specifying the unsaturated carbons..
-* **handle_pbc** (*boolean*): (True) If False, ignores periodic boundary conditions (PBC)..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
-* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
+* **saturated** (*string*): (@membrane) Selection query specifying the saturated carbons.
+* **unsaturated** (*string*): (None) Selection query specifying the unsaturated carbons.
+* **handle_pbc** (*boolean*): (True) If False, ignores periodic boundary conditions (PBC).
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_gorder_ua.yml)
 ```python
@@ -454,17 +454,17 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **start** (*integer*): (None) Starting frame for slicing..
-* **stop** (*integer*): (None) Ending frame for slicing..
-* **steps** (*integer*): (None) Step for slicing..
-* **lipid_sel** (*string*): (all) Selection string for the lipids in a membrane. The selection should cover **all** residues in the membrane, including cholesterol..
-* **midplane_sel** (*string*): (None) Selection string for residues that may be midplane. Any residues not in this selection will be assigned to a leaflet regardless of its proximity to the midplane. The default is `None`, in which case all lipids will be assigned to either the upper or lower leaflet..
-* **midplane_cutoff** (*number*): (0.0) Minimum distance in *z* an atom must be from the midplane to be assigned to a leaflet rather than the midplane. The default is `0`, in which case all lipids will be assigned to either the upper or lower leaflet. Must be non-negative..
-* **n_bins** (*integer*): (1) Number of bins in *x* and *y* to use to create a grid of membrane patches. Local membrane midpoints are computed for each patch, and lipids assigned a leaflet based on the distance to their local membrane midpoint. The default is `1`, which is equivalent to computing a single global midpoint..
-* **ignore_no_box** (*boolean*): (False) Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
-* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
+* **start** (*integer*): (None) Starting frame for slicing.
+* **stop** (*integer*): (None) Ending frame for slicing.
+* **steps** (*integer*): (None) Step for slicing.
+* **lipid_sel** (*string*): (all) Selection string for the lipids in a membrane. The selection should cover **all** residues in the membrane, including cholesterol.
+* **midplane_sel** (*string*): (None) Selection string for residues that may be midplane. Any residues not in this selection will be assigned to a leaflet regardless of its proximity to the midplane. The default is `None`, in which case all lipids will be assigned to either the upper or lower leaflet.
+* **midplane_cutoff** (*number*): (0.0) Minimum distance in *z* an atom must be from the midplane to be assigned to a leaflet rather than the midplane. The default is `0`, in which case all lipids will be assigned to either the upper or lower leaflet. Must be non-negative.
+* **n_bins** (*integer*): (1) Number of bins in *x* and *y* to use to create a grid of membrane patches. Local membrane midpoints are computed for each patch, and lipids assigned a leaflet based on the distance to their local membrane midpoint. The default is `1`, which is equivalent to computing a single global midpoint.
+* **ignore_no_box** (*boolean*): (False) Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_lpp_assign_leaflets.yml)
 ```python
@@ -529,15 +529,15 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **start** (*integer*): (None) Starting frame for slicing..
-* **stop** (*integer*): (None) Ending frame for slicing..
-* **steps** (*integer*): (None) Step for slicing..
-* **lipid_sel** (*string*): (all) Selection string for the lipids in a membrane. The selection should cover **all** residues in the membrane, including cholesterol..
-* **frame_cutoff** (*number*): (1.0) To be counted as a successful flip-flop, a molecule must reside in its new leaflet for at least ‘frame_cutoff’ consecutive frames. The default is 1, in which case the molecule only needs to move to the opposing leaflet for a single frame for the flip-flop to be successful..
-* **ignore_no_box** (*boolean*): (False) Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
-* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
+* **start** (*integer*): (None) Starting frame for slicing.
+* **stop** (*integer*): (None) Ending frame for slicing.
+* **steps** (*integer*): (None) Step for slicing.
+* **lipid_sel** (*string*): (all) Selection string for the lipids in a membrane. The selection should cover **all** residues in the membrane, including cholesterol.
+* **frame_cutoff** (*number*): (1.0) To be counted as a successful flip-flop, a molecule must reside in its new leaflet for at least ‘frame_cutoff’ consecutive frames. The default is 1, in which case the molecule only needs to move to the opposing leaflet for a single frame for the flip-flop to be successful.
+* **ignore_no_box** (*boolean*): (False) Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_lpp_flip_flop.yml)
 ```python
@@ -599,16 +599,16 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **start** (*integer*): (None) Starting frame for slicing..
-* **stop** (*integer*): (None) Ending frame for slicing..
-* **steps** (*integer*): (None) Step for slicing..
-* **lipid_sel** (*string*): (all) Selection string for the lipids in a membrane. The selection should cover **all** residues in the membrane, including cholesterol..
-* **height_sel** (*string*): (all) Atom selection for the molecules for which the z position will be calculated..
-* **n_bins** (*integer*): (1) Number of bins in *x* and *y* to use to create a grid of membrane patches. Local membrane midpoints are computed for each patch, and lipids assigned a leaflet based on the distance to their local membrane midpoint. The default is `1`, which is equivalent to computing a single global midpoint..
-* **ignore_no_box** (*boolean*): (False) Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
-* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
+* **start** (*integer*): (None) Starting frame for slicing.
+* **stop** (*integer*): (None) Ending frame for slicing.
+* **steps** (*integer*): (None) Step for slicing.
+* **lipid_sel** (*string*): (all) Selection string for the lipids in a membrane. The selection should cover **all** residues in the membrane, including cholesterol.
+* **height_sel** (*string*): (all) Atom selection for the molecules for which the z position will be calculated.
+* **n_bins** (*integer*): (1) Number of bins in *x* and *y* to use to create a grid of membrane patches. Local membrane midpoints are computed for each patch, and lipids assigned a leaflet based on the distance to their local membrane midpoint. The default is `1`, which is equivalent to computing a single global midpoint.
+* **ignore_no_box** (*boolean*): (False) Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_lpp_zpositions.yml)
 ```python
@@ -675,19 +675,19 @@ Config input / output arguments for this building block:
 Syntax: input_parameter (datatype) - (default_value) Definition
 
 Config parameters for this building block:
-* **start** (*integer*): (None) Starting frame for slicing..
-* **stop** (*integer*): (None) Ending frame for slicing..
-* **steps** (*integer*): (None) Step for slicing..
-* **executable** (*string*): (hole) Path to the HOLE executable..
-* **select** (*string*): (protein) The selection string to create an atom selection that the HOLE analysis is applied to..
-* **cpoint** (*array*): (None) Coordinates of a point inside the pore (Å). If None, tries to guess based on the geometry..
-* **cvect** (*array*): (None) Search direction vector. If None, tries to guess based on the geometry..
-* **sample** (*number*): (0.2) Distance of sample points in Å. This value determines how many points in the pore profile are calculated..
-* **end_radius** (*number*): (22.0) Radius in Å, which is considered to be the end of the pore..
-* **dot_density** (*integer*): (15) Density of facets for generating a 3D pore representation..
-* **remove_tmp** (*boolean*): (True) Remove temporal files..
-* **restart** (*boolean*): (False) Do not execute if output files exist..
-* **sandbox_path** (*string*): (./) Parent path to the sandbox directory..
+* **start** (*integer*): (None) Starting frame for slicing.
+* **stop** (*integer*): (None) Ending frame for slicing.
+* **steps** (*integer*): (None) Step for slicing.
+* **executable** (*string*): (hole) Path to the HOLE executable.
+* **select** (*string*): (protein) The selection string to create an atom selection that the HOLE analysis is applied to.
+* **cpoint** (*array*): (None) Coordinates of a point inside the pore (Å). If None, tries to guess based on the geometry.
+* **cvect** (*array*): (None) Search direction vector. If None, tries to guess based on the geometry.
+* **sample** (*number*): (0.2) Distance of sample points in Å. This value determines how many points in the pore profile are calculated.
+* **end_radius** (*number*): (22.0) Radius in Å, which is considered to be the end of the pore.
+* **dot_density** (*integer*): (15) Density of facets for generating a 3D pore representation.
+* **remove_tmp** (*boolean*): (True) Remove temporal files.
+* **restart** (*boolean*): (False) Do not execute if output files exist.
+* **sandbox_path** (*string*): (./) Parent path to the sandbox directory.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_mda_hole.yml)
 ```python
