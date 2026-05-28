@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
 """Module containing the FATSLiM Area per Lipid class and the command line interface."""
+from pathlib import Path, PurePath
+import sys
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.tools.file_utils import launchlogger
 from biobb_mem.fatslim.common import ignore_no_box, move_output_file
@@ -31,6 +33,12 @@ class FatslimAPL(BiobbObject):
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
             * **sandbox_path** (*str*) - ("./") [WF property] Parent path to the sandbox directory.
+            * **container_path** (*str*) - (None) Container path definition.
+            * **container_image** (*str*) - ('afandiadib/ambertools:serial') Container image definition.
+            * **container_volume_path** (*str*) - ('/tmp') Container volume path definition.
+            * **container_working_dir** (*str*) - (None) Container working directory definition.
+            * **container_user_id** (*str*) - (None) Container user_id definition.
+            * **container_shell_path** (*str*) - ('/bin/bash') Path to default shell inside the container.
 
     Examples:
         This is a use example of how to use the building block from Python::
@@ -95,16 +103,26 @@ class FatslimAPL(BiobbObject):
             return 0
         self.stage_files()
 
+        unique_dir = self.stage_io_dict.get("unique_dir", "")
+        if self.container_path:
+            working_dir = self.container_volume_path if self.container_volume_path else "/data"
+        else:
+            working_dir = unique_dir
+
+        host_top_path = str(Path(unique_dir).joinpath(PurePath(self.io_dict["in"]["input_top_path"]).name))
+        host_traj_path = None
+        if self.io_dict["in"].get("input_traj_path"):
+            host_traj_path = str(Path(unique_dir).joinpath(PurePath(self.io_dict["in"]["input_traj_path"]).name))
+
         # Create index file using MDAnalysis
-        u = mda.Universe(topology=self.stage_io_dict["in"]["input_top_path"],
-                         coordinates=self.stage_io_dict["in"].get("input_traj_path"))
+        u = mda.Universe(topology=host_top_path, coordinates=host_traj_path)
         ignore_no_box(u, self.ignore_no_box, self.out_log, self.global_log)
 
         # Build the index to select the atoms from the membrane
         if self.stage_io_dict["in"].get('input_ndx_path', None):
             tmp_ndx = self.stage_io_dict["in"]["input_ndx_path"]
         else:
-            tmp_ndx = self.create_tmp_file('_apl_inp.ndx')
+            tmp_ndx = str(Path(unique_dir).joinpath('_apl_inp.ndx'))
             with mda.selections.gromacs.SelectionWriter(tmp_ndx, mode='w') as ndx:
                 ndx.write(u.select_atoms(self.lipid_selection), name='headgroups')
                 ndx.write(u.select_atoms(self.protein_selection), name='protein')
@@ -114,17 +132,33 @@ class FatslimAPL(BiobbObject):
 
         else:
             # Convert topology .gro and add box dimensions if not available in the topology
-            cfg = self.create_tmp_file('_output.gro')
+            cfg = str(Path(unique_dir).joinpath('_output.gro'))
             # Save as GRO file with box information
             u.atoms.write(cfg)
 
-        tmp_csv = self.create_tmp_file('_out.csv')
+        tmp_csv = str(Path(unique_dir).joinpath('_out.csv'))
+
+        cmd_prefix = ["cd", working_dir, ";"]
+        if not self.container_path and PurePath(self.binary_path).name == "fatslim":
+            # FATSLiM 0.2.2 uses deprecated NumPy aliases removed in modern NumPy versions.
+            fatslim_compat = Path(unique_dir).joinpath('fatslim_numpy_compat.py')
+            with open(fatslim_compat, 'w') as compat_script:
+                compat_script.write('import sys\n')
+                compat_script.write('import numpy as np\n')
+                compat_script.write('if not hasattr(np, "int"):\n')
+                compat_script.write('    np.int = int\n')
+                compat_script.write('from fatslimlib import main\n')
+                compat_script.write('sys.exit(main(sys.argv[1:]))\n')
+            binary_cmd = [sys.executable, PurePath(fatslim_compat).name]
+        else:
+            binary_cmd = [self.binary_path]
+
         # Build command
-        self.cmd = [
-            self.binary_path, "apl",
-            "-n", tmp_ndx,
-            "-c", cfg,
-            "--export-apl-raw", tmp_csv,
+        self.cmd = cmd_prefix + binary_cmd + [
+            "apl",
+            "-n", PurePath(tmp_ndx).name,
+            "-c", PurePath(cfg).name,
+            "--export-apl-raw", PurePath(tmp_csv).name,
             "--apl-cutoff", str(self.cutoff),
             "--apl-limit", str(self.limit),
             "--begin-frame", str(self.begin_frame),
@@ -133,7 +167,8 @@ class FatslimAPL(BiobbObject):
 
         # Run Biobb block
         self.run_biobb()
-        move_output_file(tmp_csv, self.stage_io_dict["out"]["output_csv_path"],
+        staged_output_csv = str(Path(unique_dir).joinpath(PurePath(self.stage_io_dict["out"]["output_csv_path"]).name))
+        move_output_file(tmp_csv, staged_output_csv,
                          self.out_log, self.global_log)
         # Copy files to host
         self.copy_to_host()

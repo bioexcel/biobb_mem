@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """Module containing the Cpptraj Density class and the command line interface."""
-from pathlib import PurePath
+from pathlib import Path, PurePath
 from biobb_common.generic.biobb_object import BiobbObject
 from biobb_common.tools.file_utils import launchlogger
 
@@ -32,6 +32,12 @@ class CpptrajDensity(BiobbObject):
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
             * **sandbox_path** (*str*) - ("./") [WF property] Parent path to the sandbox directory.
+            * **container_path** (*str*) - (None) Container path definition.
+            * **container_image** (*str*) - ('afandiadib/ambertools:serial') Container image definition.
+            * **container_volume_path** (*str*) - ('/tmp') Container volume path definition.
+            * **container_working_dir** (*str*) - (None) Container working directory definition.
+            * **container_user_id** (*str*) - (None) Container user_id definition.
+            * **container_shell_path** (*str*) - ('/bin/bash') Path to default shell inside the container.
 
     Examples:
         This is a use example of how to use the building block from Python::
@@ -93,14 +99,15 @@ class CpptrajDensity(BiobbObject):
     def create_instructions_file(self, stage_io_dict, out_log, err_log):
         """Creates an input file using the properties file settings."""
         instructions_list = []
-        # Different path if container execution or not
-        if self.container_path:
-            self.instructions_file = str(PurePath(self.container_volume_path).joinpath(self.instructions_file))
-        else:
-            self.instructions_file = self.create_tmp_file(self.instructions_file)
-        instructions_list.append('parm ' + stage_io_dict["in"]["input_top_path"])
-        instructions_list.append('trajin ' + stage_io_dict["in"]["input_traj_path"] + self.slice)
-        density_command = f'density {self.density_type} out {stage_io_dict["out"]["output_cpptraj_path"]} {self.mask} delta {self.delta} {self.axis} {self.bintype}'
+        instructions_file_name = PurePath(self.instructions_file).name
+        # Always create the instructions file in the host staged sandbox.
+        # In container mode, this directory is mounted to container_volume_path.
+        unique_dir = stage_io_dict.get("unique_dir", "")
+        self.instructions_file = str(Path(unique_dir).joinpath(instructions_file_name))
+
+        instructions_list.append('parm ' + PurePath(stage_io_dict["in"]["input_top_path"]).name)
+        instructions_list.append('trajin ' + PurePath(stage_io_dict["in"]["input_traj_path"]).name + self.slice)
+        density_command = f'density {self.density_type} out {PurePath(stage_io_dict["out"]["output_cpptraj_path"]).name} {self.mask} delta {self.delta} {self.axis} {self.bintype}'
         if self.restrict:
             density_command += f' restrict {self.restrict}'
             if self.cutoff:
@@ -108,8 +115,8 @@ class CpptrajDensity(BiobbObject):
         instructions_list.append(density_command)
 
         # trajout
-        if ("output_traj_path" in stage_io_dict["out"]):
-            instructions_list.append('trajout ' + stage_io_dict["out"]["output_traj_path"])
+        if stage_io_dict["out"].get("output_traj_path"):
+            instructions_list.append('trajout ' + PurePath(stage_io_dict["out"]["output_traj_path"]).name)
 
         # Create .in file
         with open(self.instructions_file, 'w') as mdp:
@@ -127,10 +134,15 @@ class CpptrajDensity(BiobbObject):
             return 0
         self.stage_files()
 
+        if self.container_path:
+            working_dir = self.container_volume_path if self.container_volume_path else "/data"
+        else:
+            working_dir = self.stage_io_dict.get("unique_dir", "")
+
         # create instructions file
         self.create_instructions_file(self.stage_io_dict, self.out_log, self.err_log)
         # create cmd and launch execution
-        self.cmd = [self.binary_path, '-i', self.instructions_file]
+        self.cmd = ["cd", working_dir, ";", self.binary_path, '-i', PurePath(self.instructions_file).name]
         # Run Biobb block
         self.run_biobb()
         # Copy files to host

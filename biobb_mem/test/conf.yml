@@ -11,6 +11,26 @@ cpptraj_density:
     output_cpptraj_path: output.dat
     ref_output_cpptraj_path: file:test_reference_dir/ambertools/density_default.dat
 
+cpptraj_density_docker:
+  paths:
+    input_top_path: file:test_data_dir/ambertools/topology.pdb
+    input_traj_path: file:test_data_dir/ambertools/trajectory.xtc
+    output_cpptraj_path: output.dat
+    ref_output_cpptraj_path: file:test_reference_dir/ambertools/density_default.dat
+  properties:
+    container_path: docker
+    container_image: quay.io/biocontainers/biobb_mem:5.2.2--pyhdfd78af_0
+
+cpptraj_density_singularity:
+  paths:
+    input_top_path: file:test_data_dir/ambertools/topology.pdb
+    input_traj_path: file:test_data_dir/ambertools/trajectory.xtc
+    output_cpptraj_path: output.dat
+    ref_output_cpptraj_path: file:test_reference_dir/ambertools/density_default.dat
+  properties:
+    container_path: singularity
+    container_image: https://depot.galaxyproject.org/singularity/biobb_mem:5.2.2--pyhdfd78af_0
+
 cpptraj_density_mask:
   paths:
     input_top_path: file:test_data_dir/ambertools/topology.pdb
@@ -19,6 +39,28 @@ cpptraj_density_mask:
     ref_output_cpptraj_path: file:test_reference_dir/ambertools/density_mask.dat
   properties:
     mask: "::M ::A,B"
+
+cpptraj_density_mask_docker:
+  paths:
+    input_top_path: file:test_data_dir/ambertools/topology.pdb
+    input_traj_path: file:test_data_dir/ambertools/trajectory.xtc
+    output_cpptraj_path: output.dat
+    ref_output_cpptraj_path: file:test_reference_dir/ambertools/density_mask.dat
+  properties:
+    mask: "::M ::A,B"
+    container_path: docker
+    container_image: quay.io/biocontainers/biobb_mem:5.2.2--pyhdfd78af_0
+
+cpptraj_density_mask_singularity:
+  paths:
+    input_top_path: file:test_data_dir/ambertools/topology.pdb
+    input_traj_path: file:test_data_dir/ambertools/trajectory.xtc
+    output_cpptraj_path: output.dat
+    ref_output_cpptraj_path: file:test_reference_dir/ambertools/density_mask.dat
+  properties:
+    mask: "::M ::A,B"
+    container_path: singularity
+    container_image: https://depot.galaxyproject.org/singularity/biobb_mem:5.2.2--pyhdfd78af_0
 
 cpptraj_density_complex:
   paths:
@@ -37,6 +79,44 @@ cpptraj_density_complex:
     axis: y
     disable_logs: false
 
+cpptraj_density_complex_docker:
+  paths:
+    input_top_path: file:test_data_dir/ambertools/topology.pdb
+    input_traj_path: file:test_data_dir/ambertools/trajectory.xtc
+    output_cpptraj_path: output.dat
+    ref_output_cpptraj_path: file:test_reference_dir/ambertools/density_complex.dat
+  properties:
+    disable_logs: true
+    start: 5
+    end: 15
+    steps: 1
+    density_type: mass
+    mask: "::M,A,B ::A,B"
+    delta: 0.14
+    axis: y
+    disable_logs: false
+    container_path: docker
+    container_image: quay.io/biocontainers/biobb_mem:5.2.2--pyhdfd78af_0
+
+cpptraj_density_complex_singularity:
+  paths:
+    input_top_path: file:test_data_dir/ambertools/topology.pdb
+    input_traj_path: file:test_data_dir/ambertools/trajectory.xtc
+    output_cpptraj_path: output.dat
+    ref_output_cpptraj_path: file:test_reference_dir/ambertools/density_complex.dat
+  properties:
+    disable_logs: true
+    start: 5
+    end: 15
+    steps: 1
+    density_type: mass
+    mask: "::M,A,B ::A,B"
+    delta: 0.14
+    axis: y
+    disable_logs: false
+    container_path: singularity
+    container_image: https://depot.galaxyproject.org/singularity/biobb_mem:5.2.2--pyhdfd78af_0
+
 fatslim_membranes:
   paths:
     input_top_path: file:test_data_dir/A01JD/A01JD.pdb
@@ -49,6 +129,34 @@ fatslim_membranes:
     selection: '(resname DPPC and name P8)'
     cutoff: 2.2
 
+fatslim_membranes_docker:
+  paths:
+    input_top_path: file:test_data_dir/A01JD/A01JD.pdb
+    input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
+    output_ndx_path: leaflets.ndx
+    ref_output_ndx_path: file:test_reference_dir/fatslim/leaflets.ndx
+  properties:
+    ignore_no_box: true
+    remove_tmp: False
+    selection: '(resname DPPC and name P8)'
+    cutoff: 2.2
+    container_path: docker
+    container_image: quay.io/biocontainers/biobb_mem:5.2.2--pyhdfd78af_0
+
+fatslim_membranes_singularity:
+  paths:
+    input_top_path: file:test_data_dir/A01JD/A01JD.pdb
+    input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
+    output_ndx_path: leaflets.ndx
+    ref_output_ndx_path: file:test_reference_dir/fatslim/leaflets.ndx
+  properties:
+    ignore_no_box: true
+    remove_tmp: False
+    selection: '(resname DPPC and name P8)'
+    cutoff: 2.2
+    container_path: singularity
+    container_image: https://depot.galaxyproject.org/singularity/biobb_mem:5.2.2--pyhdfd78af_0
+
 fatslim_apl:
   paths:
     input_top_path: file:test_data_dir/A01JD/A01JD.pdb
@@ -59,6 +167,34 @@ fatslim_apl:
     remove_tmp: False
     ignore_no_box: true
     lipid_selection: '(resname DPPC and name P8)'
+
+fatslim_apl_docker:
+  paths:
+    input_top_path: file:test_data_dir/A01JD/A01JD.pdb
+    input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
+    output_csv_path: apl.csv
+    ref_output_csv_path: file:test_reference_dir/fatslim/apl.csv
+  properties:
+    remove_tmp: False
+    ignore_no_box: true
+    lipid_selection: '(resname DPPC and name P8)'
+    container_path: docker
+    container_image: quay.io/biocontainers/biobb_mem:5.2.2--pyhdfd78af_0
+    container_volume_path: /tmp
+    container_working_dir: /tmp
+
+fatslim_apl_singularity:
+  paths:
+    input_top_path: file:test_data_dir/A01JD/A01JD.pdb
+    input_traj_path: file:test_data_dir/A01JD/A01JD.xtc
+    output_csv_path: apl.csv
+    ref_output_csv_path: file:test_reference_dir/fatslim/apl.csv
+  properties:
+    remove_tmp: False
+    ignore_no_box: true
+    lipid_selection: '(resname DPPC and name P8)'
+    container_path: singularity
+    container_image: https://depot.galaxyproject.org/singularity/biobb_mem:5.2.2--pyhdfd78af_0
     
 lpp_assign_leaflets:
   paths:
