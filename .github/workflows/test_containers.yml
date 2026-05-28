@@ -133,7 +133,7 @@ jobs:
             biobb_common${{ steps.biobb_common_version.outputs.version }}
             pygorder
             mdahole2
-            fatslim_biobb
+            lipyphilic
 
       - name: List installed package versions
         shell: bash -l {0}
