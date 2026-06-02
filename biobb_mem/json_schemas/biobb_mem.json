@@ -23,7 +23,7 @@
             "desc" : "Calculate the area per lipid.",
             "exec" : "fatslim_apl",
             "docs": "https://biobb-mem.readthedocs.io/en/latest/fatslim.html#module-fatslim.fatslim_apl",
-            "rest": false
+            "rest": true
         },
         {
             "block" : "FatslimMembranes", 
