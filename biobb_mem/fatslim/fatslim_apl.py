@@ -83,7 +83,7 @@ class FatslimAPL(BiobbObject):
         self.lipid_selection = properties.get('lipid_selection', "not protein and element P")
         self.protein_selection = properties.get('protein_selection', "protein and not element H")
         self.cutoff = properties.get('cutoff', 3)
-        self.limit = properties.get('cutoff', 10)
+        self.limit = properties.get('limit', 10)
         self.begin_frame = properties.get('begin_frame', -1)
         self.end_frame = properties.get('end_frame', -1)
         self.ignore_no_box = properties.get('ignore_no_box', False)
