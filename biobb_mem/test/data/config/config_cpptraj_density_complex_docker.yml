@@ -1,0 +1,11 @@
+properties:
+  axis: y
+  container_image: quay.io/biocontainers/biobb_mem:5.2.2--pyhdfd78af_0
+  container_path: docker
+  delta: 0.14
+  density_type: mass
+  disable_logs: false
+  end: 15
+  mask: ::M,A,B ::A,B
+  start: 5
+  steps: 1

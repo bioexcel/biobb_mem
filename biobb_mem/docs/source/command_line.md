@@ -59,6 +59,12 @@ Config parameters for this building block:
 * **remove_tmp** (*boolean*): (True) Remove temporal files.
 * **restart** (*boolean*): (False) Do not execute if output files exist.
 * **sandbox_path** (*string*): (./) Parent path to the sandbox directory.
+* **container_path** (*string*): (None) Container path definition.
+* **container_image** (*string*): (afandiadib/ambertools:serial) Container image definition.
+* **container_volume_path** (*string*): (/tmp) Container volume path definition.
+* **container_working_dir** (*string*): (None) Container working directory definition.
+* **container_user_id** (*string*): (None) Container user_id definition.
+* **container_shell_path** (*string*): (/bin/bash) Path to default shell inside the container.
 ### YAML
 ### JSON
 
@@ -113,10 +119,38 @@ Config parameters for this building block:
 * **remove_tmp** (*boolean*): (True) Remove temporal files.
 * **restart** (*boolean*): (False) Do not execute if output files exist.
 * **sandbox_path** (*string*): (./) Parent path to the sandbox directory.
+* **container_path** (*string*): (None) Container path definition.
+* **container_image** (*string*): (afandiadib/ambertools:serial) Container image definition.
+* **container_volume_path** (*string*): (/tmp) Container volume path definition.
+* **container_working_dir** (*string*): (None) Container working directory definition.
+* **container_user_id** (*string*): (None) Container user_id definition.
+* **container_shell_path** (*string*): (/bin/bash) Path to default shell inside the container.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_apl.yml)
 ```python
 properties:
+  ignore_no_box: true
+  lipid_selection: (resname DPPC and name P8)
+  remove_tmp: false
+
+```
+#### [Docker config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_apl_docker.yml)
+```python
+properties:
+  container_image: quay.io/biocontainers/biobb_mem:5.2.2--pyhdfd78af_0
+  container_path: docker
+  container_volume_path: /tmp
+  container_working_dir: /tmp
+  ignore_no_box: true
+  lipid_selection: (resname DPPC and name P8)
+  remove_tmp: false
+
+```
+#### [Singularity config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_apl_singularity.yml)
+```python
+properties:
+  container_image: https://depot.galaxyproject.org/singularity/biobb_mem:5.2.2--pyhdfd78af_0
+  container_path: singularity
   ignore_no_box: true
   lipid_selection: (resname DPPC and name P8)
   remove_tmp: false
@@ -134,6 +168,32 @@ fatslim_apl --config config_fatslim_apl.yml --input_top_path A01JD.pdb --input_t
     "remove_tmp": false,
     "ignore_no_box": true,
     "lipid_selection": "(resname DPPC and name P8)"
+  }
+}
+```
+#### [Docker config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_apl_docker.json)
+```python
+{
+  "properties": {
+    "remove_tmp": false,
+    "ignore_no_box": true,
+    "lipid_selection": "(resname DPPC and name P8)",
+    "container_path": "docker",
+    "container_image": "quay.io/biocontainers/biobb_mem:5.2.2--pyhdfd78af_0",
+    "container_volume_path": "/tmp",
+    "container_working_dir": "/tmp"
+  }
+}
+```
+#### [Singularity config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_apl_singularity.json)
+```python
+{
+  "properties": {
+    "remove_tmp": false,
+    "ignore_no_box": true,
+    "lipid_selection": "(resname DPPC and name P8)",
+    "container_path": "singularity",
+    "container_image": "https://depot.galaxyproject.org/singularity/biobb_mem:5.2.2--pyhdfd78af_0"
   }
 }
 ```
@@ -191,10 +251,38 @@ Config parameters for this building block:
 * **remove_tmp** (*boolean*): (True) Remove temporal files.
 * **restart** (*boolean*): (False) Do not execute if output files exist.
 * **sandbox_path** (*string*): (./) Parent path to the sandbox directory.
+* **container_path** (*string*): (None) Container path definition.
+* **container_image** (*string*): (afandiadib/ambertools:serial) Container image definition.
+* **container_volume_path** (*string*): (/tmp) Container volume path definition.
+* **container_working_dir** (*string*): (None) Container working directory definition.
+* **container_user_id** (*string*): (None) Container user_id definition.
+* **container_shell_path** (*string*): (/bin/bash) Path to default shell inside the container.
 ### YAML
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_membranes.yml)
 ```python
 properties:
+  cutoff: 2.2
+  ignore_no_box: true
+  remove_tmp: false
+  selection: (resname DPPC and name P8)
+
+```
+#### [Docker config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_membranes_docker.yml)
+```python
+properties:
+  container_image: quay.io/biocontainers/biobb_mem:5.2.2--pyhdfd78af_0
+  container_path: docker
+  cutoff: 2.2
+  ignore_no_box: true
+  remove_tmp: false
+  selection: (resname DPPC and name P8)
+
+```
+#### [Singularity config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_membranes_singularity.yml)
+```python
+properties:
+  container_image: https://depot.galaxyproject.org/singularity/biobb_mem:5.2.2--pyhdfd78af_0
+  container_path: singularity
   cutoff: 2.2
   ignore_no_box: true
   remove_tmp: false
@@ -214,6 +302,32 @@ fatslim_membranes --config config_fatslim_membranes.yml --input_top_path A01JD.p
     "remove_tmp": false,
     "selection": "(resname DPPC and name P8)",
     "cutoff": 2.2
+  }
+}
+```
+#### [Docker config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_membranes_docker.json)
+```python
+{
+  "properties": {
+    "ignore_no_box": true,
+    "remove_tmp": false,
+    "selection": "(resname DPPC and name P8)",
+    "cutoff": 2.2,
+    "container_path": "docker",
+    "container_image": "quay.io/biocontainers/biobb_mem:5.2.2--pyhdfd78af_0"
+  }
+}
+```
+#### [Singularity config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_membranes_singularity.json)
+```python
+{
+  "properties": {
+    "ignore_no_box": true,
+    "remove_tmp": false,
+    "selection": "(resname DPPC and name P8)",
+    "cutoff": 2.2,
+    "container_path": "singularity",
+    "container_image": "https://depot.galaxyproject.org/singularity/biobb_mem:5.2.2--pyhdfd78af_0"
   }
 }
 ```

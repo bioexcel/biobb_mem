@@ -1,0 +1,6 @@
+{
+  "properties": {
+    "container_path": "docker",
+    "container_image": "quay.io/biocontainers/biobb_mem:5.2.2--pyhdfd78af_0"
+  }
+}
