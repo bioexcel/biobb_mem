@@ -108,10 +108,9 @@ class FatslimMembranes(BiobbObject):
         else:
             working_dir = unique_dir
 
-        host_top_path = str(Path(unique_dir).joinpath(PurePath(self.io_dict["in"]["input_top_path"]).name))
-        host_traj_path = None
-        if self.io_dict["in"].get("input_traj_path"):
-            host_traj_path = str(Path(unique_dir).joinpath(PurePath(self.io_dict["in"]["input_traj_path"]).name))
+        # MDAnalysis runs in the host, so read the original input files
+        host_top_path = self.io_dict["in"]["input_top_path"]
+        host_traj_path = self.io_dict["in"].get("input_traj_path")
 
         # Create index file using MDAnalysis
         u = mda.Universe(topology=host_top_path, coordinates=host_traj_path)
