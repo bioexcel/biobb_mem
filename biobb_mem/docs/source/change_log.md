@@ -1,24 +1,32 @@
 # Biobb Membrane changelog
 
-## What's new in version [5.3.0](https://github.com/bioexcel/biobb_amber/releases/tag/v5.3.0)?
+## [Unreleased]
+
+## What's new in version [5.3.1](https://github.com/bioexcel/biobb_mem/releases/tag/v5.3.1)?
+
+### Changes
+
+* [FIX] `fatslim_apl` and `fatslim_membranes` no longer fail with `disable_sandbox` when the input files are outside the working directory.
+
+## What's new in version [5.3.0](https://github.com/bioexcel/biobb_mem/releases/tag/v5.3.0)?
 
 ### Changes
 
 * [UPDATE] Update to biobb_common 5.3.1
 
-## What's new in version [5.2.2](https://github.com/bioexcel/biobb_amber/releases/tag/v5.2.2)?
+## What's new in version [5.2.2](https://github.com/bioexcel/biobb_mem/releases/tag/v5.2.2)?
 
 ### Changes
 
 * [UPDATE] Update to biobb_common 5.2.2
 
-## What's new in version [5.2.1](https://github.com/bioexcel/biobb_amber/releases/tag/v5.2.1)?
+## What's new in version [5.2.1](https://github.com/bioexcel/biobb_mem/releases/tag/v5.2.1)?
 
 ### Changes
 
 * [Fix] Fix leaflets numpy type for flip flops.
 
-## What's new in version [5.2.0](https://github.com/bioexcel/biobb_amber/releases/tag/v5.2.0)?
+## What's new in version [5.2.0](https://github.com/bioexcel/biobb_mem/releases/tag/v5.2.0)?
 
 ### Changes
 
