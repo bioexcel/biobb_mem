@@ -2,7 +2,6 @@
 
 """Module containing the Lipyphilic FlipFlop class and the command line interface."""
 from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.tools.file_utils import launchlogger
 import MDAnalysis as mda
 from biobb_mem.lipyphilic_biobb.common import ignore_no_box
 from lipyphilic.analysis.flip_flop import FlipFlop
@@ -81,18 +80,8 @@ class LPPFlipFlop(BiobbObject):
         self.ignore_no_box = properties.get('ignore_no_box', True)
         self.properties = properties
 
-        # Check the properties
-        self.check_properties(properties)
-        self.check_arguments()
-
-    @launchlogger
-    def launch(self) -> int:
+    def run(self) -> int:
         """Execute the :class:`LPPFlipFlop <lipyphilic_biobb.lpp_flip_flop.LPPFlipFlop>` object."""
-
-        # Setup Biobb
-        if self.check_restart():
-            return 0
-        self.stage_files()
 
         # Load the trajectory
         u = mda.Universe(self.stage_io_dict["in"]["input_top_path"], self.stage_io_dict["in"]["input_traj_path"])

@@ -4,7 +4,6 @@
 from pathlib import Path, PurePath
 import sys
 from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.tools.file_utils import launchlogger
 from biobb_mem.fatslim.common import ignore_no_box, move_output_file
 import MDAnalysis as mda
 
@@ -90,18 +89,8 @@ class FatslimAPL(BiobbObject):
         self.binary_path = properties.get('binary_path', 'fatslim')
         self.properties = properties
 
-        # Check the properties
-        self.check_properties(properties)
-        self.check_arguments()
-
-    @launchlogger
-    def launch(self) -> int:
+    def run(self) -> int:
         """Execute the :class:`FatslimAPL <fatslim.fatslim_apl.FatslimAPL>` object."""
-
-        # Setup Biobb
-        if self.check_restart():
-            return 0
-        self.stage_files()
 
         unique_dir = self.stage_io_dict.get("unique_dir", "")
         if self.container_path:

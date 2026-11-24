@@ -6,7 +6,6 @@ import os
 import numpy as np
 import pandas as pd
 from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.tools.file_utils import launchlogger
 import MDAnalysis as mda
 from mdahole2.analysis import HoleAnalysis
 
@@ -88,18 +87,8 @@ class MDAHole(BiobbObject):
         self.dot_density = properties.get('dot_density', 15)
         self.properties = properties
 
-        # Check the properties
-        self.check_properties(properties)
-        self.check_arguments()
-
-    @launchlogger
-    def launch(self) -> int:
+    def run(self) -> int:
         """Execute the :class:`MDAHole <mdanalysis_biobb.mda_hole.MDAHole>` object."""
-
-        # Setup Biobb
-        if self.check_restart():
-            return 0
-        self.stage_files()
 
         # Load the universe
         u = mda.Universe(self.stage_io_dict["in"]["input_top_path"],

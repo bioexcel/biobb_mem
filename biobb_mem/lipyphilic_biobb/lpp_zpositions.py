@@ -3,7 +3,6 @@
 """Module containing the Lipyphilic ZPositions class and the command line interface."""
 
 from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.tools.file_utils import launchlogger
 import MDAnalysis as mda
 from biobb_mem.lipyphilic_biobb.common import ignore_no_box
 from lipyphilic.analysis.z_positions import ZPositions
@@ -82,18 +81,8 @@ class LPPZPositions(BiobbObject):
         self.restart = properties.get('restart', False)
         self.sandbox_path = properties.get('sandbox_path', "./")
 
-        # Check the properties
-        self.check_properties(properties)
-        self.check_arguments()
-
-    @launchlogger
-    def launch(self) -> int:
+    def run(self) -> int:
         """Execute the :class:`LPPZPositions <lipyphilic_biobb.lpp_zpositions.LPPZPositions>` object."""
-
-        # Setup Biobb
-        if self.check_restart():
-            return 0
-        self.stage_files()
 
         # Load the trajectory
         u = mda.Universe(self.stage_io_dict["in"]["input_top_path"], self.stage_io_dict["in"]["input_traj_path"])

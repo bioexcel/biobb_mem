@@ -2,7 +2,6 @@
 
 """Module containing the gorder united atom class and the command line interface."""
 from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.tools.file_utils import launchlogger
 import gorder
 
 
@@ -76,18 +75,8 @@ class GorderUA(BiobbObject):
         self.handle_pbc = properties.get('handle_pbc', True)
         self.properties = properties
 
-        # Check the properties
-        self.check_properties(properties)
-        self.check_arguments()
-
-    @launchlogger
-    def launch(self) -> int:
+    def run(self) -> int:
         """Execute the :class:`GorderUA <gorder.gorder_ua.GorderUA>` object."""
-
-        # Setup Biobb
-        if self.check_restart():
-            return 0
-        self.stage_files()
 
         # Run Biobb block
         analysis = gorder.Analysis(

@@ -3,7 +3,6 @@
 """Module containing the Cpptraj Density class and the command line interface."""
 from pathlib import Path, PurePath
 from biobb_common.generic.biobb_object import BiobbObject
-from biobb_common.tools.file_utils import launchlogger
 
 
 class CpptrajDensity(BiobbObject):
@@ -92,10 +91,6 @@ class CpptrajDensity(BiobbObject):
         self.binary_path = properties.get('binary_path', 'cpptraj')
         self.properties = properties
 
-        # Check the properties
-        self.check_properties(properties)
-        self.check_arguments()
-
     def create_instructions_file(self, stage_io_dict, out_log, err_log):
         """Creates an input file using the properties file settings."""
         instructions_list = []
@@ -125,14 +120,8 @@ class CpptrajDensity(BiobbObject):
 
         return self.instructions_file
 
-    @launchlogger
-    def launch(self) -> int:
+    def run(self) -> int:
         """Execute the :class:`CpptrajDensity <ambertools.cpptraj_density.CpptrajDensity>` object."""
-
-        # Setup Biobb
-        if self.check_restart():
-            return 0
-        self.stage_files()
 
         if self.container_path:
             working_dir = self.container_volume_path if self.container_volume_path else "/data"
