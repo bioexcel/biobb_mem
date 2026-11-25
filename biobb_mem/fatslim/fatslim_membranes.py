@@ -88,7 +88,7 @@ class FatslimMembranes(BiobbObject):
         self.binary_path = properties.get('binary_path', 'fatslim')
         self.properties = properties
 
-    def run(self) -> int:
+    def run(self) -> None:
         """Execute the :class:`FatslimMembranes <fatslim.fatslim_membranes.FatslimMembranes>` object."""
 
         unique_dir = self.stage_io_dict.get("unique_dir", "")
@@ -148,14 +148,6 @@ class FatslimMembranes(BiobbObject):
                     # Use the rexindex to select all the atoms of the residue
                     sele = f"resindex {' '.join(map(str, res_sele))}"
                     ndx.write(u.select_atoms(sele), name=key)
-        # Copy files to host
-        self.copy_to_host()
-
-        # Remove temporary files
-        self.remove_tmp_files()
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return self.return_code
 
 
 def fatslim_membranes(input_top_path: str, output_ndx_path: str, input_traj_path: str = None, input_ndx_path: str = None, properties: dict = None, **kwargs) -> int:

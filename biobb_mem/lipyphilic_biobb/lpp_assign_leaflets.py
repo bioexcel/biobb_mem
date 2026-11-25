@@ -83,7 +83,7 @@ class LPPAssignLeaflets(BiobbObject):
         self.ignore_no_box = properties.get('ignore_no_box', True)
         self.properties = properties
 
-    def run(self) -> int:
+    def run(self) -> None:
         """Execute the :class:`LPPAssignLeaflets <lipyphilic_biobb.lpp_assign_leaflets.LPPAssignLeaflets>` object."""
 
         # Load the trajectory
@@ -119,12 +119,6 @@ class LPPAssignLeaflets(BiobbObject):
             df.to_csv(self.stage_io_dict["out"]["output_leaflets_path"], index=False)
         elif out_format == 'npy':
             np.save(self.stage_io_dict["out"]["output_leaflets_path"], leaflets.leaflets)
-        # Copy files to host
-        self.copy_to_host()
-        self.remove_tmp_files()
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return self.return_code
 
 
 def lpp_assign_leaflets(input_top_path: str,

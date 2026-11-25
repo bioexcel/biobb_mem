@@ -81,7 +81,7 @@ class LPPZPositions(BiobbObject):
         self.restart = properties.get('restart', False)
         self.sandbox_path = properties.get('sandbox_path', "./")
 
-    def run(self) -> int:
+    def run(self) -> None:
         """Execute the :class:`LPPZPositions <lipyphilic_biobb.lpp_zpositions.LPPZPositions>` object."""
 
         # Load the trajectory
@@ -112,13 +112,6 @@ class LPPZPositions(BiobbObject):
 
         # Save the DataFrame to a CSV file
         df.to_csv(self.stage_io_dict["out"]["output_positions_path"], index=False)
-
-        # Copy files to host
-        self.copy_to_host()
-        self.remove_tmp_files()
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return self.return_code
 
 
 def lpp_zpositions(input_top_path: str, input_traj_path: str, output_positions_path: str = None, properties: dict = None, **kwargs) -> int:

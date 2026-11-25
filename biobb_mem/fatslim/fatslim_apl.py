@@ -88,7 +88,7 @@ class FatslimAPL(BiobbObject):
         self.binary_path = properties.get('binary_path', 'fatslim')
         self.properties = properties
 
-    def run(self) -> int:
+    def run(self) -> None:
         """Execute the :class:`FatslimAPL <fatslim.fatslim_apl.FatslimAPL>` object."""
 
         unique_dir = self.stage_io_dict.get("unique_dir", "")
@@ -157,13 +157,6 @@ class FatslimAPL(BiobbObject):
         staged_output_csv = str(Path(unique_dir).joinpath(PurePath(self.stage_io_dict["out"]["output_csv_path"]).name))
         move_output_file(tmp_csv, staged_output_csv,
                          self.out_log, self.global_log)
-        # Copy files to host
-        self.copy_to_host()
-        # Remove temporary files
-        self.remove_tmp_files()
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return self.return_code
 
 
 def fatslim_apl(input_top_path: str,

@@ -87,7 +87,7 @@ class MDAHole(BiobbObject):
         self.dot_density = properties.get('dot_density', 15)
         self.properties = properties
 
-    def run(self) -> int:
+    def run(self) -> None:
         """Execute the :class:`MDAHole <mdanalysis_biobb.mda_hole.MDAHole>` object."""
 
         # Load the universe
@@ -130,14 +130,6 @@ class MDAHole(BiobbObject):
         hole.delete_temporary_files()
         # move back to original directory
         os.chdir(cwd)
-        # Copy files to host
-        self.copy_to_host()
-        # remove temporary folder(s)
-        self.remove_tmp_files()
-
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return self.return_code
 
 
 def mda_hole(input_top_path: str,

@@ -80,7 +80,7 @@ class LPPFlipFlop(BiobbObject):
         self.ignore_no_box = properties.get('ignore_no_box', True)
         self.properties = properties
 
-    def run(self) -> int:
+    def run(self) -> None:
         """Execute the :class:`LPPFlipFlop <lipyphilic_biobb.lpp_flip_flop.LPPFlipFlop>` object."""
 
         # Load the trajectory
@@ -123,13 +123,6 @@ class LPPFlipFlop(BiobbObject):
 
         # Save the DataFrame to a CSV file
         df.to_csv(self.stage_io_dict["out"]["output_flip_flop_path"], index=False)
-
-        # Copy files to host
-        self.copy_to_host()
-        self.remove_tmp_files()
-        self.check_arguments(output_files_created=True, raise_exception=False)
-
-        return self.return_code
 
 
 def lpp_flip_flop(input_top_path: str, input_traj_path: str, input_leaflets_path: str = None,

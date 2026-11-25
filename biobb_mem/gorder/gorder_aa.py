@@ -75,7 +75,7 @@ class GorderAA(BiobbObject):
         self.handle_pbc = properties.get('handle_pbc', True)
         self.properties = properties
 
-    def run(self) -> int:
+    def run(self) -> None:
         """Execute the :class:`GorderAA <gorder.gorder_aa.GorderAA>` object."""
 
         out = self.stage_io_dict["out"]["output_order_path"]
@@ -92,12 +92,6 @@ class GorderAA(BiobbObject):
 
         results = analysis.run()
         results.write()
-
-        # Copy files to host
-        self.copy_to_host()
-        self.remove_tmp_files()
-
-        return self.return_code
 
 
 def gorder_aa(input_top_path: str,
