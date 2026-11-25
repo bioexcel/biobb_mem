@@ -52,28 +52,7 @@ class GorderUA(BiobbObject):
                  output_order_path=None,
                  properties=None,
                  **kwargs) -> None:
-        properties = properties or {}
-
-        # Call parent class constructor
-        super().__init__(properties)
-        self.locals_var_dict = locals().copy()
-
-        # Input/Output files
-        self.io_dict = {
-            "in": {
-                "input_top_path": input_top_path,
-                "input_traj_path": input_traj_path,
-            },
-            "out": {
-                "output_order_path": output_order_path
-            }
-        }
-
-        # Properties specific for BB
-        self.saturated = properties.get('saturated', "@membrane")
-        self.unsaturated = properties.get('unsaturated', None)
-        self.handle_pbc = properties.get('handle_pbc', True)
-        self.properties = properties
+        super().__init__(**locals())
 
     def run(self) -> None:
         """Execute the :class:`GorderUA <gorder.gorder_ua.GorderUA>` object."""

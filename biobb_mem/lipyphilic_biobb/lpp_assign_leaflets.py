@@ -25,7 +25,7 @@ class LPPAssignLeaflets(BiobbObject):
             * **steps** (*int*) - (None) Step for slicing.
             * **lipid_sel** (*str*) - ("all") Selection string for the lipids in a membrane. The selection should cover **all** residues in the membrane, including cholesterol.
             * **midplane_sel** (*str*) - (None) Selection string for residues that may be midplane. Any residues not in this selection will be assigned to a leaflet regardless of its proximity to the midplane. The default is `None`, in which case all lipids will be assigned to either the upper or lower leaflet.
-            * **midplane_cutoff** (*float*) - (0) Minimum distance in *z* an atom must be from the midplane to be assigned to a leaflet rather than the midplane. The default is `0`, in which case all lipids will be assigned to either the upper or lower leaflet. Must be non-negative.
+            * **midplane_cutoff** (*float*) - (None) Minimum distance in *z* an atom must be from the midplane to be assigned to a leaflet rather than the midplane. The default is `0`, in which case all lipids will be assigned to either the upper or lower leaflet. Must be non-negative.
             * **n_bins** (*int*) - (1) Number of bins in *x* and *y* to use to create a grid of membrane patches. Local membrane midpoints are computed for each patch, and lipids assigned a leaflet based on the distance to their local membrane midpoint. The default is `1`, which is equivalent to computing a single global midpoint.
             * **ignore_no_box** (*bool*) - (True) Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
@@ -61,27 +61,7 @@ class LPPAssignLeaflets(BiobbObject):
                  output_leaflets_path,
                  properties=None,
                  **kwargs) -> None:
-        properties = properties or {}
-
-        # Call parent class constructor
-        super().__init__(properties)
-        self.locals_var_dict = locals().copy()
-
-        # Input/Output files
-        self.io_dict = {
-            "in": {"input_top_path": input_top_path, "input_traj_path": input_traj_path},
-            "out": {"output_leaflets_path": output_leaflets_path}
-        }
-        self.start = properties.get('start', None)
-        self.stop = properties.get('stop', None)
-        self.steps = properties.get('steps', None)
-        self.lipid_sel = properties.get('lipid_sel', 'all')
-        self.midplane_sel = properties.get('midplane_sel', None)
-        self.midplane_cutoff = properties.get('midplane_cutoff', None)
-        self.n_bins = properties.get('n_bins', 1)
-        # Properties specific for BB
-        self.ignore_no_box = properties.get('ignore_no_box', True)
-        self.properties = properties
+        super().__init__(**locals())
 
     def run(self) -> None:
         """Execute the :class:`LPPAssignLeaflets <lipyphilic_biobb.lpp_assign_leaflets.LPPAssignLeaflets>` object."""

@@ -63,30 +63,7 @@ class FatslimAPL(BiobbObject):
     """
 
     def __init__(self, input_top_path, output_csv_path, input_traj_path=None, input_ndx_path=None, properties=None, **kwargs) -> None:
-        properties = properties or {}
-
-        # Call parent class constructor
-        super().__init__(properties)
-        self.locals_var_dict = locals().copy()
-
-        # Input/Output files
-        self.io_dict = {
-            "in": {"input_top_path": input_top_path,
-                   "input_traj_path": input_traj_path,
-                   "input_ndx_path": input_ndx_path},
-            "out": {"output_csv_path": output_csv_path}
-        }
-
-        # Properties specific for BB
-        self.lipid_selection = properties.get('lipid_selection', "not protein and element P")
-        self.protein_selection = properties.get('protein_selection', "protein and not element H")
-        self.cutoff = properties.get('cutoff', 3)
-        self.limit = properties.get('limit', 10)
-        self.begin_frame = properties.get('begin_frame', -1)
-        self.end_frame = properties.get('end_frame', -1)
-        self.ignore_no_box = properties.get('ignore_no_box', False)
-        self.binary_path = properties.get('binary_path', 'fatslim')
-        self.properties = properties
+        super().__init__(**locals())
 
     def run(self) -> None:
         """Execute the :class:`FatslimAPL <fatslim.fatslim_apl.FatslimAPL>` object."""

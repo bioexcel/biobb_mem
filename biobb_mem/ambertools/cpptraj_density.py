@@ -63,33 +63,11 @@ class CpptrajDensity(BiobbObject):
 
     def __init__(self, input_top_path, input_traj_path, output_cpptraj_path,
                  output_traj_path=None, properties=None, **kwargs) -> None:
-        properties = properties or {}
-
-        # Call parent class constructor
-        super().__init__(properties)
-        self.locals_var_dict = locals().copy()
-
-        # Input/Output files
-        self.io_dict = {
-            "in": {"input_top_path": input_top_path, "input_traj_path": input_traj_path},
-            "out": {"output_cpptraj_path": output_cpptraj_path, "output_traj_path": output_traj_path}
-        }
+        super().__init__(**locals())
 
         # Properties specific for BB
         self.instructions_file = 'instructions.in'
-        self.start = properties.get('start', 1)
-        self.end = properties.get('end', -1)
-        self.steps = properties.get('steps', 1)
         self.slice = f' {self.start} {self.end} {self.steps}'
-        self.density_type = properties.get('density_type', 'number')
-        self.mask = properties.get('mask', '*')
-        self.delta = properties.get('delta', 0.25)
-        self.axis = properties.get('axis', 'z')
-        self.bintype = properties.get('bintype', 'bincenter')
-        self.restrict = properties.get('restrict', None)
-        self.cutoff = properties.get('cutoff', None)
-        self.binary_path = properties.get('binary_path', 'cpptraj')
-        self.properties = properties
 
     def create_instructions_file(self, stage_io_dict, out_log, err_log):
         """Creates an input file using the properties file settings."""

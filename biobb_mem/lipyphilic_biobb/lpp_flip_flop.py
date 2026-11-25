@@ -58,27 +58,7 @@ class LPPFlipFlop(BiobbObject):
     def __init__(self, input_top_path, input_traj_path,
                  input_leaflets_path, output_flip_flop_path,
                  properties=None, **kwargs) -> None:
-        properties = properties or {}
-
-        # Call parent class constructor
-        super().__init__(properties)
-        self.locals_var_dict = locals().copy()
-
-        # Input/Output files
-        self.io_dict = {
-            "in": {"input_top_path": input_top_path,
-                   "input_traj_path": input_traj_path,
-                   "input_leaflets_path": input_leaflets_path},
-            "out": {"output_flip_flop_path": output_flip_flop_path}
-        }
-        self.start = properties.get('start', None)
-        self.stop = properties.get('stop', None)
-        self.steps = properties.get('steps', None)
-        self.lipid_sel = properties.get('lipid_sel', 'all')
-        self.frame_cutoff = properties.get('frame_cutoff', 1)
-        # Properties specific for BB
-        self.ignore_no_box = properties.get('ignore_no_box', True)
-        self.properties = properties
+        super().__init__(**locals())
 
     def run(self) -> None:
         """Execute the :class:`LPPFlipFlop <lipyphilic_biobb.lpp_flip_flop.LPPFlipFlop>` object."""

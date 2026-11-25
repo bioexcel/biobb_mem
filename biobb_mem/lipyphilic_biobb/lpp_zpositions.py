@@ -57,29 +57,7 @@ class LPPZPositions(BiobbObject):
 
     def __init__(self, input_top_path, input_traj_path, output_positions_path,
                  properties=None, **kwargs) -> None:
-        properties = properties or {}
-
-        # Call parent class constructor
-        super().__init__(properties)
-        self.locals_var_dict = locals().copy()
-
-        # Input/Output files
-        self.io_dict = {
-            "in": {"input_top_path": input_top_path, "input_traj_path": input_traj_path},
-            "out": {"output_positions_path": output_positions_path}
-        }
-
-        self.start = properties.get('start', None)
-        self.stop = properties.get('stop', None)
-        self.steps = properties.get('steps', None)
-        self.lipid_sel = properties.get('lipid_sel', 'all')
-        self.height_sel = properties.get('height_sel', 'all')
-        self.n_bins = properties.get('n_bins', 1)
-        self.ignore_no_box = properties.get('ignore_no_box', False)
-        # Properties specific for BB
-        self.remove_tmp = properties.get('remove_tmp', True)
-        self.restart = properties.get('restart', False)
-        self.sandbox_path = properties.get('sandbox_path', "./")
+        super().__init__(**locals())
 
     def run(self) -> None:
         """Execute the :class:`LPPZPositions <lipyphilic_biobb.lpp_zpositions.LPPZPositions>` object."""

@@ -62,30 +62,7 @@ class MDAHole(BiobbObject):
 
     def __init__(self, input_top_path, input_traj_path, output_hole_path, output_csv_path=None,
                  properties=None, **kwargs) -> None:
-        properties = properties or {}
-
-        # Call parent class constructor
-        super().__init__(properties)
-        self.locals_var_dict = locals().copy()
-
-        # Input/Output files
-        self.io_dict = {
-            "in": {"input_top_path": input_top_path, "input_traj_path": input_traj_path},
-            "out": {"output_hole_path": output_hole_path, "output_csv_path": output_csv_path}
-        }
-
-        # Properties specific for MDAHole
-        self.start = properties.get('start', None)
-        self.stop = properties.get('stop', None)
-        self.steps = properties.get('steps', None)
-        self.executable = properties.get('executable', 'hole')
-        self.select = properties.get('select', 'protein')
-        self.cpoint = properties.get('cpoint', None)
-        self.cvect = properties.get('cvect', None)
-        self.sample = properties.get('sample', 0.2)
-        self.end_radius = properties.get('end_radius', 22)
-        self.dot_density = properties.get('dot_density', 15)
-        self.properties = properties
+        super().__init__(**locals())
 
     def run(self) -> None:
         """Execute the :class:`MDAHole <mdanalysis_biobb.mda_hole.MDAHole>` object."""

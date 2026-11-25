@@ -267,7 +267,7 @@
                 },
                 "midplane_cutoff": {
                     "type": "number",
-                    "default": 0.0,
+                    "default": null,
                     "wf_prop": false,
                     "description": "Minimum distance in *z* an atom must be from the midplane to be assigned to a leaflet rather than the midplane. The default is `0`, in which case all lipids will be assigned to either the upper or lower leaflet. Must be non-negative."
                 },

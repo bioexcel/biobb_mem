@@ -52,28 +52,7 @@ class GorderAA(BiobbObject):
                  output_order_path=None,
                  properties=None,
                  **kwargs) -> None:
-        properties = properties or {}
-
-        # Call parent class constructor
-        super().__init__(properties)
-        self.locals_var_dict = locals().copy()
-
-        # Input/Output files
-        self.io_dict = {
-            "in": {
-                "input_top_path": input_top_path,
-                "input_traj_path": input_traj_path,
-            },
-            "out": {
-                "output_order_path": output_order_path
-            }
-        }
-
-        # Properties specific for BB
-        self.heavy_atoms = properties.get('heavy_atoms', "@membrane and name r'C3.+|C2.+'")
-        self.hydrogens = properties.get('hydrogens', '@membrane and element name hydrogen')
-        self.handle_pbc = properties.get('handle_pbc', True)
-        self.properties = properties
+        super().__init__(**locals())
 
     def run(self) -> None:
         """Execute the :class:`GorderAA <gorder.gorder_aa.GorderAA>` object."""
