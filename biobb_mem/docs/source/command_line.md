@@ -114,7 +114,6 @@ Config parameters for this building block:
 * **begin_frame** (*integer*): (-1) First frame index to be used for analysis.
 * **end_frame** (*integer*): (-1) Last frame index to be used for analysis.
 * **ignore_no_box** (*boolean*): (False) Ignore the absence of box information in the topology. If the topology does not contain box information, the box will be set to the minimum and maximum positions of the atoms.
-* **return_hydrogen** (*boolean*): (False) Include hydrogen atoms in the output index file.
 * **binary_path** (*string*): (fatslim) Path to the fatslim executable binary.
 * **remove_tmp** (*boolean*): (True) Remove temporal files.
 * **restart** (*boolean*): (False) Do not execute if output files exist.

@@ -27,7 +27,6 @@ class FatslimAPL(BiobbObject):
             * **begin_frame** (*int*) - (-1) First frame index to be used for analysis.
             * **end_frame** (*int*) - (-1) Last frame index to be used for analysis.
             * **ignore_no_box** (*bool*) - (False) Ignore the absence of box information in the topology. If the topology does not contain box information, the box will be set to the minimum and maximum positions of the atoms.
-            * **return_hydrogen** (*bool*) - (False) Include hydrogen atoms in the output index file.
             * **binary_path** (*str*) - ("fatslim") Path to the fatslim executable binary.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
             * **restart** (*bool*) - (False) [WF property] Do not execute if output files exist.
