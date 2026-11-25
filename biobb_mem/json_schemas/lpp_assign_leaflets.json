@@ -279,7 +279,7 @@
                 },
                 "ignore_no_box": {
                     "type": "boolean",
-                    "default": false,
+                    "default": true,
                     "wf_prop": false,
                     "description": "Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory."
                 },
