@@ -76,12 +76,15 @@ class GorderCG(BiobbObject):
     def run(self) -> int:
         """Execute the :class:`GorderCG <gorder.gorder_cg.GorderCG>` object."""
 
+        out = self.stage_io_dict["out"]["output_order_path"]
         # Run Biobb block
         analysis = gorder.Analysis(
             structure=self.stage_io_dict["in"]["input_top_path"],
             trajectory=self.stage_io_dict["in"]["input_traj_path"],
             analysis_type=gorder.analysis_types.CGOrder(self.beads),
-            output_yaml=self.stage_io_dict["out"]["output_order_path"],
+            output_yaml=out if out.endswith('.yaml') else None,
+            output_csv=out if out.endswith('.csv') else None,
+            output_xvg=out if out.endswith('.xvg') else None,
             handle_pbc=False,
         )
 
