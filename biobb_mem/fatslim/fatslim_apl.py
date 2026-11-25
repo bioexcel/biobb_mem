@@ -154,7 +154,7 @@ class FatslimAPL(BiobbObject):
 
         # Run Biobb block
         self.run_biobb()
-        staged_output_csv = str(Path(unique_dir).joinpath(PurePath(self.stage_io_dict["out"]["output_csv_path"]).name))
+        staged_output_csv = self.sandbox_file("output_csv_path")
         move_output_file(tmp_csv, staged_output_csv,
                          self.out_log, self.global_log)
 

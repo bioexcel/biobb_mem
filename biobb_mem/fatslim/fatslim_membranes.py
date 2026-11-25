@@ -135,7 +135,7 @@ class FatslimMembranes(BiobbObject):
 
         # Run Biobb block
         self.run_biobb()
-        staged_output_ndx = str(Path(unique_dir).joinpath(PurePath(self.stage_io_dict["out"]["output_ndx_path"]).name))
+        staged_output_ndx = self.sandbox_file("output_ndx_path")
         move_output_file(tmp_out, staged_output_ndx, self.out_log, self.global_log)
         # Fatslim ignore H atoms so we add them manually
         if self.return_hydrogen:
