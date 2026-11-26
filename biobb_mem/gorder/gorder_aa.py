@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
 """Module containing the gorder all atom class and the command line interface."""
-from biobb_common.generic.biobb_object import BiobbObject, launcher
+from biobb_common.generic.biobb_object import launcher
+from biobb_mem.gorder.common import GorderBase
 import gorder
 
 
-class GorderAA(BiobbObject):
+class GorderAA(GorderBase):
     """
     | biobb_mem GorderAA
     | Wrapper of the gorder atomistic module for computing lipid order parameters per atom for carbon tails.
@@ -49,28 +50,14 @@ class GorderAA(BiobbObject):
     def __init__(self,
                  input_top_path: str,
                  input_traj_path: str,
-                 output_order_path: str | None = None,
+                 output_order_path: str,
                  properties: dict | None = None,
                  **kwargs) -> None:
         super().__init__(**locals())
 
-    def run(self) -> None:
-        """Execute the :class:`GorderAA <gorder.gorder_aa.GorderAA>` object."""
-
-        out = self.sandbox_file("output_order_path")
-        # Run Biobb block
-        analysis = gorder.Analysis(
-            structure=self.sandbox_file("input_top_path"),
-            trajectory=self.sandbox_file("input_traj_path"),
-            analysis_type=gorder.analysis_types.AAOrder(self.heavy_atoms, self.hydrogens),
-            output_yaml=out if out.endswith('.yaml') else None,
-            output_csv=out if out.endswith('.csv') else None,
-            output_xvg=out if out.endswith('.xvg') else None,
-            handle_pbc=self.handle_pbc,
-        )
-
-        results = analysis.run()
-        results.write()
+    def analysis_type(self) -> "gorder.analysis_types.AAOrder":
+        """Go from the heavy_atoms and hydrogens to the atomistic analysis type of gorder."""
+        return gorder.analysis_types.AAOrder(self.heavy_atoms, self.hydrogens)
 
 
 gorder_aa = launcher(GorderAA)

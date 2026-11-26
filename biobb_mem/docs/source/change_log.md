@@ -10,6 +10,7 @@
 * [CHANGE] `fatslim_apl`: trajectories in the formats FATSLiM can not read (cpt, g96, pdb, tng) and trajectories without box (with `ignore_no_box`) are converted to XTC for FATSLiM.
 * [CHANGE] `ignore_no_box` of the FATSLiM blocks sets the box as in the lipyphilic blocks: from the extent of the atoms in all the frames, with the system shifted so that its minimum z is 0.
 * [CHANGE] `fatslim_apl` and `fatslim_membranes` remove their temporary files also with `disable_sandbox` (unless `remove_tmp` is False).
+* [CHANGE] `gorder_aa`, `gorder_ua` and `gorder_cg`: `output_order_path` is a required argument also in Python, as documented.
 
 ## What's new in version [5.3.1](https://github.com/bioexcel/biobb_mem/releases/tag/v5.3.1)?
 
