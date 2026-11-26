@@ -245,6 +245,7 @@ gorder_cg:
     output_order_path: order.yaml
     ref_output_order_path: file:test_reference_dir/gorder/order_cg.yaml
   properties:
+    handle_pbc: False
     remove_tmp: False
 
 gorder_ua:

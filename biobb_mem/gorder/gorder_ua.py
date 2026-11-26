@@ -66,7 +66,7 @@ class GorderUA(BiobbObject):
             output_yaml=out if out.endswith('.yaml') else None,
             output_csv=out if out.endswith('.csv') else None,
             output_xvg=out if out.endswith('.xvg') else None,
-            handle_pbc=False,
+            handle_pbc=self.handle_pbc,
         )
 
         results = analysis.run()
