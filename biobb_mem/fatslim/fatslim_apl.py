@@ -34,7 +34,6 @@ class FatslimAPL(BiobbObject):
             * **container_path** (*str*) - (None) Container path definition.
             * **container_image** (*str*) - ('afandiadib/ambertools:serial') Container image definition.
             * **container_volume_path** (*str*) - ('/tmp') Container volume path definition.
-            * **container_working_dir** (*str*) - (None) Container working directory definition.
             * **container_user_id** (*str*) - (None) Container user_id definition.
             * **container_shell_path** (*str*) - ('/bin/bash') Path to default shell inside the container.
 
@@ -69,10 +68,6 @@ class FatslimAPL(BiobbObject):
         """Execute the :class:`FatslimAPL <fatslim.fatslim_apl.FatslimAPL>` object."""
 
         unique_dir = self.stage_io_dict.get("unique_dir", "")
-        if self.container_path:
-            working_dir = self.container_volume_path if self.container_volume_path else "/data"
-        else:
-            working_dir = unique_dir
 
         # MDAnalysis runs in the host, so read the original input files
         host_top_path = self.io_dict["in"]["input_top_path"]
@@ -84,7 +79,7 @@ class FatslimAPL(BiobbObject):
 
         # Build the index to select the atoms from the membrane
         if self.stage_io_dict["in"].get('input_ndx_path', None):
-            tmp_ndx = self.stage_io_dict["in"]["input_ndx_path"]
+            tmp_ndx = self.sandbox_file("input_ndx_path")
         else:
             tmp_ndx = str(Path(unique_dir).joinpath('_apl_inp.ndx'))
             with mda.selections.gromacs.SelectionWriter(tmp_ndx, mode='w') as ndx:
@@ -92,7 +87,7 @@ class FatslimAPL(BiobbObject):
                 ndx.write(u.select_atoms(self.protein_selection), name='protein')
 
         if self.stage_io_dict["in"]["input_top_path"].endswith('gro'):
-            cfg = self.stage_io_dict["in"]["input_top_path"]
+            cfg = self.sandbox_file("input_top_path")
 
         else:
             # Convert topology .gro and add box dimensions if not available in the topology
@@ -102,7 +97,6 @@ class FatslimAPL(BiobbObject):
 
         tmp_csv = str(Path(unique_dir).joinpath('_out.csv'))
 
-        cmd_prefix = ["cd", working_dir, ";"]
         if not self.container_path and PurePath(self.binary_path).name == "fatslim":
             # FATSLiM 0.2.2 uses deprecated NumPy aliases removed in modern NumPy versions.
             fatslim_compat = Path(unique_dir).joinpath('fatslim_numpy_compat.py')
@@ -113,16 +107,16 @@ class FatslimAPL(BiobbObject):
                 compat_script.write('    np.int = int\n')
                 compat_script.write('from fatslimlib import main\n')
                 compat_script.write('sys.exit(main(sys.argv[1:]))\n')
-            binary_cmd = [sys.executable, PurePath(fatslim_compat).name]
+            binary_cmd = [sys.executable, self.staged_path(fatslim_compat)]
         else:
             binary_cmd = [self.binary_path]
 
         # Build command
-        self.cmd = cmd_prefix + binary_cmd + [
+        self.cmd = binary_cmd + [
             "apl",
-            "-n", PurePath(tmp_ndx).name,
-            "-c", PurePath(cfg).name,
-            "--export-apl-raw", PurePath(tmp_csv).name,
+            "-n", self.staged_path(tmp_ndx),
+            "-c", self.staged_path(cfg),
+            "--export-apl-raw", self.staged_path(tmp_csv),
             "--apl-cutoff", str(self.cutoff),
             "--apl-limit", str(self.limit),
             "--begin-frame", str(self.begin_frame),

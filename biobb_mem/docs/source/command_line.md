@@ -62,7 +62,6 @@ Config parameters for this building block:
 * **container_path** (*string*): (None) Container path definition.
 * **container_image** (*string*): (afandiadib/ambertools:serial) Container image definition.
 * **container_volume_path** (*string*): (/tmp) Container volume path definition.
-* **container_working_dir** (*string*): (None) Container working directory definition.
 * **container_user_id** (*string*): (None) Container user_id definition.
 * **container_shell_path** (*string*): (/bin/bash) Path to default shell inside the container.
 ### YAML
@@ -121,7 +120,6 @@ Config parameters for this building block:
 * **container_path** (*string*): (None) Container path definition.
 * **container_image** (*string*): (afandiadib/ambertools:serial) Container image definition.
 * **container_volume_path** (*string*): (/tmp) Container volume path definition.
-* **container_working_dir** (*string*): (None) Container working directory definition.
 * **container_user_id** (*string*): (None) Container user_id definition.
 * **container_shell_path** (*string*): (/bin/bash) Path to default shell inside the container.
 ### YAML
@@ -139,7 +137,6 @@ properties:
   container_image: quay.io/biocontainers/biobb_mem:5.2.2--pyhdfd78af_0
   container_path: docker
   container_volume_path: /tmp
-  container_working_dir: /tmp
   ignore_no_box: true
   lipid_selection: (resname DPPC and name P8)
   remove_tmp: false
@@ -179,8 +176,7 @@ fatslim_apl --config config_fatslim_apl.yml --input_top_path A01JD.pdb --input_t
     "lipid_selection": "(resname DPPC and name P8)",
     "container_path": "docker",
     "container_image": "quay.io/biocontainers/biobb_mem:5.2.2--pyhdfd78af_0",
-    "container_volume_path": "/tmp",
-    "container_working_dir": "/tmp"
+    "container_volume_path": "/tmp"
   }
 }
 ```
@@ -253,7 +249,6 @@ Config parameters for this building block:
 * **container_path** (*string*): (None) Container path definition.
 * **container_image** (*string*): (afandiadib/ambertools:serial) Container image definition.
 * **container_volume_path** (*string*): (/tmp) Container volume path definition.
-* **container_working_dir** (*string*): (None) Container working directory definition.
 * **container_user_id** (*string*): (None) Container user_id definition.
 * **container_shell_path** (*string*): (/bin/bash) Path to default shell inside the container.
 ### YAML

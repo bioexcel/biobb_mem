@@ -57,11 +57,11 @@ class GorderAA(BiobbObject):
     def run(self) -> None:
         """Execute the :class:`GorderAA <gorder.gorder_aa.GorderAA>` object."""
 
-        out = self.stage_io_dict["out"]["output_order_path"]
+        out = self.sandbox_file("output_order_path")
         # Run Biobb block
         analysis = gorder.Analysis(
-            structure=self.stage_io_dict["in"]["input_top_path"],
-            trajectory=self.stage_io_dict["in"]["input_traj_path"],
+            structure=self.sandbox_file("input_top_path"),
+            trajectory=self.sandbox_file("input_traj_path"),
             analysis_type=gorder.analysis_types.AAOrder(self.heavy_atoms, self.hydrogens),
             output_yaml=out if out.endswith('.yaml') else None,
             output_csv=out if out.endswith('.csv') else None,

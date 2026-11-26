@@ -63,7 +63,7 @@ class LPPZPositions(BiobbObject):
         """Execute the :class:`LPPZPositions <lipyphilic_biobb.lpp_zpositions.LPPZPositions>` object."""
 
         # Load the trajectory
-        u = mda.Universe(self.stage_io_dict["in"]["input_top_path"], self.stage_io_dict["in"]["input_traj_path"])
+        u = mda.Universe(self.sandbox_file("input_top_path"), self.sandbox_file("input_traj_path"))
         ignore_no_box(u, self.ignore_no_box, self.out_log, self.global_log)
 
         # Create ZPositions object
@@ -89,7 +89,7 @@ class LPPZPositions(BiobbObject):
         })
 
         # Save the DataFrame to a CSV file
-        df.to_csv(self.stage_io_dict["out"]["output_positions_path"], index=False)
+        df.to_csv(self.sandbox_file("output_positions_path"), index=False)
 
 
 lpp_zpositions = launcher(LPPZPositions)

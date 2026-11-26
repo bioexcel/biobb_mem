@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """Module containing the FATSLiM Membranes class and the command line interface."""
-from pathlib import Path, PurePath
+from pathlib import Path
 from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_mem.fatslim.common import ignore_no_box, move_output_file
 import MDAnalysis as mda
@@ -33,7 +33,6 @@ class FatslimMembranes(BiobbObject):
             * **container_path** (*str*) - (None) Container path definition.
             * **container_image** (*str*) - ('afandiadib/ambertools:serial') Container image definition.
             * **container_volume_path** (*str*) - ('/tmp') Container volume path definition.
-            * **container_working_dir** (*str*) - (None) Container working directory definition.
             * **container_user_id** (*str*) - (None) Container user_id definition.
             * **container_shell_path** (*str*) - ('/bin/bash') Path to default shell inside the container.
 
@@ -69,10 +68,6 @@ class FatslimMembranes(BiobbObject):
         """Execute the :class:`FatslimMembranes <fatslim.fatslim_membranes.FatslimMembranes>` object."""
 
         unique_dir = self.stage_io_dict.get("unique_dir", "")
-        if self.container_path:
-            working_dir = self.container_volume_path if self.container_volume_path else "/data"
-        else:
-            working_dir = unique_dir
 
         # MDAnalysis runs in the host, so read the original input files
         host_top_path = self.io_dict["in"]["input_top_path"]
@@ -84,14 +79,14 @@ class FatslimMembranes(BiobbObject):
 
         # Build the index to select the atoms from the membrane
         if self.stage_io_dict["in"].get('input_ndx_path', None):
-            tmp_ndx = self.stage_io_dict["in"]["input_ndx_path"]
+            tmp_ndx = self.sandbox_file("input_ndx_path")
         else:
             tmp_ndx = str(Path(unique_dir).joinpath('_headgroups.ndx'))
             with mda.selections.gromacs.SelectionWriter(tmp_ndx, mode='w') as ndx:
                 ndx.write(u.select_atoms(self.selection), name='headgroups')
 
         if self.stage_io_dict["in"]["input_top_path"].endswith('gro'):
-            cfg = self.stage_io_dict["in"]["input_top_path"]
+            cfg = self.sandbox_file("input_top_path")
         else:
             # Convert topology .gro and add box dimensions if not available in the topology
             cfg = str(Path(unique_dir).joinpath('_output.gro'))
@@ -101,10 +96,10 @@ class FatslimMembranes(BiobbObject):
         tmp_out = str(Path(unique_dir).joinpath('_output.ndx'))
         # Build command
         self.cmd = [
-            "cd", working_dir, ";", self.binary_path, "membranes",
-            "-n", PurePath(tmp_ndx).name,
-            "-c", PurePath(cfg).name,
-            "--output-index", PurePath(tmp_out).name,
+            self.binary_path, "membranes",
+            "-n", self.staged_path(tmp_ndx),
+            "-c", self.staged_path(cfg),
+            "--output-index", self.staged_path(tmp_out),
             "--cutoff", str(self.cutoff),
             "--begin-frame", str(self.begin_frame),
             "--end-frame", str(self.end_frame)

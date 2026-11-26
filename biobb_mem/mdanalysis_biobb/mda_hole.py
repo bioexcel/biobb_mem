@@ -2,10 +2,10 @@
 
 """Module containing the MDAnalysis HOLE class and the command line interface."""
 import re
-import os
 import numpy as np
 import pandas as pd
 from biobb_common.generic.biobb_object import BiobbObject, launcher
+from biobb_common.tools import file_utils as fu
 import MDAnalysis as mda
 from mdahole2.analysis import HoleAnalysis
 
@@ -68,45 +68,43 @@ class MDAHole(BiobbObject):
         """Execute the :class:`MDAHole <mdanalysis_biobb.mda_hole.MDAHole>` object."""
 
         # Load the universe
-        u = mda.Universe(self.stage_io_dict["in"]["input_top_path"],
-                         self.stage_io_dict["in"]["input_traj_path"])
-        # save current directory and move to temporary
-        cwd = os.getcwd()
-        os.chdir(self.stage_io_dict.get("unique_dir"))
-        # Create HoleAnalysis object
-        hole = HoleAnalysis(
-            universe=u,
-            select=self.select,
-            cpoint=self.cpoint,
-            cvect=self.cvect,
-            sample=self.sample,
-            executable=self.executable,
-            end_radius=self.end_radius
-        )
-        # Run the analysis with step parameter
-        hole.run(
-            start=self.start,
-            stop=self.stop,
-            step=self.steps
-        )
-        # Save the results to a CSV file
-        all_frames = []
-        for frame in hole.results.profiles.keys():
-            rxn_coord = hole.results.profiles[frame].rxn_coord
-            radius = hole.results.profiles[frame].radius
-            df_frame = pd.DataFrame({'Frame': frame, 'Pore Coordinate': rxn_coord, 'Radius': radius})
-            all_frames.append(df_frame)
-        # Concatenate all frames into a single DataFrame
-        df_all_frames = pd.concat(all_frames, ignore_index=True)
-        df_all_frames.to_csv(self.stage_io_dict["out"]["output_csv_path"], index=False)
+        u = mda.Universe(self.sandbox_file("input_top_path"),
+                         self.sandbox_file("input_traj_path"))
+        # HoleAnalysis writes its files (hole000.out, simple2.rad...) in the current directory: the sandbox.
+        # Its tmpdir argument does not move them, and HOLE limits the file paths to 70 characters.
+        with fu.change_dir(self.stage_io_dict["unique_dir"]):
+            # Create HoleAnalysis object
+            hole = HoleAnalysis(
+                universe=u,
+                select=self.select,
+                cpoint=self.cpoint,
+                cvect=self.cvect,
+                sample=self.sample,
+                executable=self.executable,
+                end_radius=self.end_radius
+            )
+            # Run the analysis with step parameter
+            hole.run(
+                start=self.start,
+                stop=self.stop,
+                step=self.steps
+            )
+            # Save the results to a CSV file
+            all_frames = []
+            for frame in hole.results.profiles.keys():
+                rxn_coord = hole.results.profiles[frame].rxn_coord
+                radius = hole.results.profiles[frame].radius
+                df_frame = pd.DataFrame({'Frame': frame, 'Pore Coordinate': rxn_coord, 'Radius': radius})
+                all_frames.append(df_frame)
+            # Concatenate all frames into a single DataFrame
+            df_all_frames = pd.concat(all_frames, ignore_index=True)
+            df_all_frames.to_csv(self.sandbox_file("output_csv_path"), index=False)
 
-        hole.create_vmd_surface(
-            self.stage_io_dict["out"]["output_hole_path"],
-            dot_density=self.dot_density
-        )
-        hole.delete_temporary_files()
-        # move back to original directory
-        os.chdir(cwd)
+            hole.create_vmd_surface(
+                self.sandbox_file("output_hole_path"),
+                dot_density=self.dot_density
+            )
+            hole.delete_temporary_files()
 
 
 mda_hole = launcher(MDAHole)
