@@ -5,7 +5,7 @@ import re
 import os
 import numpy as np
 import pandas as pd
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 import MDAnalysis as mda
 from mdahole2.analysis import HoleAnalysis
 
@@ -60,8 +60,8 @@ class MDAHole(BiobbObject):
             * schema: http://edamontology.org/EDAM.owl
     """
 
-    def __init__(self, input_top_path, input_traj_path, output_hole_path, output_csv_path=None,
-                 properties=None, **kwargs) -> None:
+    def __init__(self, input_top_path: str, input_traj_path: str, output_hole_path: str, output_csv_path: str | None = None,
+                 properties: dict | None = None, **kwargs) -> None:
         super().__init__(**locals())
 
     def run(self) -> None:
@@ -109,19 +109,7 @@ class MDAHole(BiobbObject):
         os.chdir(cwd)
 
 
-def mda_hole(input_top_path: str,
-             input_traj_path: str,
-             output_hole_path: str,
-             output_csv_path: str,
-             properties: dict = None,
-             **kwargs) -> int:
-    """Execute the :class:`MDAHole <mdanalysis_biobb.mda_hole.MDAHole>` class and
-    execute the :meth:`launch() <mdanalysis_biobb.mda_hole.MDAHole.launch>` method."""
-    return MDAHole(**dict(locals())).launch()
-
-
-mda_hole.__doc__ = MDAHole.__doc__
-main = MDAHole.get_main(mda_hole, "Analyze ion channel pores or transporter pathways.")
+mda_hole = launcher(MDAHole)
 
 
 def display_hole(input_top_path: str, input_traj_path: str,
@@ -184,4 +172,4 @@ def display_hole(input_top_path: str, input_traj_path: str,
 
 
 if __name__ == '__main__':
-    main()
+    MDAHole.main()

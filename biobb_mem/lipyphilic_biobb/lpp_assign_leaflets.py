@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """Module containing the Lipyphilic AssignLeaflets class and the command line interface."""
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 import MDAnalysis as mda
 from biobb_mem.lipyphilic_biobb.common import ignore_no_box
 from lipyphilic.leaflets.assign_leaflets import AssignLeaflets
@@ -56,10 +56,10 @@ class LPPAssignLeaflets(BiobbObject):
     """
 
     def __init__(self,
-                 input_top_path,
-                 input_traj_path,
-                 output_leaflets_path,
-                 properties=None,
+                 input_top_path: str,
+                 input_traj_path: str,
+                 output_leaflets_path: str,
+                 properties: dict | None = None,
                  **kwargs) -> None:
         super().__init__(**locals())
 
@@ -101,18 +101,7 @@ class LPPAssignLeaflets(BiobbObject):
             np.save(self.stage_io_dict["out"]["output_leaflets_path"], leaflets.leaflets)
 
 
-def lpp_assign_leaflets(input_top_path: str,
-                        input_traj_path: str,
-                        output_leaflets_path: str = None,
-                        properties: dict = None,
-                        **kwargs) -> int:
-    """Execute the :class:`LPPAssignLeaflets <lipyphilic_biobb.lpp_assign_leaflets.LPPAssignLeaflets>` class and
-    execute the :meth:`launch() <lipyphilic_biobb.lpp_assign_leaflets.LPPAssignLeaflets.launch>` method."""
-    return LPPAssignLeaflets(**dict(locals())).launch()
-
-
-lpp_assign_leaflets.__doc__ = LPPAssignLeaflets.__doc__
-main = LPPAssignLeaflets.get_main(lpp_assign_leaflets, "Assign lipids to leaflets in a bilayer.")
+lpp_assign_leaflets = launcher(LPPAssignLeaflets)
 
 
 def display_nglview(input_top_path: str, output_leaflets_path: str, frame: int = 0):
@@ -148,4 +137,4 @@ def display_nglview(input_top_path: str, output_leaflets_path: str, frame: int =
 
 
 if __name__ == '__main__':
-    main()
+    LPPAssignLeaflets.main()

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """Module containing the gorder united atom class and the command line interface."""
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 import gorder
 
 
@@ -47,10 +47,10 @@ class GorderUA(BiobbObject):
     """
 
     def __init__(self,
-                 input_top_path,
-                 input_traj_path,
-                 output_order_path=None,
-                 properties=None,
+                 input_top_path: str,
+                 input_traj_path: str,
+                 output_order_path: str | None = None,
+                 properties: dict | None = None,
                  **kwargs) -> None:
         super().__init__(**locals())
 
@@ -73,18 +73,7 @@ class GorderUA(BiobbObject):
         results.write()
 
 
-def gorder_ua(input_top_path: str,
-              input_traj_path: str,
-              output_order_path: str = None,
-              properties: dict = None,
-              **kwargs) -> int:
-    """Create :class:`GorderUA <gorder.gorder_ua.GorderUA>` class and
-    execute :meth:`launch() <gorder.gorder_ua.GorderUA.launch>` method"""
-    return GorderUA(**dict(locals())).launch()
-
-
-gorder_ua.__doc__ = GorderUA.__doc__
-main = GorderUA.get_main(gorder_ua, "Compute united atom lipid order parameters using gorder order tool.")
+gorder_ua = launcher(GorderUA)
 
 if __name__ == '__main__':
-    main()
+    GorderUA.main()

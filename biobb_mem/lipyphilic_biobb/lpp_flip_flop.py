@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """Module containing the Lipyphilic FlipFlop class and the command line interface."""
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 import MDAnalysis as mda
 from biobb_mem.lipyphilic_biobb.common import ignore_no_box
 from lipyphilic.analysis.flip_flop import FlipFlop
@@ -55,9 +55,9 @@ class LPPFlipFlop(BiobbObject):
 
     """
 
-    def __init__(self, input_top_path, input_traj_path,
-                 input_leaflets_path, output_flip_flop_path,
-                 properties=None, **kwargs) -> None:
+    def __init__(self, input_top_path: str, input_traj_path: str,
+                 input_leaflets_path: str, output_flip_flop_path: str,
+                 properties: dict | None = None, **kwargs) -> None:
         super().__init__(**locals())
 
     def run(self) -> None:
@@ -105,15 +105,7 @@ class LPPFlipFlop(BiobbObject):
         df.to_csv(self.stage_io_dict["out"]["output_flip_flop_path"], index=False)
 
 
-def lpp_flip_flop(input_top_path: str, input_traj_path: str, input_leaflets_path: str = None,
-                  output_flip_flop_path: str = None, properties: dict = None, **kwargs) -> int:
-    """Execute the :class:`LPPFlipFlop <lipyphilic_biobb.lpp_flip_flop.LPPFlipFlop>` class and
-    execute the :meth:`launch() <lipyphilic_biobb.lpp_flip_flop.LPPFlipFlop.launch>` method."""
-    return LPPFlipFlop(**dict(locals())).launch()
-
-
-lpp_flip_flop.__doc__ = LPPFlipFlop.__doc__
-main = LPPFlipFlop.get_main(lpp_flip_flop, "Find flip-flop events in a lipid bilayer.")
+lpp_flip_flop = launcher(LPPFlipFlop)
 
 if __name__ == '__main__':
-    main()
+    LPPFlipFlop.main()

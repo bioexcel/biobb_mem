@@ -3,7 +3,7 @@
 """Module containing the FATSLiM Area per Lipid class and the command line interface."""
 from pathlib import Path, PurePath
 import sys
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_mem.fatslim.common import ignore_no_box, move_output_file
 import MDAnalysis as mda
 
@@ -62,7 +62,7 @@ class FatslimAPL(BiobbObject):
 
     """
 
-    def __init__(self, input_top_path, output_csv_path, input_traj_path=None, input_ndx_path=None, properties=None, **kwargs) -> None:
+    def __init__(self, input_top_path: str, output_csv_path: str, input_traj_path: str | None = None, input_ndx_path: str | None = None, properties: dict | None = None, **kwargs) -> None:
         super().__init__(**locals())
 
     def run(self) -> None:
@@ -136,19 +136,7 @@ class FatslimAPL(BiobbObject):
                          self.out_log, self.global_log)
 
 
-def fatslim_apl(input_top_path: str,
-                output_csv_path: str,
-                input_traj_path: str = None,
-                input_ndx_path: str = None,
-                properties: dict = None,
-                **kwargs) -> int:
-    """Execute the :class:`FatslimAPL <fatslim.fatslim_apl.FatslimAPL>` class and
-    execute the :meth:`launch() <fatslim.fatslim_apl.FatslimAPL.launch>` method."""
-    return FatslimAPL(**dict(locals())).launch()
-
-
-fatslim_apl.__doc__ = FatslimAPL.__doc__
-main = FatslimAPL.get_main(fatslim_apl, 'Calculate the area per lipid.')
+fatslim_apl = launcher(FatslimAPL)
 
 if __name__ == '__main__':
-    main()
+    FatslimAPL.main()

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """Module containing the gorder coarse-grained class and the command line interface."""
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 import gorder
 
 
@@ -46,10 +46,10 @@ class GorderCG(BiobbObject):
     """
 
     def __init__(self,
-                 input_top_path,
-                 input_traj_path,
-                 output_order_path=None,
-                 properties=None,
+                 input_top_path: str,
+                 input_traj_path: str,
+                 output_order_path: str | None = None,
+                 properties: dict | None = None,
                  **kwargs) -> None:
         super().__init__(**locals())
 
@@ -72,18 +72,7 @@ class GorderCG(BiobbObject):
         results.write()
 
 
-def gorder_cg(input_top_path: str,
-              input_traj_path: str,
-              output_order_path: str = None,
-              properties: dict = None,
-              **kwargs) -> int:
-    """Create :class:`GorderCG <gorder.gorder_cg.GorderCG>` class and
-    execute :meth:`launch() <gorder.gorder_cg.GorderCG.launch>` method"""
-    return GorderCG(**dict(locals())).launch()
-
-
-gorder_cg.__doc__ = GorderCG.__doc__
-main = GorderCG.get_main(gorder_cg, "Compute coarse-grained lipid order parameters using gorder order tool.")
+gorder_cg = launcher(GorderCG)
 
 if __name__ == '__main__':
-    main()
+    GorderCG.main()

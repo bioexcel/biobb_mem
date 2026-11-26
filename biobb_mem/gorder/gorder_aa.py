@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """Module containing the gorder all atom class and the command line interface."""
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 import gorder
 
 
@@ -47,10 +47,10 @@ class GorderAA(BiobbObject):
     """
 
     def __init__(self,
-                 input_top_path,
-                 input_traj_path,
-                 output_order_path=None,
-                 properties=None,
+                 input_top_path: str,
+                 input_traj_path: str,
+                 output_order_path: str | None = None,
+                 properties: dict | None = None,
                  **kwargs) -> None:
         super().__init__(**locals())
 
@@ -73,18 +73,7 @@ class GorderAA(BiobbObject):
         results.write()
 
 
-def gorder_aa(input_top_path: str,
-              input_traj_path: str,
-              output_order_path: str = None,
-              properties: dict = None,
-              **kwargs) -> int:
-    """Create :class:`GorderAA <gorder.gorder_aa.GorderAA>` class and
-    execute :meth:`launch() <gorder.gorder_aa.GorderAA.launch>` method"""
-    return GorderAA(**dict(locals())).launch()
-
-
-gorder_aa.__doc__ = GorderAA.__doc__
-main = GorderAA.get_main(gorder_aa, "Compute atomistic lipid order parameters using gorder order tool.")
+gorder_aa = launcher(GorderAA)
 
 if __name__ == '__main__':
-    main()
+    GorderAA.main()

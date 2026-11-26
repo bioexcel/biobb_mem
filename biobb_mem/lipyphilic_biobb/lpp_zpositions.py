@@ -2,7 +2,7 @@
 
 """Module containing the Lipyphilic ZPositions class and the command line interface."""
 
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 import MDAnalysis as mda
 from biobb_mem.lipyphilic_biobb.common import ignore_no_box
 from lipyphilic.analysis.z_positions import ZPositions
@@ -55,8 +55,8 @@ class LPPZPositions(BiobbObject):
 
     """
 
-    def __init__(self, input_top_path, input_traj_path, output_positions_path,
-                 properties=None, **kwargs) -> None:
+    def __init__(self, input_top_path: str, input_traj_path: str, output_positions_path: str,
+                 properties: dict | None = None, **kwargs) -> None:
         super().__init__(**locals())
 
     def run(self) -> None:
@@ -92,14 +92,7 @@ class LPPZPositions(BiobbObject):
         df.to_csv(self.stage_io_dict["out"]["output_positions_path"], index=False)
 
 
-def lpp_zpositions(input_top_path: str, input_traj_path: str, output_positions_path: str = None, properties: dict = None, **kwargs) -> int:
-    """Execute the :class:`LPPZPositions <lipyphilic_biobb.lpp_zpositions.LPPZPositions>` class and
-    execute the :meth:`launch() <lipyphilic_biobb.lpp_zpositions.LPPZPositions.launch>` method."""
-    return LPPZPositions(**dict(locals())).launch()
-
-
-lpp_zpositions.__doc__ = LPPZPositions.__doc__
-main = LPPZPositions.get_main(lpp_zpositions, "Calculate the z distance in of lipids to the bilayer center.")
+lpp_zpositions = launcher(LPPZPositions)
 
 
 def frame_df(output_positions_path):
@@ -130,4 +123,4 @@ def frame_df(output_positions_path):
 
 
 if __name__ == '__main__':
-    main()
+    LPPZPositions.main()

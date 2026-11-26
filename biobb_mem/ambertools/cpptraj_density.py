@@ -2,7 +2,7 @@
 
 """Module containing the Cpptraj Density class and the command line interface."""
 from pathlib import Path, PurePath
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 
 
 class CpptrajDensity(BiobbObject):
@@ -61,8 +61,8 @@ class CpptrajDensity(BiobbObject):
 
     """
 
-    def __init__(self, input_top_path, input_traj_path, output_cpptraj_path,
-                 output_traj_path=None, properties=None, **kwargs) -> None:
+    def __init__(self, input_top_path: str, input_traj_path: str, output_cpptraj_path: str,
+                 output_traj_path: str | None = None, properties: dict | None = None, **kwargs) -> None:
         super().__init__(**locals())
 
         # Properties specific for BB
@@ -114,19 +114,7 @@ class CpptrajDensity(BiobbObject):
         self.run_biobb()
 
 
-def cpptraj_density(input_top_path: str,
-                    input_traj_path: str,
-                    output_cpptraj_path: str,
-                    output_traj_path: str = None,
-                    properties: dict = None,
-                    **kwargs) -> int:
-    """Execute the :class:`CpptrajDensity <ambertools.cpptraj_density.CpptrajDensity>` class and
-    execute the :meth:`launch() <ambertools.cpptraj_density.CpptrajDensity.launch>` method."""
-    return CpptrajDensity(**dict(locals())).launch()
-
-
-cpptraj_density.__doc__ = CpptrajDensity.__doc__
-main = CpptrajDensity.get_main(cpptraj_density, "Calculates the density along an axis of a given cpptraj compatible trajectory.")
+cpptraj_density = launcher(CpptrajDensity)
 
 if __name__ == '__main__':
-    main()
+    CpptrajDensity.main()

@@ -2,7 +2,7 @@
 
 """Module containing the FATSLiM Membranes class and the command line interface."""
 from pathlib import Path, PurePath
-from biobb_common.generic.biobb_object import BiobbObject
+from biobb_common.generic.biobb_object import BiobbObject, launcher
 from biobb_mem.fatslim.common import ignore_no_box, move_output_file
 import MDAnalysis as mda
 import numpy as np
@@ -61,8 +61,8 @@ class FatslimMembranes(BiobbObject):
 
     """
 
-    def __init__(self, input_top_path, output_ndx_path, input_traj_path=None,
-                 input_ndx_path=None, properties=None, **kwargs) -> None:
+    def __init__(self, input_top_path: str, output_ndx_path: str, input_traj_path: str | None = None,
+                 input_ndx_path: str | None = None, properties: dict | None = None, **kwargs) -> None:
         super().__init__(**locals())
 
     def run(self) -> None:
@@ -127,14 +127,7 @@ class FatslimMembranes(BiobbObject):
                     ndx.write(u.select_atoms(sele), name=key)
 
 
-def fatslim_membranes(input_top_path: str, output_ndx_path: str, input_traj_path: str = None, input_ndx_path: str = None, properties: dict = None, **kwargs) -> int:
-    """Execute the :class:`FatslimMembranes <fatslim.fatslim_membranes.FatslimMembranes>` class and
-    execute the :meth:`launch() <fatslim.fatslim_membranes.FatslimMembranes.launch>` method."""
-    return FatslimMembranes(**dict(locals())).launch()
-
-
-fatslim_membranes.__doc__ = FatslimMembranes.__doc__
-main = FatslimMembranes.get_main(fatslim_membranes, "Calculates the density along an axis of a given cpptraj compatible trajectory.")
+fatslim_membranes = launcher(FatslimMembranes)
 
 
 def parse_index(ndx):
@@ -214,4 +207,4 @@ def display_fatslim(input_top_path: str, lipid_sel: str, input_traj_path: str = 
 
 
 if __name__ == '__main__':
-    main()
+    FatslimMembranes.main()

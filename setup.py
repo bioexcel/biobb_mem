@@ -28,16 +28,16 @@ setuptools.setup(
     python_requires='>=3.10,<3.13',
     entry_points={
         "console_scripts": [
-            "cpptraj_density = biobb_mem.ambertools.cpptraj_density:main",
-            "fatslim_apl = biobb_mem.fatslim.fatslim_apl:main",
-            "fatslim_membranes = biobb_mem.fatslim.fatslim_membranes:main",
-            "gorder_aa = biobb_mem.gorder.gorder_aa:main",
-            "gorder_ua = biobb_mem.gorder.gorder_ua:main",
-            "gorder_cg = biobb_mem.gorder.gorder_cg:main",
-            "lpp_assign_leaflets = biobb_mem.lipyphilic_biobb.lpp_assign_leaflets:main",
-            "lpp_flip_flop = biobb_mem.lipyphilic_biobb.lpp_flip_flop:main",
-            "lpp_zpositions = biobb_mem.lipyphilic_biobb.lpp_zpositions:main",
-            "mda_hole = biobb_mem.mdanalysis_biobb.mda_hole:main",
+            "cpptraj_density = biobb_mem.ambertools.cpptraj_density:CpptrajDensity.main",
+            "fatslim_apl = biobb_mem.fatslim.fatslim_apl:FatslimAPL.main",
+            "fatslim_membranes = biobb_mem.fatslim.fatslim_membranes:FatslimMembranes.main",
+            "gorder_aa = biobb_mem.gorder.gorder_aa:GorderAA.main",
+            "gorder_ua = biobb_mem.gorder.gorder_ua:GorderUA.main",
+            "gorder_cg = biobb_mem.gorder.gorder_cg:GorderCG.main",
+            "lpp_assign_leaflets = biobb_mem.lipyphilic_biobb.lpp_assign_leaflets:LPPAssignLeaflets.main",
+            "lpp_flip_flop = biobb_mem.lipyphilic_biobb.lpp_flip_flop:LPPFlipFlop.main",
+            "lpp_zpositions = biobb_mem.lipyphilic_biobb.lpp_zpositions:LPPZPositions.main",
+            "mda_hole = biobb_mem.mdanalysis_biobb.mda_hole:MDAHole.main",
         ]
     },
     classifiers=(
