@@ -167,6 +167,8 @@ fatslim_apl:
     remove_tmp: False
     ignore_no_box: true
     lipid_selection: '(resname DPPC and name P8)'
+    begin_frame: 5
+    end_frame: 8
 
 fatslim_apl_docker:
   paths:
@@ -178,6 +180,8 @@ fatslim_apl_docker:
     remove_tmp: False
     ignore_no_box: true
     lipid_selection: '(resname DPPC and name P8)'
+    begin_frame: 5
+    end_frame: 8
     container_path: docker
     container_image: quay.io/biocontainers/biobb_mem:5.2.2--pyhdfd78af_0
     container_volume_path: /tmp
@@ -192,6 +196,8 @@ fatslim_apl_singularity:
     remove_tmp: False
     ignore_no_box: true
     lipid_selection: '(resname DPPC and name P8)'
+    begin_frame: 5
+    end_frame: 8
     container_path: singularity
     container_image: https://depot.galaxyproject.org/singularity/biobb_mem:5.2.2--pyhdfd78af_0
     

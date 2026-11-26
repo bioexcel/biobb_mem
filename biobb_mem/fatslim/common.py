@@ -1,40 +1,57 @@
-from MDAnalysis.transformations.boxdimensions import set_dimensions
-from biobb_common.tools import file_utils as fu
-import glob
-import shutil
-import os
+"""Common class of the FATSLiM blocks of package biobb_mem."""
+from pathlib import Path, PurePath
+import sys
+import MDAnalysis as mda
+from biobb_common.generic.biobb_object import BiobbObject
+from biobb_mem.common import ignore_no_box
 
 
-def set_box(u):
-    # Calculate the dimensions of the box
-    positions = u.atoms.positions
-    box_dimensions = positions.max(axis=0) - positions.min(axis=0)
-    # Set the box dimensions
-    u.trajectory.add_transformations(set_dimensions([*box_dimensions, 90, 90, 90]))
+class FatslimBase(BiobbObject):
+    """Base class of the FATSLiM blocks: the input files of fatslim and the start of its command line."""
 
+    def fatslim_cmd(self, tmp_dir: Path, command: str, groups: dict[str, str],
+                    frame: int | None = None) -> tuple[mda.Universe, list[str]]:
+        """Go from a fatslim command to the universe of the inputs and the start of the command line, with the
+        index (input_ndx_path or the **groups** selections) and the files fatslim reads written in **tmp_dir**.
+        fatslim reads the whole trajectory, or only its **frame** when given."""
+        # MDAnalysis runs in the host, so it reads the original input files
+        top_path = self.io_dict["in"]["input_top_path"]
+        traj_path = self.io_dict["in"].get("input_traj_path")
+        u = mda.Universe(top_path, traj_path) if traj_path else mda.Universe(top_path)
+        box_set = ignore_no_box(u, self.ignore_no_box, self.out_log, self.global_log)
 
-def ignore_no_box(u, ignore_no_box, out_log, global_log):
-    # FATSLiM ValueError: Box does not correspond to PBC=xyz
-    if u.dimensions is None:
-        if ignore_no_box:
-            fu.log('Setting box dimensions using the minimum and maximum positions of the atoms.',
-                   out_log, global_log)
-            set_box(u)
+        if self.io_dict["in"].get("input_ndx_path"):
+            ndx = self.sandbox_file("input_ndx_path")
         else:
-            fu.log('The trajectory does not contain box information. '
-                   'Please set the ignore_no_box property to True to ignore this error.',
-                   out_log, global_log)
-            raise ValueError("Box dimensions are required but not found in the trajectory.")
+            ndx = str(tmp_dir / "groups.ndx")
+            with mda.selections.gromacs.SelectionWriter(ndx, mode="w") as ndx_file:
+                for name, selection in groups.items():
+                    ndx_file.write(u.select_atoms(selection), name=name)
 
+        # fatslim reads the topology from a GRO file with the box
+        if frame is not None:
+            u.trajectory[frame]
+        conf = tmp_dir / "conf.gro"
+        u.atoms.write(str(conf))
 
-def move_output_file(file, out_file_path, out_log, global_log):
-    # Add a wildcard to support multiples frames output (it adds 0000 suffix)
-    base, ext = os.path.splitext(file)
-    file_glob = base + '*' + ext
-    files_to_move = glob.glob(file_glob)
-    if files_to_move:
-        fu.log(f"Renaming file {files_to_move[0]} to {out_file_path}", out_log, global_log)
-        # Move the file to the output path
-        shutil.move(files_to_move[0], out_file_path)
-    else:
-        fu.log(f"Warning: File {file} not found, FATSLiM calculation might have failed.", out_log, global_log)
+        if self.container_path or PurePath(self.binary_path).name != "fatslim":
+            cmd = [self.binary_path]
+        else:
+            # FATSLiM 0.2.2 uses NumPy aliases removed in modern NumPy versions
+            compat = tmp_dir / "fatslim_numpy_compat.py"
+            compat.write_text("import sys\nimport numpy as np\nif not hasattr(np, 'int'):\n    np.int = int\n"
+                              "from fatslimlib import main\nsys.exit(main(sys.argv[1:]))\n")
+            cmd = [sys.executable, self.staged_path(compat)]
+        cmd += [command, "-n", self.staged_path(ndx), "-c", self.staged_path(conf)]
+
+        if traj_path and frame is None:
+            traj = self.sandbox_file("input_traj_path")
+            # fatslim reads xtc, trr and gro files with a box; a container sees only the files of its volume
+            if box_set or PurePath(traj).suffix.lower() not in (".xtc", ".trr", ".gro") or (
+                    self.container_path and Path(self.staged_path(traj)).is_absolute()):
+                traj = str(tmp_dir / "traj.xtc")
+                with mda.Writer(traj, u.atoms.n_atoms) as writer:
+                    for _ in u.trajectory:
+                        writer.write(u.atoms)
+            cmd += ["-t", self.staged_path(traj)]
+        return u, cmd

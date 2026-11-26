@@ -166,23 +166,17 @@
                     "wf_prop": false,
                     "description": "Cutoff distance (in nm) to be used when leaflet identification is performed."
                 },
-                "begin_frame": {
+                "frame": {
                     "type": "integer",
-                    "default": -1,
+                    "default": 0,
                     "wf_prop": false,
-                    "description": "First frame index to be used for analysis."
-                },
-                "end_frame": {
-                    "type": "integer",
-                    "default": -1,
-                    "wf_prop": false,
-                    "description": "Last frame index to be used for analysis."
+                    "description": "Index of the trajectory frame whose leaflets are identified (-1: the last frame)."
                 },
                 "ignore_no_box": {
                     "type": "boolean",
                     "default": false,
                     "wf_prop": false,
-                    "description": "Ignore the absence of box information in the topology. If the topology does not contain box information, the box will be set to the minimum and maximum positions of the atoms."
+                    "description": "Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory."
                 },
                 "return_hydrogen": {
                     "type": "boolean",

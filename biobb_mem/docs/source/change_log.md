@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+### Changes
+
+* [FIX] `fatslim_apl` and `fatslim_membranes` read the trajectory. Before, they analysed the coordinates of the topology file only and, when it had no box, with a box made from the extent of the atoms (`ignore_no_box`), so the areas per lipid near the box edges were wrong.
+* [FIX] `fatslim_apl` analyses the frames from `begin_frame` to `end_frame` (all of them by default; `end_frame` itself is not analysed), not only the first one. The output CSV has the areas of every analysed frame, with a new first column `frame`.
+* [CHANGE] `fatslim_membranes` identifies the leaflets of one frame, chosen with the new `frame` property (the first one by default, -1 for the last one). Its `begin_frame` and `end_frame` properties are removed: FATSLiM can not write the leaflets of every frame.
+* [CHANGE] `fatslim_apl`: trajectories in the formats FATSLiM can not read (cpt, g96, pdb, tng) and trajectories without box (with `ignore_no_box`) are converted to XTC for FATSLiM.
+* [CHANGE] `ignore_no_box` of the FATSLiM blocks sets the box as in the lipyphilic blocks: from the extent of the atoms in all the frames, with the system shifted so that its minimum z is 0.
+* [CHANGE] `fatslim_apl` and `fatslim_membranes` remove their temporary files also with `disable_sandbox` (unless `remove_tmp` is False).
+
 ## What's new in version [5.3.1](https://github.com/bioexcel/biobb_mem/releases/tag/v5.3.1)?
 
 ### Changes

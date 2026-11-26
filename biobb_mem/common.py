@@ -1,4 +1,4 @@
-""" Common functions for package biobb_mem.lipyphilic_biobb """
+"""Common functions of package biobb_mem."""
 import numpy as np
 from MDAnalysis.transformations import translate, set_dimensions
 from biobb_common.tools import file_utils as fu
@@ -25,14 +25,18 @@ def set_box(u):
     u.trajectory.add_transformations(*transformations)
 
 
-def ignore_no_box(u, ignore_no_box, out_log, global_log):
+def ignore_no_box(u, ignore_no_box, out_log, global_log) -> bool:
+    """Go from a universe without box to the box of :func:`set_box` with **ignore_no_box**, or to a ValueError.
+    True when the box was set."""
     if u.dimensions is None:
         if ignore_no_box:
             fu.log('Setting box dimensions using the minimum and maximum positions of the atoms.',
                    out_log, global_log)
             set_box(u)
+            return True
         else:
             fu.log('The trajectory does not contain box information. '
                    'Please set the ignore_no_box property to True to ignore this error.',
                    out_log, global_log)
             raise ValueError("Box dimensions are required but not found in the trajectory.")
+    return False

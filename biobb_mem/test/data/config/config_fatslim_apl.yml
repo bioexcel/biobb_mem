@@ -1,4 +1,6 @@
 properties:
+  begin_frame: 5
+  end_frame: 8
   ignore_no_box: true
   lipid_selection: (resname DPPC and name P8)
   remove_tmp: false

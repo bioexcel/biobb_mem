@@ -4,7 +4,7 @@
 
 from biobb_common.generic.biobb_object import BiobbObject, launcher
 import MDAnalysis as mda
-from biobb_mem.lipyphilic_biobb.common import ignore_no_box
+from biobb_mem.common import ignore_no_box
 from lipyphilic.analysis.z_positions import ZPositions
 import pandas as pd
 import numpy as np

@@ -87,7 +87,7 @@ fatslim_apl -h
       --input_top_path INPUT_TOP_PATH
                             Path to the input topology file. Accepted formats: tpr, gro, g96, pdb, brk, ent.
       -o OUTPUT_CSV_PATH, --output_csv_path OUTPUT_CSV_PATH
-                            Path to the output CSV file. Accepted formats: csv.
+                            Path to the output CSV file with the area of each lipid in each analysed frame. Accepted formats: csv.
     
     optional arguments:
       --input_traj_path INPUT_TRAJ_PATH
@@ -101,7 +101,7 @@ Config input / output arguments for this building block:
 * **input_top_path** (*string*): Path to the input topology file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.pdb). Accepted formats: TPR, GRO, G96, PDB, BRK, ENT
 * **input_traj_path** (*string*): Path to the GROMACS trajectory file. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/A01JD.xtc). Accepted formats: XTC, TRR, CPT, GRO, G96, PDB, TNG
 * **input_ndx_path** (*string*): Path to the input index NDX file for lipid headgroups and the interacting group. File type: input. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/data/A01JD/headgroups.ndx). Accepted formats: NDX
-* **output_csv_path** (*string*): Path to the output CSV file. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/fatslim/apl.csv). Accepted formats: CSV
+* **output_csv_path** (*string*): Path to the output CSV file with the area of each lipid in each analysed frame. File type: output. [Sample file](https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/fatslim/apl.csv). Accepted formats: CSV
 ### Config
 Syntax: input_parameter (datatype) - (default_value) Definition
 
@@ -110,9 +110,9 @@ Config parameters for this building block:
 * **protein_selection** (*string*): (protein and not element H) Protein selection interacting with the membrane.
 * **cutoff** (*number*): (3.0) This option allows user to specify the cutoff distance (in nm) to be used when performing the neighbor search needed by the APL calculation algorithm
 * **limit** (*number*): (10.0) This option allows user to specify the upper limit (in nm2) for a valid area per lipid value.
-* **begin_frame** (*integer*): (-1) First frame index to be used for analysis.
-* **end_frame** (*integer*): (-1) Last frame index to be used for analysis.
-* **ignore_no_box** (*boolean*): (False) Ignore the absence of box information in the topology. If the topology does not contain box information, the box will be set to the minimum and maximum positions of the atoms.
+* **begin_frame** (*integer*): (-1) Index of the first trajectory frame analysed (-1: the first frame).
+* **end_frame** (*integer*): (-1) Index of the trajectory frame where the analysis stops, not analysed (-1: up to the last frame).
+* **ignore_no_box** (*boolean*): (False) Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory.
 * **binary_path** (*string*): (fatslim) Path to the fatslim executable binary.
 * **remove_tmp** (*boolean*): (True) Remove temporal files.
 * **restart** (*boolean*): (False) Do not execute if output files exist.
@@ -126,6 +126,8 @@ Config parameters for this building block:
 #### [Common config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_apl.yml)
 ```python
 properties:
+  begin_frame: 5
+  end_frame: 8
   ignore_no_box: true
   lipid_selection: (resname DPPC and name P8)
   remove_tmp: false
@@ -134,9 +136,11 @@ properties:
 #### [Docker config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_apl_docker.yml)
 ```python
 properties:
+  begin_frame: 5
   container_image: quay.io/biocontainers/biobb_mem:5.2.2--pyhdfd78af_0
   container_path: docker
   container_volume_path: /tmp
+  end_frame: 8
   ignore_no_box: true
   lipid_selection: (resname DPPC and name P8)
   remove_tmp: false
@@ -145,8 +149,10 @@ properties:
 #### [Singularity config file](https://github.com/bioexcel/biobb_mem/blob/master/biobb_mem/test/data/config/config_fatslim_apl_singularity.yml)
 ```python
 properties:
+  begin_frame: 5
   container_image: https://depot.galaxyproject.org/singularity/biobb_mem:5.2.2--pyhdfd78af_0
   container_path: singularity
+  end_frame: 8
   ignore_no_box: true
   lipid_selection: (resname DPPC and name P8)
   remove_tmp: false
@@ -163,7 +169,9 @@ fatslim_apl --config config_fatslim_apl.yml --input_top_path A01JD.pdb --input_t
   "properties": {
     "remove_tmp": false,
     "ignore_no_box": true,
-    "lipid_selection": "(resname DPPC and name P8)"
+    "lipid_selection": "(resname DPPC and name P8)",
+    "begin_frame": 5,
+    "end_frame": 8
   }
 }
 ```
@@ -174,6 +182,8 @@ fatslim_apl --config config_fatslim_apl.yml --input_top_path A01JD.pdb --input_t
     "remove_tmp": false,
     "ignore_no_box": true,
     "lipid_selection": "(resname DPPC and name P8)",
+    "begin_frame": 5,
+    "end_frame": 8,
     "container_path": "docker",
     "container_image": "quay.io/biocontainers/biobb_mem:5.2.2--pyhdfd78af_0",
     "container_volume_path": "/tmp"
@@ -187,6 +197,8 @@ fatslim_apl --config config_fatslim_apl.yml --input_top_path A01JD.pdb --input_t
     "remove_tmp": false,
     "ignore_no_box": true,
     "lipid_selection": "(resname DPPC and name P8)",
+    "begin_frame": 5,
+    "end_frame": 8,
     "container_path": "singularity",
     "container_image": "https://depot.galaxyproject.org/singularity/biobb_mem:5.2.2--pyhdfd78af_0"
   }
@@ -238,9 +250,8 @@ Syntax: input_parameter (datatype) - (default_value) Definition
 Config parameters for this building block:
 * **selection** (*string*): (not protein and element P) Alternative ot the NDX file for choosing the Headgroups used in the identification using MDAnalysis selection language.
 * **cutoff** (*number*): (2.0) Cutoff distance (in nm) to be used when leaflet identification is performed.
-* **begin_frame** (*integer*): (-1) First frame index to be used for analysis.
-* **end_frame** (*integer*): (-1) Last frame index to be used for analysis.
-* **ignore_no_box** (*boolean*): (False) Ignore the absence of box information in the topology. If the topology does not contain box information, the box will be set to the minimum and maximum positions of the atoms.
+* **frame** (*integer*): (0) Index of the trajectory frame whose leaflets are identified (-1: the last frame).
+* **ignore_no_box** (*boolean*): (False) Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory.
 * **return_hydrogen** (*boolean*): (False) Include hydrogen atoms in the output index file.
 * **binary_path** (*string*): (fatslim) Path to the fatslim executable binary.
 * **remove_tmp** (*boolean*): (True) Remove temporal files.
