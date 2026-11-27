@@ -3,7 +3,7 @@
 """Module containing the Lipyphilic AssignLeaflets class and the command line interface."""
 from biobb_common.generic.biobb_object import BiobbObject, launcher
 import MDAnalysis as mda
-from biobb_mem.lipyphilic_biobb.common import ignore_no_box
+from biobb_mem.common import ignore_no_box
 from lipyphilic.leaflets.assign_leaflets import AssignLeaflets
 import pandas as pd
 import numpy as np
@@ -67,7 +67,7 @@ class LPPAssignLeaflets(BiobbObject):
         """Execute the :class:`LPPAssignLeaflets <lipyphilic_biobb.lpp_assign_leaflets.LPPAssignLeaflets>` object."""
 
         # Load the trajectory
-        u = mda.Universe(self.stage_io_dict["in"]["input_top_path"], self.stage_io_dict["in"]["input_traj_path"])
+        u = mda.Universe(self.sandbox_file("input_top_path"), self.sandbox_file("input_traj_path"))
         ignore_no_box(u, self.ignore_no_box, self.out_log, self.global_log)
         # Create AssignLeaflets object
         leaflets = AssignLeaflets(
@@ -96,9 +96,9 @@ class LPPAssignLeaflets(BiobbObject):
             })
 
             # Save the DataFrame to a CSV file
-            df.to_csv(self.stage_io_dict["out"]["output_leaflets_path"], index=False)
+            df.to_csv(self.sandbox_file("output_leaflets_path"), index=False)
         elif out_format == 'npy':
-            np.save(self.stage_io_dict["out"]["output_leaflets_path"], leaflets.leaflets)
+            np.save(self.sandbox_file("output_leaflets_path"), leaflets.leaflets)
 
 
 lpp_assign_leaflets = launcher(LPPAssignLeaflets)

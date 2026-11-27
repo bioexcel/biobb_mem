@@ -137,7 +137,7 @@
         },
         "output_csv_path": {
             "type": "string",
-            "description": "Path to the output CSV file",
+            "description": "Path to the output CSV file with the area of each lipid in each analysed frame",
             "filetype": "output",
             "sample": "https://github.com/bioexcel/biobb_mem/raw/main/biobb_mem/test/reference/fatslim/apl.csv",
             "enum": [
@@ -146,7 +146,7 @@
             "file_formats": [
                 {
                     "extension": ".*\\.csv$",
-                    "description": "Path to the output CSV file",
+                    "description": "Path to the output CSV file with the area of each lipid in each analysed frame",
                     "edam": "format_3752"
                 }
             ]
@@ -182,19 +182,19 @@
                     "type": "integer",
                     "default": -1,
                     "wf_prop": false,
-                    "description": "First frame index to be used for analysis."
+                    "description": "Index of the first trajectory frame analysed (-1: the first frame)."
                 },
                 "end_frame": {
                     "type": "integer",
                     "default": -1,
                     "wf_prop": false,
-                    "description": "Last frame index to be used for analysis."
+                    "description": "Index of the trajectory frame where the analysis stops, not analysed (-1: up to the last frame)."
                 },
                 "ignore_no_box": {
                     "type": "boolean",
                     "default": false,
                     "wf_prop": false,
-                    "description": "Ignore the absence of box information in the topology. If the topology does not contain box information, the box will be set to the minimum and maximum positions of the atoms."
+                    "description": "Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory."
                 },
                 "binary_path": {
                     "type": "string",
@@ -237,12 +237,6 @@
                     "default": "/tmp",
                     "wf_prop": false,
                     "description": "Container volume path definition."
-                },
-                "container_working_dir": {
-                    "type": "string",
-                    "default": null,
-                    "wf_prop": false,
-                    "description": "Container working directory definition."
                 },
                 "container_user_id": {
                     "type": "string",

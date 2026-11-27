@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 
 """Module containing the gorder coarse-grained class and the command line interface."""
-from biobb_common.generic.biobb_object import BiobbObject, launcher
+from biobb_common.generic.biobb_object import launcher
+from biobb_mem.gorder.common import GorderBase
 import gorder
 
 
-class GorderCG(BiobbObject):
+class GorderCG(GorderBase):
     """
     | biobb_mem GorderCG
     | Wrapper of the gorder coarse-grained module for computing lipid order parameters per atom for carbon tails.
@@ -48,28 +49,14 @@ class GorderCG(BiobbObject):
     def __init__(self,
                  input_top_path: str,
                  input_traj_path: str,
-                 output_order_path: str | None = None,
+                 output_order_path: str,
                  properties: dict | None = None,
                  **kwargs) -> None:
         super().__init__(**locals())
 
-    def run(self) -> None:
-        """Execute the :class:`GorderCG <gorder.gorder_cg.GorderCG>` object."""
-
-        out = self.stage_io_dict["out"]["output_order_path"]
-        # Run Biobb block
-        analysis = gorder.Analysis(
-            structure=self.stage_io_dict["in"]["input_top_path"],
-            trajectory=self.stage_io_dict["in"]["input_traj_path"],
-            analysis_type=gorder.analysis_types.CGOrder(self.beads),
-            output_yaml=out if out.endswith('.yaml') else None,
-            output_csv=out if out.endswith('.csv') else None,
-            output_xvg=out if out.endswith('.xvg') else None,
-            handle_pbc=self.handle_pbc,
-        )
-
-        results = analysis.run()
-        results.write()
+    def analysis_type(self) -> "gorder.analysis_types.CGOrder":
+        """Go from the beads to the coarse-grained analysis type of gorder."""
+        return gorder.analysis_types.CGOrder(self.beads)
 
 
 gorder_cg = launcher(GorderCG)

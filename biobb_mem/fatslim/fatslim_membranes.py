@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 
 """Module containing the FATSLiM Membranes class and the command line interface."""
-from pathlib import Path, PurePath
-from biobb_common.generic.biobb_object import BiobbObject, launcher
-from biobb_mem.fatslim.common import ignore_no_box, move_output_file
+from pathlib import Path
+import shutil
+from biobb_common.generic.biobb_object import launcher
+from biobb_common.tools import file_utils as fu
+from biobb_mem.fatslim.common import FatslimBase
 import MDAnalysis as mda
 import numpy as np
 
 
-class FatslimMembranes(BiobbObject):
+class FatslimMembranes(FatslimBase):
     """
     | biobb_mem FatslimMembranes
     | Wrapper of the `FATSLiM membranes <https://pythonhosted.org/fatslim/documentation/leaflets.html>`_ module for leaflet and membrane identification.
@@ -22,9 +24,8 @@ class FatslimMembranes(BiobbObject):
         properties (dic - Python dictionary object containing the tool parameters, not input/output files):
             * **selection** (*str*) - ("not protein and element P") Alternative ot the NDX file for choosing the Headgroups used in the identification using MDAnalysis `selection language <https://docs.mdanalysis.org/stable/documentation_pages/selections.html>`_.
             * **cutoff** (*float*) - (2) Cutoff distance (in nm) to be used when leaflet identification is performed.
-            * **begin_frame** (*int*) - (-1) First frame index to be used for analysis.
-            * **end_frame** (*int*) - (-1) Last frame index to be used for analysis.
-            * **ignore_no_box** (*bool*) - (False) Ignore the absence of box information in the topology. If the topology does not contain box information, the box will be set to the minimum and maximum positions of the atoms.
+            * **frame** (*int*) - (0) Index of the trajectory frame whose leaflets are identified (-1: the last frame).
+            * **ignore_no_box** (*bool*) - (False) Ignore the absence of box information in the trajectory. If the trajectory does not contain box information, the box will be set to the minimum and maximum positions of the atoms in the trajectory.
             * **return_hydrogen** (*bool*) - (False) Include hydrogen atoms in the output index file.
             * **binary_path** (*str*) - ("fatslim") Path to the fatslim executable binary.
             * **remove_tmp** (*bool*) - (True) [WF property] Remove temporal files.
@@ -33,7 +34,6 @@ class FatslimMembranes(BiobbObject):
             * **container_path** (*str*) - (None) Container path definition.
             * **container_image** (*str*) - ('afandiadib/ambertools:serial') Container image definition.
             * **container_volume_path** (*str*) - ('/tmp') Container volume path definition.
-            * **container_working_dir** (*str*) - (None) Container working directory definition.
             * **container_user_id** (*str*) - (None) Container user_id definition.
             * **container_shell_path** (*str*) - ('/bin/bash') Path to default shell inside the container.
 
@@ -67,58 +67,26 @@ class FatslimMembranes(BiobbObject):
 
     def run(self) -> None:
         """Execute the :class:`FatslimMembranes <fatslim.fatslim_membranes.FatslimMembranes>` object."""
-
-        unique_dir = self.stage_io_dict.get("unique_dir", "")
-        if self.container_path:
-            working_dir = self.container_volume_path if self.container_volume_path else "/data"
-        else:
-            working_dir = unique_dir
-
-        # MDAnalysis runs in the host, so read the original input files
-        host_top_path = self.io_dict["in"]["input_top_path"]
-        host_traj_path = self.io_dict["in"].get("input_traj_path")
-
-        # Create index file using MDAnalysis
-        u = mda.Universe(topology=host_top_path, coordinates=host_traj_path)
-        ignore_no_box(u, self.ignore_no_box, self.out_log, self.global_log)
-
-        # Build the index to select the atoms from the membrane
-        if self.stage_io_dict["in"].get('input_ndx_path', None):
-            tmp_ndx = self.stage_io_dict["in"]["input_ndx_path"]
-        else:
-            tmp_ndx = str(Path(unique_dir).joinpath('_headgroups.ndx'))
-            with mda.selections.gromacs.SelectionWriter(tmp_ndx, mode='w') as ndx:
-                ndx.write(u.select_atoms(self.selection), name='headgroups')
-
-        if self.stage_io_dict["in"]["input_top_path"].endswith('gro'):
-            cfg = self.stage_io_dict["in"]["input_top_path"]
-        else:
-            # Convert topology .gro and add box dimensions if not available in the topology
-            cfg = str(Path(unique_dir).joinpath('_output.gro'))
-            # Save as GRO file with box information
-            u.atoms.write(cfg)
-
-        tmp_out = str(Path(unique_dir).joinpath('_output.ndx'))
-        # Build command
-        self.cmd = [
-            "cd", working_dir, ";", self.binary_path, "membranes",
-            "-n", PurePath(tmp_ndx).name,
-            "-c", PurePath(cfg).name,
-            "--output-index", PurePath(tmp_out).name,
-            "--cutoff", str(self.cutoff),
-            "--begin-frame", str(self.begin_frame),
-            "--end-frame", str(self.end_frame)
+        tmp_dir = Path(self.create_tmp_dir())
+        u, cmd = self.fatslim_cmd(tmp_dir, "membranes", {"headgroups": self.selection}, frame=self.frame)
+        self.cmd = cmd + [
+            "--output-index", self.staged_path(tmp_dir / "leaflets.ndx"),
+            "--cutoff", str(self.cutoff)
         ]
-
-        # Run Biobb block
         self.run_biobb()
-        staged_output_ndx = self.sandbox_file("output_ndx_path")
-        move_output_file(tmp_out, staged_output_ndx, self.out_log, self.global_log)
+
+        # fatslim adds the time of the frame (ns) to the name of the index: leaflets_0000.ndx
+        leaflets_ndx = next(tmp_dir.glob("leaflets_*.ndx"), None)
+        if leaflets_ndx is None:
+            fu.log("No leaflets index file: FATSLiM failed.", self.out_log, self.global_log)
+            return
+        output_ndx = self.sandbox_file("output_ndx_path")
+        shutil.move(leaflets_ndx, output_ndx)
         # Fatslim ignore H atoms so we add them manually
         if self.return_hydrogen:
             # Parse the atoms indices of the membrane without Hs
-            leaflet_groups = parse_index(staged_output_ndx)
-            with mda.selections.gromacs.SelectionWriter(staged_output_ndx, mode='w') as ndx:
+            leaflet_groups = parse_index(output_ndx)
+            with mda.selections.gromacs.SelectionWriter(output_ndx, mode='w') as ndx:
                 for key, value in leaflet_groups.items():
                     # Select the residues using atom indexes
                     res_sele = set(u.atoms[np.array(value)-1].residues.resindices)
@@ -179,8 +147,7 @@ def display_fatslim(input_top_path: str, lipid_sel: str, input_traj_path: str = 
     except ImportError:
         raise ImportError('Please install the nglview package to visualize the membrane/s.')
 
-    u = mda.Universe(topology=input_top_path,
-                     coordinates=input_traj_path)
+    u = mda.Universe(input_top_path, input_traj_path) if input_traj_path else mda.Universe(input_top_path)
     # Visualize the system with NGLView
     view = nv.show_mdanalysis(u)
     view.clear_representations()

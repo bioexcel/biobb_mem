@@ -3,7 +3,7 @@
 """Module containing the Lipyphilic FlipFlop class and the command line interface."""
 from biobb_common.generic.biobb_object import BiobbObject, launcher
 import MDAnalysis as mda
-from biobb_mem.lipyphilic_biobb.common import ignore_no_box
+from biobb_mem.common import ignore_no_box
 from lipyphilic.analysis.flip_flop import FlipFlop
 import pandas as pd
 import numpy as np
@@ -64,10 +64,10 @@ class LPPFlipFlop(BiobbObject):
         """Execute the :class:`LPPFlipFlop <lipyphilic_biobb.lpp_flip_flop.LPPFlipFlop>` object."""
 
         # Load the trajectory
-        u = mda.Universe(self.stage_io_dict["in"]["input_top_path"], self.stage_io_dict["in"]["input_traj_path"])
+        u = mda.Universe(self.sandbox_file("input_top_path"), self.sandbox_file("input_traj_path"))
         ignore_no_box(u, self.ignore_no_box, self.out_log, self.global_log)
         # Load the leaflets
-        leaflets_path = self.stage_io_dict["in"]["input_leaflets_path"]
+        leaflets_path = self.sandbox_file("input_leaflets_path")
         if leaflets_path.endswith('.csv'):
             df = pd.read_csv(leaflets_path)
             n_frames = len(df['frame'].unique())
@@ -102,7 +102,7 @@ class LPPFlipFlop(BiobbObject):
         })
 
         # Save the DataFrame to a CSV file
-        df.to_csv(self.stage_io_dict["out"]["output_flip_flop_path"], index=False)
+        df.to_csv(self.sandbox_file("output_flip_flop_path"), index=False)
 
 
 lpp_flip_flop = launcher(LPPFlipFlop)

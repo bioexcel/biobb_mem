@@ -2,6 +2,8 @@
   "properties": {
     "remove_tmp": false,
     "ignore_no_box": true,
-    "lipid_selection": "(resname DPPC and name P8)"
+    "lipid_selection": "(resname DPPC and name P8)",
+    "begin_frame": 5,
+    "end_frame": 8
   }
 }
